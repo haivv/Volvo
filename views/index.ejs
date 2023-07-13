@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+    <script src="/javascripts/bootstrap.bundle.min.js"></script>
+    <script src="/javascripts/custom-file-input.js"></script>
+        <script>
+            //F5
+            document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 116) {
+                event.preventDefault();   
+            }
+            });
+        </script>
+
+
+    <script>
+        function checkfile() {
+            if (document.getElementById('user').value == "") {
+                document.getElementById('usererr').innerHTML = "Please enter your username.";
+                return false;
+            }
+            else {
+                document.getElementById('usererr').innerHTML = "";
+            }
+
+            if (document.getElementById('pass').value == "") {
+                document.getElementById('passerr').innerHTML = "Please enter your password.";
+                return false;
+            }
+            else {
+                document.getElementById('passerr').innerHTML = "";
+            }
+            document.flogin.submit();
+        }
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                // Execute your code here
+                checkfile();
+            }
+        });
+
+    </script>
+
+
+
+    <style>
+        body {
+            width: 100%;
+            height: 969px;
+            background: radial-gradient(92.96% 233.91% at 53.52% 50%, #131929 23.96%, #0E3FC0 100%);
+            background-repeat: none;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+
+    <div id="top">
+        <div id="titleVolvo">VOLVO</div>
+        <% if(sesLogin){ %>
+         <div id="txtLogin"><a href="/logout"> Logout</a></div>
+         <% }else{ %>
+            <div id="txtLogin"><a href="/adminLogin"> Login to admin</a></div>
+            <% } %>
+    </div>
+    
+    <div id="welcome">
+
+        <p style="text-align: center;"><span id="txtVolvo">Volvo</span> <span id="txtPortal">Portal</span></p>
+        <p id="txtSlogan">Share and explore 3D experiences across the web and VR here.</p>
+        <div id="action">
+            <div class="d-flex justify-content-center">
+                <a href="/avatar" class="btn-white btn-admin">Start</a>
+            </div>
+        </div>
+
+    </div>
+   
+    <script>
+    //     window.addEventListener('beforeunload', function(event) {
+    //     fetch('/log-exit-time', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //     });
+    //   });
+      </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,310 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+@font-face {
+  font-family: VolvoM;
+  src: url(/volvo-novum-medium.otf);
+}
+
+@font-face {
+  font-family: VolvoL;
+  src: url(/Volvo-Light.ttf);
+}
+tbody{
+  font-weight: 100;
+  font-family: 'VolvoL', Courier, monospace;
+}
+#top{
+  width: 100%;
+  height: 100px;
+  padding:60px;
+
+}
+#titleVolvo {
+  width: 200px;
+  height: 60px;
+ 
+  float: left;
+  color: white;
+  font-weight: bold;
+  font-size: 22pt;
+  letter-spacing: 15px;
+  font-family: 'Times New Roman', Times, serif;
+
+}
+#txtLogin {
+  width: 120px;
+  height: 40px;
+  float: right;
+  color: white;
+  font-family: 'volvo';
+}
+#txtLogin a{
+  color: white;
+}
+#welcome {
+  margin: 10% auto;
+  width: 900px;
+  min-height: 244px;
+}
+
+#txtVolvo,#txtPortal,#txtSlogan, #txtLogin{
+  color: white;
+  text-align: center;
+}
+#txtVolvo{
+  font-size: 67.34px;
+  font-weight: bold;
+  font-family: 'VolvoL';
+}
+
+#txtPortal{
+  font-size: 67.34px;
+  font-weight: 100;
+} 
+#txtSlogan{
+  font-size: 21.33px;
+}
+#txtAsk {
+  color: white;
+  font-family: 'VolvoL';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28.43px;
+  line-height: 150%;
+  text-align: center;
+}
+
+#action {
+  width: 900px;
+  align-items: center;
+  margin-top: 70px;
+
+}
+
+.btn-white {
+  background: white;
+  width: 400px;
+  height: 72px;
+  border: 0px;
+  border-radius: 10px;
+  font-family: 'Volvo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 21.328px;
+  line-height: 150%;
+
+
+
+}
+
+#action a {
+  text-decoration: none;
+  text-align: center;
+  padding-top: 20px;
+  height: 72px;
+  color: black;
+}
+
+#empty {
+  width: 24px;
+}
+
+
+/* User Tracking System */
+h1 {
+  color: white;
+  font-family: 'Volvo';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 50.517px;
+  line-height: 140%;
+  color: #1A2236;
+  padding-top: 160px;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  width: 100%;
+  min-height: 218px;
+
+
+  /* White */
+
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+table{
+  width: 100%;
+  border-collapse: collapse;
+ 
+}
+thead {
+  color: #4D5569;
+  background: #F5F6F9;
+  font-size: 16px;
+  font-family: 'VolvoL';
+
+}
+th{
+  height: 36px;
+  padding:0px 10px;
+  border-bottom: 1px solid #ddd !important; 
+}
+td{
+  height: 46px;
+  padding:0px 10px;
+  border-bottom: 1px solid #ddd !important; 
+ 
+}
+
+
+#col1, #col2, #col3, #col4, #col5  {
+  width: 20%;
+}
+
+
+
+/* mesagebox */
+
+#wrap {
+  width: 400px;
+  height: 500px;
+  margin: auto;
+  padding-top: 15%;
+
+
+}
+
+#form-login {
+  width: 400px;
+  min-height: 200px;
+  background: #F5F6F9;
+  width: 100%;
+  margin-bottom: 60px;
+  padding: 20px;
+  border-radius: 10px;
+
+}
+
+#logoSimg {
+  width: 200px;
+  margin: auto;
+
+
+}
+
+#logoSimg img {
+  width: 100%;
+  margin-top: 2%;
+}
+
+#user,
+#pass {
+  width: 100%;
+  height: 36px;
+  margin-top: 10px;
+  padding: 3px;
+}
+
+#send {
+  width: 100%;
+}
+
+.error {
+  color: #F65633;
+}
+
+#pLogout {
+  text-align: right;
+}
+
+.col a {
+  text-decoration: none;
+  width: 100%;
+}
+
+
+
+.col ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+ 
+}
+
+.col ul li {
+  display: block;
+  float: left;
+
+  position: relative;
+  transition-duration: 0.5s;
+
+}
+
+
+
+.col li ul li {
+  width: 100%;
+  line-height: 34px;
+  font-weight: 300;
+}
+
+.col li ul li:hover {
+  background: #CBDFFF;
+  width: 100%;
+}
+
+.firstLi {
+  border-radius: 10px 10px 0px 0px;
+}
+
+.lastLi {
+  border-radius: 0px 0px 10px 10px;
+}
+
+
+.col li:hover,
+.col li ul li:focus-within {
+  cursor: pointer;
+}
+
+.col ul li ul {
+  background: rgb(255, 255, 255);
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  transition: all 0.5s ease;
+  left: 0;
+  display: none;
+  width: 180px;
+  border-radius: 10px;
+  border: 1px solid #a5a5a5;
+  color: #91BCF5;
+}
+.col ul li:hover>ul,
+.col ul li:focus-within>ul,
+.col ul li ul:hover,
+.col ul li ul:focus {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+.col ul li ul li {
+  clear: both;
+  padding-left: 40px;
+}
+
+
+/* home logout */
+
+

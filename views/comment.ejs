@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <link rel='stylesheet' href='/stylesheets/notice.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+    <script src="/javascripts/bootstrap.bundle.min.js"></script>
+    <script src="/javascripts/custom-file-input.js"></script>
+    <script>
+
+
+
+
+
+
+        function commentBoxShow() {
+            var modal = document.getElementById("comment");
+            modal.style.display = "block";
+        }
+
+        function noticeBoxHide() {
+            var modal = document.getElementById("notice");
+            modal.style.display = "none";
+        }
+    </script>
+
+
+    <style>
+        body {
+            background: #F5F6F9;
+        }
+    </style>
+
+    <script>
+        // message box
+        function showSelEmpMes() {
+            var modal = document.getElementById("emptySelect");
+            modal.style.display = "block";
+        }
+    </script>
+
+</head>
+
+<body onLoad="commentBoxShow();">
+
+
+    <div id='comment' class='messBox'>
+        <div class='modalcomment-content '>
+            <div class="p-2 d-flex flex-row-reverse ">
+
+                <a href='/notice' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
+
+
+            </div>
+            <h1 class="p-2">
+                <%= title %>
+            </h1>
+
+            <% if(dataPage.length> 0)
+                {
+                dataPage.forEach(function(data){
+                %>
+                <h4 id="title" class="p-2">
+                    <%= data.title %>
+                </h4>
+                <div class="p-2 d-flex  flex-row-reverse">
+                    작성자: <%= data.writer %> - 작성일: <%= data.dateCreate %> %>
+                </div>
+
+                <div id="content" class="p-2">
+                    <%= data.content %>
+                </div>
+
+                <div id="txtcomment" class="p-2">
+                    <form action="/notice/addcomment" method="post">
+                        <div>
+                            <h4>Comment</h4>
+                        </div>
+                        <div id="commented">
+                            <% if(dataComment.length> 0)
+                                {
+                                dataComment.forEach(function(data2){
+                                %>
+                                <h6>
+                                    <%= data2.comWriter %>
+                                        <%= data2.comDate %>
+                                </h6>
+                                <span>
+                                    <%= data2.comContent %>
+                                </span>
+
+                                <% }); }<!--and if(sampleData.length>-->
+                                    else
+                                    {
+                                    %>
+
+                                    No Data Found
+
+                                    <% } %>
+
+
+
+                        </div>
+                        <div id="typecomment">
+
+                            <input type="hidden" name="idNotice" value="<%= data.id %>">
+                            <input type="text" name="txtTypeComment" id="txtTypeComment" required><button
+                                class="btn btn-dark" id="btnSend">Send</button>
+
+                    </form>
+
+
+
+
+                    </form>
+                </div>
+                <% }); }<!--and if(sampleData.length>-->
+                    else
+                    {
+                    %>
+
+                    No Data Found
+
+                    <% } %>
+
+
+
+
+
+
+
+        </div><!--end flex-->
+        </form>
+
+    </div><!--end modal-content-->
+    </div><!--end loginfail-->
+
+
+
+
+
+
+</body>
+
+</html>

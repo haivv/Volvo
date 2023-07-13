@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  <link rel='stylesheet' href='/stylesheets/notice.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/custom-file-input.js"></script>
+  <script>
+
+    function checkall() {
+      var countOfCheck = 0;
+      if ((document.getElementById('searchoption').value != "op1") && (document.getElementById('searchoption').value != "op2")&& (document.getElementById('searchoption').value != "op3")&& (document.getElementById('searchoption').value != "op4")&& (document.getElementById('searchoption').value != "op5")) {
+        var modal = document.getElementById("checkSelect");
+        modal.style.display = "block";  
+        countOfCheck += 1;
+        return false;
+      }
+      
+
+      if (document.getElementById('txttitle').value == "") {
+        var modal = document.getElementById("checkTitle");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+      
+      if (document.getElementById('txtContent').value.trim() == "") {
+        var modal = document.getElementById("checkContent");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+      document.fadd.submit();
+    }
+    function hideCheckSelect(){
+      var modal = document.getElementById("checkSelect");
+      document.getElementById('searchoption').focus();
+        modal.style.display = "none";
+    }
+
+    function hideCheckTitle(){
+      var modal = document.getElementById("checkTitle");
+      document.getElementById('txttitle').focus();
+        modal.style.display = "none";
+    }
+
+    function hideCheckContent(){
+      var modal = document.getElementById("checkContent");
+      document.getElementById('txtContent').focus();
+        modal.style.display = "none";
+    }
+
+
+
+
+    function noticeBoxShow() {
+      var modal = document.getElementById("notice");
+      modal.style.display = "block";
+    }
+
+    function noticeBoxHide() {
+      var modal = document.getElementById("notice");
+      modal.style.display = "none";
+    }
+  </script>
+
+
+  <style>
+    body {
+      background: #F5F6F9;
+    }
+  </style>
+
+  <script>
+    // message box
+    function showSelEmpMes() {
+      var modal = document.getElementById("emptySelect");
+      modal.style.display = "block";
+    }
+  </script>
+
+</head>
+
+<body onLoad="noticeBoxShow();">
+   <!--empty title -->
+   <div id='checkSelect' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please choose category!</p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckSelect();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+ 
+  <!--empty title -->
+  <div id='checkTitle' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please type title!</p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckTitle();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+   <!--empty content -->
+   <div id='checkContent' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please type content! </p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckContent();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+
+  <div id='notice' class='modal'>
+    <div class='modal-content'>
+
+
+      <form action="/notice/proAddNotice" method="post" name="fadd">
+        <div class="d-flex flex-column">
+          <div class="p-2 d-flex flex-row-reverse ">
+
+            <a href='/notice' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
+
+
+          </div>
+          <div class="p-2">
+            <div id="title">
+              <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"  id="searchoption">
+                <option>Select a category</option>
+                <option value="op1">Announcement</option>
+                <option value="op2">Suggestion</option>
+                <option value="op3">Opinion</option>
+                <option value="op4">Request</option>
+                <option value="op5">Reference</option>
+              </select>
+              <input type="text" placeholder="Type your title" id="txttitle" name="txtTitle">
+
+            </div>
+
+          </div>
+          <div class="p-2 ">
+            <textarea id="txtContent" name="txtContent">
+
+          </textarea>
+
+          </div>
+          <div class="p-2 d-flex flex-row-reverse ">
+            <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkall()">Upload</button>
+
+          </div>
+
+
+
+
+
+        </div><!--end flex-->
+      </form>
+
+    </div><!--end modal-content-->
+  </div><!--end loginfail-->
+
+
+
+
+
+
+</body>
+
+</html>

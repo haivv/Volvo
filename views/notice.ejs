@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  <link rel='stylesheet' href='/stylesheets/notice.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/custom-file-input.js"></script>
+  <script>
+    // pointer
+    var myObject = document.getElementById('myObject');
+
+    myObject.addEventListener('mouseover', function() {
+      myObject.style.cursor = 'pointer';
+    });
+
+    myObject.addEventListener('mouseout', function() {
+      myObject.style.cursor = 'default';
+    });
+    //end pointer
+
+
+    function noticeBoxShow() {
+      var modal = document.getElementById("notice");
+      modal.style.display = "block";
+    }
+
+    function noticeBoxHide() {
+      var modal = document.getElementById("notice");
+      modal.style.display = "none";
+    }
+
+    function showComment(key) {
+      // var modal = document.getElementById("comment");
+      // document.getElementById("key").innerHTML = key;
+      // modal.style.display = "block";
+      var link = "/notice/comment/"+key;
+      window.location=link;
+    }
+
+    function hideComment(key) {
+      
+      var modal = document.getElementById("comment");
+      modal.style.display = "none";
+    }
+  </script>
+
+
+  <style>
+    body {
+      background: #F5F6F9;
+    }
+  </style>
+
+</head>
+
+<body onLoad="noticeBoxShow();">
+
+<!--show comment-->
+<div id='comment' class='messBox'>
+  <div class='modalcomment-content d-flex flex-column'>
+    <p id="key"></p>
+    <p class="p-3 d-flex flex-row-reverse ">
+      <a href='#' onclick='hideComment();' class='btn btn-dark '>Confirm</a>
+
+    </p>
+  </div>
+</div>
+<!--end show comment-->
+
+
+  <div id='notice' class='modal'>
+    <div class='modal-content'>
+
+      <div class="d-flex flex-column">
+
+        <div class="p-2 d-flex flex-row-reverse">
+          <a href='#' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
+        </div>
+        <h2>
+          <%= title %>
+        </h2>
+        <div class="p-2 d-flex flex-row-reverse" ><a href="/notice/notice_add" class="btn btn-primary">Upload</a> </div>
+        <div class="p-2">
+
+          <table>
+            <thead>
+              <tr>
+                <th>Title </th>
+                <th>Date Created</th>
+                <th>Writer</th>
+                <th>Comment </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <% if(dataPage.length> 0)
+                {
+                dataPage.forEach(function(data){
+                %>
+                <tr onclick="showComment(<%= data.id %>)" id="dataRow">
+                  
+                  <td>
+                    <%= data.title %>
+                  </td>
+                  <td>
+                    <%= data.dateCreate %>
+                  </td>
+                  <td>
+                    <%= data.writer %>
+                  </td>
+                  <td>
+                    <%= data.content %>
+                  </td>
+                </tr>
+                <% }); }<!--and if(sampleData.length>-->
+                  else
+                  {
+                  %>
+                  <tr>
+                    <td colspan="4">No Data Found</td>
+                  </tr>
+                  <% } %>
+            </tbody>
+          </table>
+          <br>
+          <div class="container">
+            <ul class="pagination  justify-content-center">
+              <% if(page>=2){
+                %>
+                <li class="page-item"><a class="page-link" id="paging-left" href="/notice/<%= page-1 %>"> Previous </a>
+                </li>
+                <% } <!--end if(page>=2)-->
+                  <!---mid link-->
+                  for(var i=1; i<=total_pages ; i++){ if (i==page) { %>
+                    <li class="page-item active"><a class="page-link" id="paging-left" href="/notice/<%= i %>">
+                        <%= i %>
+                      </a></li>
+                    <% } else{ %>
+
+                      <li class="page-item "><a class="page-link" id="paging-left" href="/notice/<%= i %>">
+                          <%= i %>
+                        </a></li>
+                      <% } }<!--end for-->
+                        <!------------->
+
+                        if(page < total_pages){page++; %>
+
+                          <li class="page-item"><a class="page-link" id="paging-left" href="/notice/<%= page %>"> Next
+                            </a></li>
+
+                          <% } %>
+
+            </ul>
+          </div><!--container paging-->
+
+
+
+          </div><!--main-->
+        </div><!--d-flex flex-column-->
+      </div><!--end modal-content-->
+  </div><!--end notice-->
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/custom-file-input.js"></script>
+
+  <style>
+    body {
+      background: #F5F6F9;
+    }
+  </style>
+ <script>
+  //F5
+  document.addEventListener('keydown', function (event) {
+  if (event.keyCode === 116) {
+      event.preventDefault();   
+  }
+  });
+</script>
+
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>
+      <%= title %>
+    </h1>
+    
+    <div id="main">
+    
+        <table>
+          <thead>
+            <tr id="row1">
+              <th class="col">
+                
+            
+                <nav role="navigation">
+                  <ul>
+                    <li >ID<a href="#"><img src="../images/sort.png"></a>
+                      <ul   >
+                        <li class="firstLi"><a href="/sort">Sort Ascending</a></li>
+                        <li class="lastLi"><a href="/admin">Sort Descending</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+
+              </th>
+              <th id="col2">IP</th>
+              <th id="col3">Platform</th>
+              <th class="col">
+                <nav role="navigation">
+                  <ul>
+                    <li >Last Login<a href="#"><img src="../images/sort.png"></a>
+                      <ul   >
+                        <li class="firstLi"><a href="/sort">Sort Ascending</a></li>
+                        <li class="lastLi"><a href="/admin">Sort Descending</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+
+              </th>
+              <th id="col5">Last Logout </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(dataPage.length> 0)
+              {
+              dataPage.forEach(function(data){
+              %>
+              <tr>
+                <td>
+                  Visitor <%= data.id %>
+                </td>
+                <td>
+                  <%= data.ip %>
+                </td>
+                <td>
+                  <%= data.platform %>
+                </td>
+                <td>
+                  <%= data.logintime %>
+                </td>
+                <td>
+                  <%= data.logouttime %>
+                </td>
+              </tr>
+              <% }); }<!--and if(sampleData.length>-->
+                else
+                {
+                %>
+                <tr>
+                  <td colspan="5">No Data Found</td>
+                </tr>
+                <% } %>
+          </tbody>
+        </table>
+        <hr>
+        <div class="container">
+          <ul class="pagination  justify-content-center">
+            <% if(page>=2){
+              %>
+              <li class="page-item"><a class="page-link" id="paging-left" href="/sort/<%= page-1 %>"> Previous </a>
+              </li>
+              <% } <!--end if(page>=2)-->
+                <!---mid link-->
+                for(var i=1; i<=total_pages ; i++){ if (i==page) { %>
+                  <li class="page-item active"><a class="page-link" id="paging-left" href="/sort/<%= i %>">
+                      <%= i %>
+                    </a></li>
+                  <% } else{ %>
+
+                    <li class="page-item "><a class="page-link" id="paging-left" href="/sort/<%= i %>">
+                        <%= i %>
+                      </a></li>
+                    <% } }<!--end for-->
+                      <!------------->
+
+                      if(page < total_pages){ %>
+                        <li class="page-item"><a class="page-link" id="paging-left" href="/sort/<%= page+1 %>"> Next
+                          </a></li>
+
+                        <% } %>
+
+          </ul>
+        </div><!--container paging-->
+
+     
+
+    </div><!--main-->
+  </div><!--container-->
+
+</body>
+
+</html>

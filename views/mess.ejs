@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  <link rel='stylesheet' href='/stylesheets/notice.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/custom-file-input.js"></script>
+  <script>
+
+    function showMess() {
+     
+      
+        var modal = document.getElementById("mess");
+        modal.style.display = "block";
+       
+        return false;
+    
+      
+    }
+    function hideMess(){
+      var modal = document.getElementById("mess");
+      document.getElementById('searchoption').focus();
+        modal.style.display = "none";
+    }
+
+    
+  </script>
+
+
+  <style>
+    body {
+      background: #F5F6F9;
+    }
+  </style>
+
+  
+
+</head>
+
+<body onLoad="showMess();">
+
+   <!--empty title -->
+   <div id='mess' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex "><%= title %></p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        
+        <a href='../notice' onclick='hideMess();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+ 
+
+
+
+
+
+
+</body>
+
+</html>

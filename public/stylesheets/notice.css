@@ -1,0 +1,174 @@
+#notice{
+ padding:8% 10% 0 10%;
+ z-index: 1; 
+
+}
+
+.modal {
+	display: none;
+	 z-index: 1; 
+   position: absolute;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+	background-color: #fc1515;
+	padding: 20px;
+  z-index: 1; 
+
+}
+
+/* mess */
+.messBox{
+  background-color: rgba(0, 0, 0, 0.2);
+  /* opacity: 0.5; */
+  display: none;
+	z-index: 10 ;
+ 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+ 
+  
+}
+.modalmess-content {
+  opacity: 1;
+  width: 400px;
+  height: 200px;
+  background: rgb(252, 252, 252);
+  border: 1px solid rgb(156, 156, 156);
+  border-radius: 10px;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+	position: fixed;
+
+}
+/* comment */
+.modalcomment-content {
+  opacity: 1;
+  width: 70%;
+  height: 80%;
+  background: rgb(252, 252, 252);
+  border: 1px solid rgb(156, 156, 156);
+  border-radius: 10px;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+	position: fixed;
+  
+
+}
+
+#txtcomment{
+  height: 200px;
+  width: 100%;
+  background: #a5a5a5;
+  position:fixed;
+  bottom: 0;
+  border-radius: 0px 0px 10px 10px;
+}
+#typecomment{
+  width: 100%;
+  position:fixed;
+  bottom: 0;
+}
+#txtTypeComment{
+  width: 84%;
+  height: 40px;
+}
+#btnSend{
+  width: 10%;
+  position: relative;
+  top:-4px;
+  left: 5px;
+}
+
+@font-face {
+  font-family: VolvoM;
+  src: url(/volvo-novum-medium.otf);
+}
+
+@font-face {
+  font-family: VolvoL;
+  src: url(/Volvo-Light.ttf);
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+ 
+}
+thead {
+  color: #4D5569;
+  background: #F5F6F9;
+  font-size: 14px;
+  font-family: 'VolvoL';
+
+}
+
+th{
+  height: 30px;
+  padding:0px 10px;
+  border-bottom: 1px solid #ddd !important; 
+}
+td{
+  height: 24px;
+  padding:0px 10px;
+  border-bottom: 1px solid #ddd !important; 
+  font-size: 14px;
+  font-weight: 100;
+ 
+}
+
+
+
+
+
+
+.page-link{
+  font-size: 13px !important;
+}
+
+#main{
+  width: 100%;
+  height: 100px;
+  background-color: #fc1515;
+}
+#title{
+  width: 100%;
+  
+}
+#title select{
+  width: 20%;
+  float:left;
+  height: 50px;
+  
+}
+#title input{
+  width: 80%;
+  float:right;
+  height: 50px;
+}
+
+textarea{
+  width: 100%;
+  min-height: 250px;
+
+  padding:10px
+}
+#btnUpload{
+  text-align: right;
+}
+
+#dataRow{
+  cursor: pointer;
+}
+
+h1{
+  border-bottom: 2px solid #8d8d8d;
+}

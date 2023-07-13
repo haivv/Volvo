@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/custom-file-input.js"></script>
+  <script>
+    //F5
+    document.addEventListener('keydown', function (event) {
+    if (event.keyCode === 116) {
+        event.preventDefault();   
+    }
+    });
+</script>
+  <script type='text/javascript'>
+
+    // JavaScript anonymous function
+    window.history.forward();
+    function noBack() {
+      window.history.forward();
+    }
+
+    function showSortingBox() {
+      var modal = document.getElementById("sorting");
+      modal.style.display = "block";
+    }
+    function hideSortingBox() {
+      var modal = document.getElementById("sorting");
+      modal.style.display = "none";
+    }
+  </script>
+
+
+  
+  <style>
+    body {
+      background: #F5F6F9;
+    }
+  </style>
+
+</head>
+
+<body onLoad="noBack();" onpageshow="if (event.persisted) noBack();">
+  
+
+  <div class="container">
+    <h1>
+      <%= title %>
+    </h1>
+   
+    <div id="main">
+ 
+        <table>
+          <thead>
+            <tr>
+              <th class="col">
+
+                <nav role="navigation">
+                  <ul>
+                    <li>ID<a href="#"><img src="../images/sort.png"></a>
+                      <ul>
+                        <li class="firstLi"><a href="/sort">Sort Ascending</a></li>
+                        <li class="lastLi"><a href="/admin">Sort Descending</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+
+              </th>
+
+              <th id="col2">IP</th>
+              <th id="col3">Platform</th>
+              <th class="col">
+
+                <nav role="navigation">
+                  <ul>
+                    <li>Last Login<a href="#"><img src="../images/sort.png"></a>
+                      <ul>
+                        <li class="firstLi"><a href="/sort">Sort Ascending</a></li>
+                        <li class="lastLi"><a href="/admin">Sort Descending</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+
+              </th>
+              <th id="col5">Last Logout </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(dataPage.length> 0)
+              {
+              dataPage.forEach(function(data){
+              %>
+              <tr>
+                <td>
+                  Visitor <%= data.id %>
+                </td>
+                <td>
+                  <%= data.ip %>
+                </td>
+                <td>
+                  <%= data.platform %>
+                </td>
+                <td>
+                  <%= data.logintime %>
+                </td>
+                <td>
+                  <%= data.logouttime %>
+                </td>
+              </tr>
+              <% }); }<!--and if(sampleData.length>-->
+                else
+                {
+                %>
+                <tr>
+                  <td colspan="5">No Data Found</td>
+                </tr>
+                <% } %>
+          </tbody>
+        </table>
+        <hr>
+        <div class="container">
+          <ul class="pagination  justify-content-center">
+            <% if(page>=2){
+              %>
+              <li class="page-item"><a class="page-link" id="paging-left" href="/admin/<%= page-1 %>"> Previous </a>
+              </li>
+              <% } <!--end if(page>=2)-->
+                <!---mid link-->
+                for(var i=1; i<=total_pages ; i++){ if (i==page) { %>
+                  <li class="page-item active"><a class="page-link" id="paging-left" href="/admin/<%= i %>">
+                      <%= i %>
+                    </a></li>
+                  <% } else{ %>
+
+                    <li class="page-item "><a class="page-link" id="paging-left" href="/admin/<%= i %>">
+                        <%= i %>
+                      </a></li>
+                    <% } }<!--end for-->
+                      <!------------->
+
+                      if(page < total_pages){ page++ %>
+                       
+                        <li class="page-item"><a class="page-link" id="paging-left" href="/admin/<%= page  %>"> Next
+                        </a></li>
+
+                        <% } %>
+
+          </ul>
+        </div><!--container paging-->
+
+        
+
+    </div><!--main-->
+  </div><!--container-->
+
+</body>
+
+</html>

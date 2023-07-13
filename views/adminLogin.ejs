@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+  <META HTTP-EQUIV="Expires" CONTENT="-1">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/custom-file-input.js"></script>
+  <script>
+    //F5
+    document.addEventListener('keydown', function (event) {
+    if (event.keyCode === 116) {
+        event.preventDefault();   
+    }
+    });
+</script>
+
+  <script>
+    function checkfile() {
+      if (document.getElementById('user').value == "") {
+        document.getElementById('usererr').innerHTML = "Please enter your username.";
+        return false;
+      }
+      else {
+        document.getElementById('usererr').innerHTML = "";
+      }
+
+      if (document.getElementById('pass').value == "") {
+        document.getElementById('passerr').innerHTML = "Please enter your password.";
+        return false;
+      }
+      else {
+        document.getElementById('passerr').innerHTML = "";
+      }
+
+      document.flogin.submit();
+
+    }
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        // Execute your code here
+        checkfile();
+      }
+    });
+
+
+    window.history.forward();
+    function noBack() {
+      window.history.forward();
+    }
+  </script>
+
+<script>
+  window.addEventListener('beforeunload', function(event) {
+  fetch('/log-exit-time', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+});
+</script>
+
+
+
+  
+
+  <style>
+    body {
+      width: 100%;
+      height: 969px;
+      background: radial-gradient(92.96% 233.91% at 53.52% 50%, #131929 23.96%, #0E3FC0 100%);
+      background-repeat: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <% if (sesLogin == 'admin') { %>
+    <!-- Code to execute if the session variable exists and is not null -->
+    <script>
+
+      window.location.href = "/admin"; // Replace "/newPage" with the desired URL
+    </script>
+
+    <% } else{ %>
+
+
+
+      <div id="wrap">
+        <div id="form-login">
+          <h2>
+            <%= title %>
+          </h2>
+          <form action="/logged" name="flogin" method="post">
+
+            <input type="text" name="user" id="user" placeholder="User name">
+            <span class="error" id="usererr"> </span>
+            <input type="password" name="pass" id="pass" placeholder="Password">
+            <span class="error" id="passerr"> </span>
+            <button type="button" id="send" class="btn btn-dark mt-3" onclick="checkfile()">Login</button>
+
+
+          </form>
+          <% if (action=='login' ) {%>
+            <span class="error">Account is not active.</span>
+
+            <% } %>
+
+
+        </div>
+        <div id="logoSimg">
+          <img src="images/logo.png" alt="" />
+        </div>
+      </div>
+
+      <% } %>
+
+
+
+
+
+        <script>
+
+        </script>
+
+</body>
+
+</html>
