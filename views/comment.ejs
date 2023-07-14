@@ -54,7 +54,7 @@
         <div class='modalcomment-content '>
             <div class="p-2 d-flex flex-row-reverse ">
 
-                <a href='/notice' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
+                <a href='/notice/updateComment' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
 
 
             </div>
@@ -74,7 +74,9 @@
                 </div>
 
                 <div id="content" class="p-2">
-                    <%= data.content %>
+                    
+                    <%- data.content %>
+                    
                 </div>
 
                 <div id="txtcomment" class="p-2">
@@ -87,10 +89,10 @@
                                 {
                                 dataComment.forEach(function(data2){
                                 %>
-                                <h6>
+                                <div class="txtWriter">
                                     <%= data2.comWriter %>
                                         <%= data2.comDate %>
-                                </h6>
+                                </div>
                                 <span>
                                     <%= data2.comContent %>
                                 </span>

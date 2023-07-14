@@ -227,7 +227,9 @@ td{
 #pLogout {
   text-align: right;
 }
-
+.col{
+  width: 22%;
+}
 .col a {
   text-decoration: none;
   width: 100%;

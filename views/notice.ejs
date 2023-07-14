@@ -88,13 +88,13 @@
         </h2>
         <div class="p-2 d-flex flex-row-reverse" ><a href="/notice/notice_add" class="btn btn-primary">Upload</a> </div>
         <div class="p-2">
-
+         
           <table>
             <thead>
               <tr>
-                <th>Title </th>
-                <th>Date Created</th>
-                <th>Writer</th>
+                <th id="col1">Title </th>
+                <th class="col">Date Created</th>
+                <th class="col">Writer</th>
                 <th>Comment </th>
 
               </tr>
@@ -116,7 +116,7 @@
                     <%= data.writer %>
                   </td>
                   <td>
-                    <%= data.content %>
+                    <%= data.comment %>
                   </td>
                 </tr>
                 <% }); }<!--and if(sampleData.length>-->

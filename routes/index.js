@@ -137,7 +137,6 @@ router.post('/logout/:user/:ip/:platform/:logintime/:logouttime', function (req,
 
 router.post('/logged', function (req, res, next) {
   
-
   var fUsername = req.body.user;
   var fPassword = req.body.pass;
   const query = `SELECT * FROM user where username="${fUsername}" and password="${fPassword}" `;
@@ -254,11 +253,6 @@ router.get('/admin/:page', function (req, res, next) {
 
 
 
-router.get('/lobby', function (req, res, next) {
-
-  // res.send(device) //--192.168.0.51--
-  // --------------------
-});
 
 
 
@@ -356,6 +350,11 @@ router.get('/sort/:page', function (req, res, next) {
 });
 //end sort
 
+router.get('/editor', function (req, res, next) {
+
+   res.render('testeditor',{title:'Editor page'});
+  // --------------------
+});
 
 
 

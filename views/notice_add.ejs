@@ -12,17 +12,20 @@
   <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
   <script src="/javascripts/bootstrap.bundle.min.js"></script>
   <script src="/javascripts/custom-file-input.js"></script>
+ 
+
+
   <script>
 
     function checkall() {
       var countOfCheck = 0;
-      if ((document.getElementById('searchoption').value != "op1") && (document.getElementById('searchoption').value != "op2")&& (document.getElementById('searchoption').value != "op3")&& (document.getElementById('searchoption').value != "op4")&& (document.getElementById('searchoption').value != "op5")) {
+      if ((document.getElementById('searchoption').value != "op1") && (document.getElementById('searchoption').value != "op2") && (document.getElementById('searchoption').value != "op3") && (document.getElementById('searchoption').value != "op4") && (document.getElementById('searchoption').value != "op5")) {
         var modal = document.getElementById("checkSelect");
-        modal.style.display = "block";  
+        modal.style.display = "block";
         countOfCheck += 1;
         return false;
       }
-      
+
 
       if (document.getElementById('txttitle').value == "") {
         var modal = document.getElementById("checkTitle");
@@ -30,38 +33,39 @@
         countOfCheck += 1;
         return false;
       }
-      
-      if (document.getElementById('txtContent').value.trim() == "") {
-        var modal = document.getElementById("checkContent");
-        modal.style.display = "block";
-        countOfCheck += 1;
-        return false;
-      }
+
+      // if (document.getElementById('txtContent').value.trim() == "") {
+      //   var modal = document.getElementById("checkContent");
+      //   modal.style.display = "block";
+      //   countOfCheck += 1;
+      //   return false;
+      // }
 
       document.fadd.submit();
     }
-    function hideCheckSelect(){
+    function hideCheckSelect() {
       var modal = document.getElementById("checkSelect");
       document.getElementById('searchoption').focus();
-        modal.style.display = "none";
+      modal.style.display = "none";
     }
 
-    function hideCheckTitle(){
+    function hideCheckTitle() {
       var modal = document.getElementById("checkTitle");
       document.getElementById('txttitle').focus();
-        modal.style.display = "none";
+      modal.style.display = "none";
     }
 
-    function hideCheckContent(){
+    function hideCheckContent() {
       var modal = document.getElementById("checkContent");
       document.getElementById('txtContent').focus();
-        modal.style.display = "none";
+      modal.style.display = "none";
     }
 
 
 
 
     function noticeBoxShow() {
+     // document.getElementById("editorMain").value = '';
       var modal = document.getElementById("notice");
       modal.style.display = "block";
     }
@@ -85,13 +89,17 @@
       var modal = document.getElementById("emptySelect");
       modal.style.display = "block";
     }
+
+
   </script>
+
+
 
 </head>
 
 <body onLoad="noticeBoxShow();">
-   <!--empty title -->
-   <div id='checkSelect' class='messBox'>
+  <!--empty title -->
+  <div id='checkSelect' class='messBox'>
     <div class='modalmess-content d-flex flex-column'>
       <p class="p-5 d-flex ">Please choose category!</p>
       <p class="p-3 d-flex flex-row-reverse ">
@@ -100,7 +108,7 @@
       </p>
     </div>
   </div>
- 
+
   <!--empty title -->
   <div id='checkTitle' class='messBox'>
     <div class='modalmess-content d-flex flex-column'>
@@ -112,8 +120,8 @@
     </div>
   </div>
 
-   <!--empty content -->
-   <div id='checkContent' class='messBox'>
+  <!--empty content -->
+  <div id='checkContent' class='messBox'>
     <div class='modalmess-content d-flex flex-column'>
       <p class="p-5 d-flex ">Please type content! </p>
       <p class="p-3 d-flex flex-row-reverse ">
@@ -138,7 +146,8 @@
           </div>
           <div class="p-2">
             <div id="title">
-              <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"  id="searchoption">
+              <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"
+                id="searchoption">
                 <option>Select a category</option>
                 <option value="op1">Announcement</option>
                 <option value="op2">Suggestion</option>
@@ -151,12 +160,17 @@
             </div>
 
           </div>
-          <div class="p-2 ">
-            <textarea id="txtContent" name="txtContent">
+          <div class="p-2" >
+            <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
+            <textarea cols="80" id="txtContent" name="txtContent" rows="10" placeholder="Type your content."></textarea>
+            <script>
+              CKEDITOR.replace('txtContent', {
+                uiColor: '#CCEAEE',
+                removeButtons: 'PasteFromWord'
+              });
+            </script>
+          </div>    
 
-          </textarea>
-
-          </div>
           <div class="p-2 d-flex flex-row-reverse ">
             <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkall()">Upload</button>
 

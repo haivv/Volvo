@@ -78,7 +78,7 @@
   bottom: 0;
 }
 #txtTypeComment{
-  width: 84%;
+  width: 86%;
   height: 40px;
 }
 #btnSend{
@@ -158,8 +158,10 @@ td{
 textarea{
   width: 100%;
   min-height: 250px;
+  padding:10px;
+  margin:10px 0px;
+  border-top: 0;
 
-  padding:10px
 }
 #btnUpload{
   text-align: right;
@@ -172,3 +174,24 @@ textarea{
 h1{
   border-bottom: 2px solid #8d8d8d;
 }
+
+#col1{
+  width: 40%;
+}
+.col{
+  width: 20%;
+}
+#commented{
+  width: 98%;
+  height: 100px;
+  overflow: auto; /* Enable vertical scrolling */
+  border: 1px solid #ccc;
+  padding:3px;
+}
+.txtWriter{
+  font-weight: 600;
+}
+
+
+/* Editor */
+
