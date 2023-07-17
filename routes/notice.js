@@ -100,7 +100,8 @@ router.post('/proAddNotice', function (req, res, next) {
         //   var jsonData = JSON.parse(data);
         //   var name = jsonData.name;
           const txtTitle = req.body.txtTitle;
-          const txtContent = req.body.txtContent;
+          var txtContent = req.body.txtContent;
+          var newContent = database.escape(txtContent);
           const txtWrite = req.session.sesWriter;
           
           var today = new Date();
@@ -114,7 +115,7 @@ router.post('/proAddNotice', function (req, res, next) {
           var query = `
           INSERT INTO notice 
           (title,category, dateCreate, writer, content) 
-          VALUES ("${txtTitle}", "${txtOption}", "${dateString}", "${txtWrite}", "${txtContent}")
+          VALUES ("${txtTitle}", "${txtOption}", "${dateString}", "${txtWrite}", "${newContent}")
           `;
       
           database.query(query, function(error, data){

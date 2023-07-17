@@ -12,7 +12,8 @@
   <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
   <script src="/javascripts/bootstrap.bundle.min.js"></script>
   <script src="/javascripts/custom-file-input.js"></script>
- 
+
+
 
 
   <script>
@@ -65,7 +66,7 @@
 
 
     function noticeBoxShow() {
-     // document.getElementById("editorMain").value = '';
+      // document.getElementById("editorMain").value = '';
       var modal = document.getElementById("notice");
       modal.style.display = "block";
     }
@@ -160,21 +161,89 @@
             </div>
 
           </div>
-          <div class="p-2" >
-            <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
-            <textarea cols="80" id="txtContent" name="txtContent" rows="10" placeholder="Type your content."></textarea>
+          <div class="p-2">
+            <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script> 
+      
+
+
+       <textarea cols="80" id="txtContent" name="txtContent" rows="10"></textarea>
+
             <script>
-              CKEDITOR.replace('txtContent', {
+              // CKEDITOR.addCss('.cke_editable { font-size: 15px; padding: 2em; }');
+            
+
+              CKEDITOR.replace('txtContent', 
+              
+              { 
+                toolbar: [
+
+                {
+                  name: 'clipboard',
+                  items: ['Undo', 'Redo']
+                },
+                {
+                  name: 'insert',
+                  items: ['Image', 'Video']
+                } ,
+                {
+                  name: 'links',
+                  items: ['Link', 'Unlink']
+                },
+                
+              
+                
+                  '/',
+                  {
+                  name: 'basicstyles',
+                  items: ['Bold', 'Italic', 'Underline']
+                },
+                {
+                  name: 'styles',
+                  items: [ 'Font', 'FontSize']
+                },
+                {
+                  name: 'colors',
+                  items: ['TextColor']
+                }
+                
+                ],
+                // extraPlugins: 'editorplaceholder',
+                // editorplaceholder: 'Start typing here...',
+
+                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
+
+                // Adding drag and drop image upload.
+                extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',
+                uploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+
+                // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+                filebrowserBrowseUrl: '/apps/ckfinder/3.4.5/ckfinder.html',
+                filebrowserImageBrowseUrl: '/apps/ckfinder/3.4.5/ckfinder.html?type=Images',
+                filebrowserUploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                filebrowserImageUploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Images',
+
+                height: 260,
                 uiColor: '#CCEAEE',
+                
+
+                removeDialogTabs: 'image:advanced;link:advanced',
+                
+
                 removeButtons: 'PasteFromWord'
               });
             </script>
-          </div>    
+
+
+
+
+
+          </div>
 
           <div class="p-2 d-flex flex-row-reverse ">
             <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkall()">Upload</button>
 
           </div>
+
 
 
 

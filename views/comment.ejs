@@ -75,7 +75,13 @@
 
                 <div id="content" class="p-2">
                     
-                    <%- data.content %>
+                    <% 
+                        const str = data.content.toString(); 
+                        const modifiedStr = str.slice(1, -1);
+                    
+                    %>
+                    
+                    <%- modifiedStr  %>
                     
                 </div>
 
