@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2023 at 03:49 PM
+-- Generation Time: Jul 20, 2023 at 04:04 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -35,26 +35,6 @@ CREATE TABLE `comment` (
   `comContent` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `comment`
---
-
-INSERT INTO `comment` (`id`, `idNotice`, `comWriter`, `comDate`, `comContent`) VALUES
-(13, 3, 'Author', '2023-07-12', 'Nice'),
-(14, 3, 'Author', '2023-07-12', 'Wonderful'),
-(15, 3, 'Author', '2023-07-12', 'Ok'),
-(16, 4, 'Author', '2023-07-12', 'asd'),
-(17, 5, 'Author', '2023-07-12', 'm'),
-(19, 4, '이혜원', '2023-07-12', 'ok'),
-(22, 9, 'undefined', '2023-07-13', 'have a nice day!'),
-(23, 9, 'undefined', '2023-07-13', 'm'),
-(24, 9, 'undefined', '2023-07-13', 'have a nice day!'),
-(25, 9, 'undefined', '2023-07-13', 'hi'),
-(26, 10, 'user2', '2023-07-13', 'have a nice day!'),
-(29, 9, 'undefined', '2023-07-13', 'ok'),
-(32, 10, 'undefined', '2023-07-13', 'hi'),
-(35, 9, 'undefined', '2023-07-13', 'hi');
-
 -- --------------------------------------------------------
 
 --
@@ -72,25 +52,6 @@ CREATE TABLE `notice` (
   `fileUpload` varchar(50) NOT NULL,
   `videoUpload` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `notice`
---
-
-INSERT INTO `notice` (`id`, `title`, `category`, `dateCreate`, `writer`, `comment`, `content`, `fileUpload`, `videoUpload`) VALUES
-(3, '오염수 방류 앞둔 일본 국민 ', 'Reference', '2023-07-12', '선홍민', 3, '\r\n          후쿠시마 제1원전에 보관 중인 오염수 바다 방류가 내달 추진될 예정인 가운데 일본 국민의 35%만이 방류에 찬성하는 것으로 조사됐다. 최근 여론조사에서 가장 낮은 찬성률로 오염수 방류가 임박해지자 불안 심리가 커진 것으로 보인다.', '', ''),
-(4, '테스트', 'Announcement', '2023-07-12', '선홍민', 2, '\r\n          asdfasdf', '', ''),
-(5, '1', 'Suggestion', '2023-07-12', '선홍민', 1, '\r\n          1', '', ''),
-(6, 'New title 16:00', 'Suggestion', '2023-07-12', '이혜원', 0, '\r\n          Content', '', ''),
-(7, 'Title 07-13 9:44', 'Opinion', '2023-07-13', '이혜원', 0, '\r\n          content', '', ''),
-(8, 'New title 10:03', 'Suggestion', '2023-07-13', 'undefined', 0, '\r\n          Content', '', ''),
-(9, 'New title 10:09', 'Suggestion', '2023-07-13', 'undefined', 6, '\r\n          content', '', ''),
-(10, 'New title', 'Announcement', '2023-07-13', 'user1', 2, '\r\n          b', '', ''),
-(11, 'New title 11:05', 'Suggestion', '2023-07-13', 'user3', 0, '\r\n          content', '', ''),
-(12, 'New title', 'Suggestion', '2023-07-14', 'user14', 0, '<p>gfgfgf</p>\r\n', '', ''),
-(24, 'undefined', '', '2023-07-18', 'undefined', 0, 'NULL', 'undefined', ''),
-(25, 'New title', 'Suggestion', '2023-07-18', 'undefined', 0, '\'\'', 'undefined', ''),
-(34, 'New title 18 07', 'Announcement', '2023-07-18', 'undefined', 0, '\'<p>content <strong>content&nbsp;</strong></p>\r\n\'', '2023_07_18_17_53_24_color.png', '');
 
 -- --------------------------------------------------------
 
@@ -219,6 +180,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `platform`
