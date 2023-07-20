@@ -24,7 +24,6 @@
   /* opacity: 0.5; */
   display: none;
 	z-index: 10 ;
- 
   position: fixed;
   top: 0;
   left: 0;
@@ -75,10 +74,10 @@
 #typecomment{
   width: 100%;
   position:fixed;
-  bottom: 0;
+  bottom: 5px;
 }
 #txtTypeComment{
-  width: 86%;
+  width: 88%;
   height: 40px;
 }
 #btnSend{
@@ -182,7 +181,7 @@ h1{
   width: 20%;
 }
 #commented{
-  width: 98%;
+  width: 100%;
   height: 100px;
   overflow: auto; /* Enable vertical scrolling */
   border: 1px solid #ccc;
@@ -290,10 +289,70 @@ textarea{
 .btnFileUpload{
   margin-top: 10px;
 }
-
+#txtcomment form{
+  position: relative;
+  top: -30px;
+}
 
 
 
 
 
 /* end file */
+
+/* Comment page */
+
+#fileupload{
+  width: 100%;
+  height: 25px;
+  background: #ffffff;
+  position: relative;top: -35px;
+
+ 
+}
+
+#txtfileupload{
+  margin:0px  30px;
+ 
+}
+/* Action */
+#action{
+  width: 120px;
+  height: 25px;
+  float: right;
+}
+
+#pagetitle{
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid #b3c1c3;
+  
+}
+
+/* show title writer - date */
+#showtitle{
+  margin-left: 20px;
+}
+
+#showname_date{
+  margin-right: 20px;
+}
+
+/* Delete box */
+#checkDelete{
+  background-color: rgba(0, 0, 0, 0.2);
+  /* opacity: 0.5; */
+  display: none;
+	z-index: 15 ;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+
+#btnDeleteNotice{
+  position: relative;
+  top:-3px;
+}

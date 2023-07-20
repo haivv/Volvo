@@ -11,7 +11,7 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
     <script src="/javascripts/bootstrap.bundle.min.js"></script>
-    <script src="/javascripts/custom-file-input.js"></script>
+    <!-- <script src="/javascripts/custom-file-input.js"></script> -->
     <script>
 
 
@@ -43,11 +43,39 @@
             var modal = document.getElementById("emptySelect");
             modal.style.display = "block";
         }
+        // Check Delete
+        function showcheckDelete() {
+
+           
+            var modal = document.getElementById("checkDelete");
+            modal.style.display = "block";
+        }
+        function hidecheckDelete() {
+            var modal = document.getElementById("checkDelete");
+            modal.style.display = "none";
+        }
     </script>
 
 </head>
 
 <body onLoad="commentBoxShow();">
+
+<!-- Check Delete -->
+<div id='checkDelete' >
+    <div class=' d-flex flex-column modalmess-content '>
+      <p class="p-5 d-flex ">Do you want to delete?</p>
+      <p class="p-3 d-flex flex-row-reverse ">  
+        <a  href='#' onclick='hidecheckDelete();'  class='btn btn-dark btnfix'>No</a>&nbsp;
+        <a href='/notice/notice_delete/<%= strID %>' class='btn btn-dark '>Confirm </a> 
+
+      </p>
+    </div>
+  </div>
+
+
+
+
+    
 
 
     <div id='comment' class='messBox'>
@@ -58,34 +86,61 @@
 
 
             </div>
-            <h1 class="p-2">
+            <h2 class="p-2" id="pagetitle">
                 <%= title %>
-            </h1>
+            </h2>
 
             <% if(dataPage.length> 0)
                 {
                 dataPage.forEach(function(data){
                 %>
-                <h4 id="title" class="p-2">
+                <h4 id="showtitle" class="">
                     <%= data.title %>
                 </h4>
-                <div class="p-2 d-flex  flex-row-reverse">
+                <div class="d-flex  flex-row-reverse" id="showname_date">
                     작성자: <%= data.writer %> - 작성일: <%= data.dateCreate %> %>
                 </div>
 
                 <div id="content" class="p-2">
-                    
-                    <% 
-                        const str = data.content.toString(); 
-                        const modifiedStr = str.slice(1, -1);
-                    
-                    %>
-                    
-                    <%- modifiedStr  %>
-                    
+
+                    <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
+
+                        <%- modifiedStr %>
+
                 </div>
 
+
+
+
                 <div id="txtcomment" class="p-2">
+                    <div id="fileupload">
+                      
+
+                            <% if((data.fileUpload=='undefined' ) || (data.fileUpload=='' )) { }else{%>
+                            <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>"
+                                target="_blank">Download</a>
+                            &#9;
+                            <% } %>
+
+                            <% if((data.videoUpload=='undefined' ) || (data.videoUpload=='' )) { } else{%>
+                                <span>Attached video: </span><a href="/uploads/<%= data.videoUpload %>"
+                                    target="_blank">Download</a>
+                                <% } %>
+
+
+                              
+                            <% if(data.writer == sesWriter){  %>
+                               
+                            <div id="action">
+                                <a href="/notice/notice_edit/<%= data.id %>">Edit</a> <button id="btnDeleteNotice" class="btn btn-link" onclick="showcheckDelete();">Delete</button> 
+
+
+                            </div>
+
+                            <%} else{%>
+                                
+                                <% } %>
+                    </div>
                     <form action="/notice/addcomment" method="post">
                         <div>
                             <h4>Comment</h4>
@@ -102,6 +157,8 @@
                                 <span>
                                     <%= data2.comContent %>
                                 </span>
+
+
 
                                 <% }); }<!--and if(sampleData.length>-->
                                     else

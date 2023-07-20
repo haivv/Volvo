@@ -28,6 +28,7 @@
       var modal = document.getElementById("mess");
       document.getElementById('searchoption').focus();
         modal.style.display = "none";
+        window.location="../notice";
     }
 
     
@@ -52,8 +53,8 @@
       <p class="p-5 d-flex "><%= title %></p>
       <p class="p-3 d-flex flex-row-reverse ">
         
-        <a href='../notice' onclick='hideMess();' class='btn btn-dark '>Confirm</a>
-
+        <!-- <a onclick='hideMess();' class='btn btn-dark '>Confirm</a> -->
+        <a href="/notice" class='btn btn-dark '>Confirm</a>
       </p>
     </div>
   </div>

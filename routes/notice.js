@@ -76,11 +76,23 @@ router.get('/notice_add', function (req, res, next) {
     res.render('notice_add', { title: 'Notice' });
 });
 
+router.get('/notice_edit/:id', function (req, res, next) {
+    var id = req.params.id;
+
+    var query = `SELECT * FROM notice WHERE id = "${id}"`;
+
+    database.query(query, function (error, data) {
+
+        res.render('notice_edit', { title: 'Notice', Data: data, id: id, sesWriter: req.session.sesWriter });
+    });
+});
+
+
 // Upload file
 // // SET STORAGE
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, './uploads');
+        callback(null, './public/uploads');
     },
     filename: function (req, file, callback) {
         //add datetime to file name
@@ -92,9 +104,9 @@ var storage = multer.diskStorage({
         var hours = date_ob.getHours();
         var minutes = date_ob.getMinutes();
         var seconds = date_ob.getSeconds();
-        var dateTime = year + "_" + month + "_" + day + "_" + hours + "_" + minutes + "_" + seconds;
+        var dateTime = year + month + day + hours + minutes + seconds;
 
-        var uniqueFileName = dateTime+'_'+file.originalname;
+        var uniqueFileName = dateTime + '_' + file.originalname;
 
 
         callback(null, uniqueFileName);
@@ -103,6 +115,7 @@ var storage = multer.diskStorage({
 
 
 var upload = multer({ storage: storage }).single('myfile');
+var upload2 = multer({ storage: storage }).single('myvideo');
 
 router.get('/', function (req, res, next) {
     res.render('index', { title: 'Express' });
@@ -110,7 +123,7 @@ router.get('/', function (req, res, next) {
 
 //upload file
 router.post('/uploadfile', (req, res) => {
-   
+
     upload(req, res, function (err) {
         if (err) {
             return res.end("Error uploading file.");
@@ -121,6 +134,15 @@ router.post('/uploadfile', (req, res) => {
 
 });
 
+//upload video
+router.post('/uploadvideo', (req, res) => {
+    upload2(req, res, function (err) {
+        if (err) {
+            return res.end("Error uploading video.");
+        }
+        console.log("Video is uploaded successfully!");
+    });
+});
 
 
 
@@ -157,13 +179,65 @@ router.post('/proAddNotice', function (req, res, next) {
 
 
     var fileUpload = req.body.txtfileupload;
+    var videoUpload = req.body.txtvideoupload;
+
+    if (typeof fileUpload !== 'undefined') {
+        fileUpload = fileUpload.trim();
+    } else {
+        console.log(' Biến file không tồn tại');
+    }
+
+    if (typeof videoUpload !== 'undefined') {
+        videoUpload = videoUpload.trim();
+    } else {
+        console.log(' Biến video không tồn tại');
+    }
+
+    if (typeof txtWrite !== 'undefined') {
+        txtWrite = txtWrite.trim();
+    } else {
+        console.log(' Biến writer không tồn tại');
+    }
 
 
-    var query = `
-          INSERT INTO notice 
-          (title,category, dateCreate, writer, content, fileUpload) 
-          VALUES ("${txtTitle}", "${txtOption}", "${dateString}", "${txtWrite}", "${newContent}", "${fileUpload}")
-          `;
+
+
+
+
+
+
+    database.query(`SELECT * FROM notice ORDER BY id DESC LIMIT 1 `, (error, results, fields) => {
+        if (error) {
+            console.error('Error executing the query:', error);
+            return res.status(500).send('An error occurred');
+        }
+
+        // Extract the column values from the result set
+        const lastID = results.map((row) => row['id']);
+        // console.log(lastID);
+        var countData;
+        var insertID;
+        if (lastID.length === 0) {
+            countData = 0;
+            insertID = 1;
+            // array empty 
+        }
+        else {
+            countData = lastID.length;
+            for (let i = 0; i < countData; i++) {
+                insertID = lastID[i] + 1;
+            }
+        }
+        //console.log(countData);
+
+
+        //console.log(insertID);
+
+        var query = `
+        INSERT INTO notice 
+        (id,title,category, dateCreate, writer, content, fileUpload, videoUpload) 
+        VALUES ("${insertID}","${txtTitle}", "${txtOption}", "${dateString}", "${txtWrite}", "${newContent}", "${fileUpload}", "${videoUpload}")
+        `;
 
     database.query(query, function (error, data) {
 
@@ -172,6 +246,116 @@ router.post('/proAddNotice', function (req, res, next) {
         }
         else {
             res.render('mess', { title: 'Add notice success!', sess: req.session.sesWriter });
+        }
+
+    });
+
+
+
+
+
+    });
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+});
+
+router.post('/proUpdateNotice', function (req, res, next) {
+    var id = req.body.txtid;
+    const txtSelect = req.body.searchoption;
+    var txtOption = '';
+    if (txtSelect == 'op1') {
+        txtOption = "Announcement";
+    } else if (txtSelect == 'op2') {
+        txtOption = "Suggestion";
+    } else if (txtSelect == 'op3') {
+        txtOption = "Opinion";
+    } else if (txtSelect == 'op4') {
+        txtOption = "Request";
+    } else if (txtSelect == 'op5') {
+        txtOption = "Reference";
+    }
+
+
+    var txtTitle = req.body.txtTitle;
+    console.log(txtTitle);
+    var txtContent = req.body.txtContent;
+    var newContent = database.escape(txtContent);
+    var txtWriter = req.body.txtsendWriter;
+
+    var today = new Date();
+
+    var year = today.getFullYear();
+    var month = ('0' + (today.getMonth() + 1)).slice(-2);
+    var day = ('0' + today.getDate()).slice(-2);
+
+    var dateString = year + '-' + month + '-' + day;
+
+
+    var fileUpload = req.body.txtfileupload;
+    var videoUpload = req.body.txtvideoupload;
+    fileUpload = fileUpload.trim();
+    videoUpload = videoUpload.trim();
+    txtWriter = txtWriter.trim();
+
+    var query = `
+        UPDATE notice 
+        SET title = "${txtTitle}",
+        category = "${txtOption}", 
+        dateCreate = "${dateString}", 
+        writer = "${txtWriter}", 
+        content = "${newContent}", 
+        fileUpload = "${fileUpload}", 
+        videoUpload = "${videoUpload}"
+        WHERE id = "${id}"
+
+          `;
+
+    database.query(query, function (error, data) {
+
+        if (error) {
+            throw error;
+        }
+        else {
+            // console.log(query);
+            res.render('mess', { title: 'Update notice success!', sess: req.session.sesWriter });
+        }
+
+    });
+
+
+
+
+
+});
+
+
+router.get('/notice_delete/:txtid', function (req, res, next) {
+    var id = req.params.txtid;
+
+    var query = `
+            DELETE FROM notice WHERE id = "${id}"
+          `;
+
+    database.query(query, function (error, data) {
+
+        if (error) {
+            throw error;
+        }
+        else {
+            // console.log(query);
+            res.render('mess', { title: 'Delete notice success!' });
         }
 
     });
@@ -191,7 +375,7 @@ router.get('/comment/:key', function (req, res, next) {
         var queryComment = `SELECT * FROM comment WHERE idNotice = "${id}" ORDER BY id DESC `;
 
         database.query(queryComment, function (error, data2) {
-            res.render('comment', { title: 'Notice', dataPage: data, dataComment: data2 });
+            res.render('comment', { title: 'Notice', dataPage: data, dataComment: data2, sesWriter: req.session.sesWriter, strID: id });
         });
 
 

@@ -102,7 +102,7 @@
       var hours = date_ob.getHours();
       var minutes = date_ob.getMinutes();
       var seconds = date_ob.getSeconds();
-      var dateTime = year + month  + day + hours + minutes + seconds;
+      var dateTime = year + month + day + hours + minutes + seconds;
 
       document.getElementById("sendFileName").value = dateTime + '_' + fileName;
 
@@ -141,7 +141,7 @@
       var hours = date_ob.getHours();
       var minutes = date_ob.getMinutes();
       var seconds = date_ob.getSeconds();
-      var dateTime = year + month  + day + hours + minutes + seconds;
+      var dateTime = year + month + day + hours + minutes + seconds;
 
       document.getElementById("sendVideoName").value = dateTime + '_' + fileName;
 
@@ -201,7 +201,7 @@
 
 
 
- 
+
 
   <!--show box to add file -->
   <div id='addfile' class='messBox'>
@@ -250,7 +250,7 @@
   </div>
 
   <!--empty content -->
-  <!-- <div id='checkContent' class='messBox'>
+  <div id='checkContent' class='messBox'>
     <div class='modalmess-content d-flex flex-column'>
       <p class="p-5 d-flex ">Please type content! </p>
       <p class="p-3 d-flex flex-row-reverse ">
@@ -258,14 +258,14 @@
 
       </p>
     </div>
-  </div> -->
+  </div>
 
 
   <div id='notice' class='modal'>
     <div class='modal-content'>
 
 
-      <form action="/notice/proAddNotice" method="post" name="fadd">
+      <form action="/notice/proUpdateNotice" method="post" name="fadd">
         <div class="d-flex flex-column">
           <div class="p-2 d-flex flex-row-reverse ">
 
@@ -273,114 +273,150 @@
 
 
           </div>
-          <div class="p-2">
-            <div id="title">
-              <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"
-                id="searchoption">
-                <option>Select a category</option>
-                <option value="op1">Announcement</option>
-                <option value="op2">Suggestion</option>
-                <option value="op3">Opinion</option>
-                <option value="op4">Request</option>
-                <option value="op5">Reference</option>
-              </select>
-              <input type="text" placeholder="Type your title" id="txttitle" name="txtTitle">
+          <!-- show data from data base to modifine -->
+          <% if(Data.length> 0)
+            {
+            Data.forEach(function(data){
+            %>
+
+
+
+            <div class="p-2">
+              <div id="title">
+                <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"
+                  id="searchoption" >
+                  <option>Select a category</option>
+                  
+                  <option value="op1" <% if(data.category =='Announcement'){ %> selected <% } %> >Announcement</option>
+                  <option value="op2" <% if(data.category =='Suggestion'){ %> selected <% } %> >Suggestion</option>
+                  <option value="op3"   <% if(data.category =='Opinion'){ %> selected <% } %> >Opinion</option>
+                  <option value="op4"  <% if(data.category =='Request'){ %> selected <% } %> >Request</option>
+                  <option value="op5" <% if(data.category =='Reference'){ %> selected <% } %> >Reference</option>
+                </select>
+                <input type="text" placeholder="Type your title" id="txttitle" name="txtTitle" value="<%= data.title %>">
+
+              </div>
+
+            </div>
+            <div class="p-2">
+              <div id="addFile">
+                <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i> <i
+                  class="fa fa-video-camera" style="font-size:18px" onclick="addVideoShow()"></i>
+              </div>
+
+
+
+
+              <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
+
+
+
+              <textarea cols="80" id="txtContent" name="txtContent" rows="10">
+                <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
+
+                        <%- modifiedStr %>
+
+              </textarea>
+
+              <script>
+                // CKEDITOR.addCss('.cke_editable { font-size: 15px; padding: 2em; }');
+
+
+                CKEDITOR.replace('txtContent',
+
+                  {
+                    toolbar: [
+
+                      {
+                        name: 'clipboard',
+                        items: ['Undo', 'Redo']
+                      },
+                      {
+                        name: 'insert',
+                        items: ['Image']
+                      },
+                      {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                      },
+
+
+                      {
+                        name: 'basicstyles',
+                        items: ['Bold', 'Italic', 'Underline']
+                      },
+                      {
+                        name: 'styles',
+                        items: ['Font', 'FontSize']
+                      },
+                      {
+                        name: 'colors',
+                        items: ['TextColor']
+                      }
+
+                    ],
+                    extraPlugins: 'uploadimage,image2',
+                    // extraPlugins: 'editorplaceholder',
+                    // editorplaceholder: 'Start typing here...',
+
+                    extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
+
+                    // Adding drag and drop image upload.
+                    extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',
+                    uploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+
+                    // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+                    filebrowserBrowseUrl: '/apps/ckfinder/3.4.5/ckfinder.html',
+                    filebrowserImageBrowseUrl: '/apps/ckfinder/3.4.5/ckfinder.html?type=Images',
+                    filebrowserUploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                    filebrowserImageUploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Images',
+
+                    height: 200,
+                    uiColor: '#CCEAEE',
+
+
+                    removeDialogTabs: 'image:advanced;link:advanced',
+
+
+                    removeButtons: 'PasteFromWord'
+                  });
+              </script>
+
+            </div>
+            <div class="l-3 d-flex ">
+              <input type="hidden" name="txtid"  value="<%= data.id %> ">
+              <input type="hidden" name="txtsendWriter"  value="<%= data.writer %> ">
+              <p id="txtfileupload">
+
+                <% const strFile=data.fileUpload.toString(); const modifiedStrFile=strFile.split('_'); %>
+
+                <%- modifiedStrFile[1] %>
+              
+              </p>
+              <input type="hidden" name="txtfileupload" id="sendFileName" value="<%= data.fileUpload %> ">
+              &#9;
+
+
+              <p id="txtvideoupload">
+                <% const strVideo=data.videoUpload.toString(); const modifiedStrVideo=strVideo.split('_'); %>
+
+                <%- modifiedStrVideo[1] %>
+
+
+              </p>
+              <input type="hidden" name="txtvideoupload" id="sendVideoName"  value="<%= data.videoUpload %> ">
 
             </div>
 
-          </div>
-          <div class="p-2">
-            <div id="addFile">
-              <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i> <i class="fa fa-video-camera"
-                style="font-size:18px" onclick="addVideoShow()"></i>
-            </div>
 
+            <% }); } else { %>
+              No Data Found
+              <% } %>
 
+                <div class="p-2 d-flex flex-row-reverse ">
+                  <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkall()">Update</button>
 
-
-            <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
-
-
-
-            <textarea cols="80" id="txtContent" name="txtContent" rows="10"></textarea>
-
-            <script>
-              // CKEDITOR.addCss('.cke_editable { font-size: 15px; padding: 2em; }');
-
-
-              CKEDITOR.replace('txtContent',
-
-                {
-                  toolbar: [
-
-                    {
-                      name: 'clipboard',
-                      items: ['Undo', 'Redo']
-                    },
-                    {
-                      name: 'insert',
-                      items: ['Image']
-                    },
-                    {
-                      name: 'links',
-                      items: ['Link', 'Unlink']
-                    },
-
-
-                    {
-                      name: 'basicstyles',
-                      items: ['Bold', 'Italic', 'Underline']
-                    },
-                    {
-                      name: 'styles',
-                      items: ['Font', 'FontSize']
-                    },
-                    {
-                      name: 'colors',
-                      items: ['TextColor']
-                    }
-
-                  ],
-                  extraPlugins: 'uploadimage,image2',
-                  // extraPlugins: 'editorplaceholder',
-                  // editorplaceholder: 'Start typing here...',
-
-                  extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
-
-                  // Adding drag and drop image upload.
-                  extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',
-                  uploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-
-                  // Configure your file manager integration. This example uses CKFinder 3 for PHP.
-                  filebrowserBrowseUrl: '/apps/ckfinder/3.4.5/ckfinder.html',
-                  filebrowserImageBrowseUrl: '/apps/ckfinder/3.4.5/ckfinder.html?type=Images',
-                  filebrowserUploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files',
-                  filebrowserImageUploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Images',
-
-                  height: 200,
-                  uiColor: '#CCEAEE',
-
-
-                  removeDialogTabs: 'image:advanced;link:advanced',
-
-
-                  removeButtons: 'PasteFromWord'
-                });
-            </script>
-
-          </div>
-          <div class=" d-flex ">
-            <p id="txtfileupload"></p>
-            <input type="hidden" name="txtfileupload" id="sendFileName">
-            &#9; 
-            <p id="txtvideoupload"></p>
-            <input type="hidden" name="txtvideoupload" id="sendVideoName">
-
-          </div>
-          <div class="p-2 d-flex flex-row-reverse ">
-            <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkall()">Upload</button>
-
-          </div>
+                </div>
 
 
 
