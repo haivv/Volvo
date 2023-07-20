@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2023 at 10:54 AM
+-- Generation Time: Jul 19, 2023 at 03:49 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -40,17 +40,6 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id`, `idNotice`, `comWriter`, `comDate`, `comContent`) VALUES
-(1, 1, 'Min', '2023-07-11', 'Good idea'),
-(2, 1, 'Min', '2023-07-11', 'Good '),
-(3, 1, 'Min', '2023-07-12', 'Nice'),
-(5, 2, 'Author', '2023-07-11', 'ok'),
-(6, 2, 'Author', '2023-07-11', 'hghg'),
-(7, 2, 'Author', '2023-07-11', 'hghgjj'),
-(8, 2, 'Author', '2023-07-11', 'ggggg'),
-(9, 2, 'Author', '2023-07-11', 'hhhhh'),
-(10, 2, 'Author', '2023-07-12', 'mm'),
-(11, 2, 'Author', '2023-07-12', 'yyyy'),
-(12, 1, 'Author', '2023-07-12', 'Wonderful'),
 (13, 3, 'Author', '2023-07-12', 'Nice'),
 (14, 3, 'Author', '2023-07-12', 'Wonderful'),
 (15, 3, 'Author', '2023-07-12', 'Ok'),
@@ -89,8 +78,6 @@ CREATE TABLE `notice` (
 --
 
 INSERT INTO `notice` (`id`, `title`, `category`, `dateCreate`, `writer`, `comment`, `content`, `fileUpload`, `videoUpload`) VALUES
-(1, '윤 대통령, 한-뉴질랜드 정상회담', 'Announcement', '2023-07-11', '선홍민', 4, '윤석열 대통령은 11일(현지시간) 나토(NATO 북대서양조약기구)정상회의 계기에 크리스 힙킨스 뉴질랜드 총리와 한-뉴질랜드 정상회담을 갖고 ', '', ''),
-(2, '나토 사무총장과 면담…11개 분야 협력 문서 체결', 'Opinion', '2023-07-11', '선홍민', 7, '\r\n          리투아니아 도착한 윤석열 대통령 내외. 연합뉴스\r\n윤석열 대통령은 11일(현지시간) 리투아니아 수도 빌뉴스에서 옌스 스톨텐베르그 북대서양조약기구(NATO·나토) 사무총장과 면담을 통해 안보 협력 강화 방안을 논의한다.', '', ''),
 (3, '오염수 방류 앞둔 일본 국민 ', 'Reference', '2023-07-12', '선홍민', 3, '\r\n          후쿠시마 제1원전에 보관 중인 오염수 바다 방류가 내달 추진될 예정인 가운데 일본 국민의 35%만이 방류에 찬성하는 것으로 조사됐다. 최근 여론조사에서 가장 낮은 찬성률로 오염수 방류가 임박해지자 불안 심리가 커진 것으로 보인다.', '', ''),
 (4, '테스트', 'Announcement', '2023-07-12', '선홍민', 2, '\r\n          asdfasdf', '', ''),
 (5, '1', 'Suggestion', '2023-07-12', '선홍민', 1, '\r\n          1', '', ''),
@@ -183,36 +170,6 @@ INSERT INTO `platform` (`id`, `user`, `ip`, `platform`, `logintime`, `logouttime
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test`
---
-
-CREATE TABLE `test` (
-  `id` int(11) NOT NULL,
-  `content` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `test`
---
-
-INSERT INTO `test` (`id`, `content`) VALUES
-(1, 'test'),
-(2, '<p>fgfgf</p>'),
-(3, 'undefined'),
-(4, 'undefined'),
-(5, 'undefined'),
-(6, 'abc <a href=\"google.com\">abc</a>'),
-(7, '\'<p>hjhj <a href=\"google.com\">hjhjhj</a></p>\''),
-(8, '\'<p>16:00 <i>미팅 </i>시작 / 미리 <strong>도착하여 </strong>UIPA 담당자와 <a href=\"http://www.simgxr.com/\">contact </a>후 미팅 장소로 이동</p>\''),
-(9, 'p>abc <a href=\"a.html\">123&nbsp;</a> gfgfg <strong>fd</strong>fdf</p'),
-(10, 'color.png'),
-(11, 'color.png'),
-(12, 'color.png'),
-(13, 'color.png');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user`
 --
 
@@ -254,12 +211,6 @@ ALTER TABLE `platform`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `test`
---
-ALTER TABLE `test`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -270,28 +221,10 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `comment`
---
-ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- AUTO_INCREMENT for table `notice`
---
-ALTER TABLE `notice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
 -- AUTO_INCREMENT for table `platform`
 --
 ALTER TABLE `platform`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
-
---
--- AUTO_INCREMENT for table `test`
---
-ALTER TABLE `test`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -307,7 +240,7 @@ ALTER TABLE `user`
 -- Constraints for table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`idNotice`) REFERENCES `notice` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`idNotice`) REFERENCES `notice` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
