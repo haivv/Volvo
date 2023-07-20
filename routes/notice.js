@@ -5,6 +5,17 @@ var database = require('../database');
 const fs = require('fs');
 var multer = require('multer');
 
+        var date_ob = new Date();
+        var day = ("0" + date_ob.getDate()).slice(-2);
+        var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+        var year = date_ob.getFullYear();
+        var date = year + "-" + month + "-" + day;
+        var hours = date_ob.getHours();
+        var minutes = date_ob.getMinutes();
+        var seconds = date_ob.getSeconds();
+        var dateTime = year + month + day + hours + minutes + seconds;
+
+        var preName = dateTime+"_";
 /* GET home page. */
 
 
@@ -96,17 +107,8 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, callback) {
         //add datetime to file name
-        var date_ob = new Date();
-        var day = ("0" + date_ob.getDate()).slice(-2);
-        var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-        var year = date_ob.getFullYear();
-        var date = year + "-" + month + "-" + day;
-        var hours = date_ob.getHours();
-        var minutes = date_ob.getMinutes();
-        var seconds = date_ob.getSeconds();
-        var dateTime = year + month + day + hours + minutes + seconds;
-
-        var uniqueFileName = dateTime + '_' + file.originalname;
+        
+        var uniqueFileName = preName + file.originalname;
 
 
         callback(null, uniqueFileName);
@@ -183,12 +185,14 @@ router.post('/proAddNotice', function (req, res, next) {
 
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
+        fileUpload = preName+fileUpload;
     } else {
         console.log(' Biến file không tồn tại');
     }
 
     if (typeof videoUpload !== 'undefined') {
         videoUpload = videoUpload.trim();
+        videoUpload = preName+videoUpload;
     } else {
         console.log(' Biến video không tồn tại');
     }
