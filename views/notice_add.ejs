@@ -94,17 +94,9 @@
       var fileName = fileInput.files[0].name;
       document.getElementById("txtfileupload").innerHTML = fileName;
 
-      var date_ob = new Date();
-      var day = ("0" + date_ob.getDate()).slice(-2);
-      var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-      var year = date_ob.getFullYear();
-      var date = year + "-" + month + "-" + day;
-      var hours = date_ob.getHours();
-      var minutes = date_ob.getMinutes();
-      var seconds = date_ob.getSeconds();
-      var dateTime = year + month  + day + hours + minutes;
+     
 
-      document.getElementById("sendFileName").value = dateTime + '_' + fileName;
+      document.getElementById("sendFileName").value =  fileName;
 
       document.fsubmitfile.submit();
     }
@@ -133,17 +125,9 @@
       var fileName = fileInput.files[0].name;
       document.getElementById("txtvideoupload").innerHTML = fileName;
 
-      var date_ob = new Date();
-      var day = ("0" + date_ob.getDate()).slice(-2);
-      var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-      var year = date_ob.getFullYear();
-      var date = year + "-" + month + "-" + day;
-      var hours = date_ob.getHours();
-      var minutes = date_ob.getMinutes();
-      var seconds = date_ob.getSeconds();
-      var dateTime = year + month  + day + hours + minutes;
+     
 
-      document.getElementById("sendVideoName").value = dateTime + '_' + fileName;
+      document.getElementById("sendVideoName").value = fileName;
 
       document.fsubmitfile.submit();
 
@@ -151,6 +135,34 @@
 
     function closeBoxAddvideo() {
       var modal = document.getElementById("addVideo");
+      modal.style.display = "none";
+    }
+
+     // Add image
+     function addImageShow() {
+      // document.getElementById("editorMain").value = '';
+      var modal = document.getElementById("addImage");
+      modal.style.display = "block";
+    }
+
+    function hideAddImage() {
+      var modal = document.getElementById("addImage");
+      modal.style.display = "none";
+
+      var fileInput = document.getElementById('myimage');
+      var fileName = fileInput.files[0].name;
+      document.getElementById("txtimageupload").innerHTML = fileName;
+
+     
+
+      document.getElementById("sendImageName").value = fileName;
+
+      document.fsubmitfile.submit();
+
+    }
+
+    function closeBoxAddimage() {
+      var modal = document.getElementById("addImage");
       modal.style.display = "none";
     }
   </script>
@@ -177,6 +189,29 @@
 </head>
 
 <body onLoad="noticeBoxShow();">
+
+<!--show box to add image -->
+<div id='addImage' class='messBox'>
+  <div class='modalmess-content d-flex flex-column p-2'>
+    <div class="btnX "><button onclick='closeBoxAddimage()'>X</button></div>
+    <p class="p-1 d-flex ">Please choose video! </p>
+    <div class="choosefile">
+      <form action="/notice/uploadimage" name="fsubmitimage" method="POST" enctype="multipart/form-data">
+        <input type="file" name="myimage" id="myimage" class="inputfile inputfile-6" accept="">
+        <label for="myimage"><span id="hidfile1"></span> </label>
+        <label for="myimage">
+          <div class="btnfile"> Select image</div>
+        </label>
+        <script src="/javascripts/custom-file-input.js"></script>
+    </div>
+    <p class="d-flex flex-row-reverse">
+      <button class='btn btn-dark btnFileUpload' onclick="hideAddImage()">Upload</button>
+      </form>
+    </p>
+  </div>
+</div>
+
+
   <!--show box to add video -->
   <div id='addVideo' class='messBox'>
     <div class='modalmess-content d-flex flex-column p-2'>
@@ -291,8 +326,9 @@
           </div>
           <div class="p-2">
             <div id="addFile">
-              <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i> <i class="fa fa-video-camera"
-                style="font-size:18px" onclick="addVideoShow()"></i>
+              <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i> 
+              <i class="fa fa-video-camera" style="font-size:18px" onclick="addVideoShow()"></i>
+              <i class="fa fa-picture-o" style="font-size:18px" onclick="addImageShow()"></i>
             </div>
 
 
@@ -317,10 +353,7 @@
                       name: 'clipboard',
                       items: ['Undo', 'Redo']
                     },
-                    {
-                      name: 'insert',
-                      items: ['Image']
-                    },
+                    
                     {
                       name: 'links',
                       items: ['Link', 'Unlink']
@@ -375,8 +408,14 @@
             &#9; 
             <p id="txtvideoupload"></p>
             <input type="hidden" name="txtvideoupload" id="sendVideoName">
+            &#9; 
+            <p id="txtimageupload"></p>
+            <input type="hidden" name="txtimageupload" id="sendImageName">
+
+            <input type="hidden" name="txtsendWriter" value="sendImageName">
 
           </div>
+
           <div class="p-2 d-flex flex-row-reverse ">
             <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkall()">Upload</button>
 

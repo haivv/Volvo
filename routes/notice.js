@@ -5,32 +5,6 @@ var database = require('../database');
 const fs = require('fs');
 var multer = require('multer');
 
-var date_ob = new Date();
-var day = ("0" + date_ob.getDate()).slice(-2);
-var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-var year = date_ob.getFullYear();
-var hours = date_ob.getHours();
-var minutes = date_ob.getMinutes();
-var seconds = date_ob.getSeconds();
-var txtHours, txtMinutes, txtSeconds;
-if (hours<10){
-    txtHours ='0'+hours.toString();
-}
-else{
-    txtHours =hours.toString();
-}
-if (minutes<10){
-    txtMinutes = '0'+minutes.toString();
-}
-else{
-    txtMinutes = minutes.toString();
-}
-if (seconds<10){
-    txtSeconds ='0'+seconds.toString();
-}else{
-    txtSeconds =seconds.toString();
-}
-var dateTime = year.toString() + month.toString() + day.toString() + txtHours+'_';
 
 
 
@@ -38,12 +12,13 @@ var dateTime = year.toString() + month.toString() + day.toString() + txtHours+'_
 
 
 
-  
-  
-  
+
+
+
+
 
 router.get('/', function (req, res, next) {
-   
+
     var ses = req.session.sesWriter;
     var page = 1;
     var sql = "SELECT * FROM notice";
@@ -130,9 +105,37 @@ var storage = multer.diskStorage({
         callback(null, './public/uploads');
     },
     filename: function (req, file, callback) {
-        //add datetime to file name
-       
-        var uniqueFileName= dateTime + file.originalname;
+
+        var date_ob = new Date();
+        var day = ("0" + date_ob.getDate()).slice(-2);
+        var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+        var year = date_ob.getFullYear();
+        var hours = date_ob.getHours();
+        var minutes = date_ob.getMinutes();
+        var seconds = date_ob.getSeconds();
+        var txtHours, txtMinutes, txtSeconds;
+        if (hours < 10) {
+            txtHours = '0' + hours.toString();
+        }
+        else {
+            txtHours = hours.toString();
+        }
+        if (minutes < 10) {
+            txtMinutes = '0' + minutes.toString();
+        }
+        else {
+            txtMinutes = minutes.toString();
+        }
+        if (seconds < 10) {
+            txtSeconds = '0' + seconds.toString();
+        } else {
+            txtSeconds = seconds.toString();
+        }
+        var dateTime = year + month + day + txtHours + txtMinutes + '_';
+
+
+
+        var uniqueFileName = dateTime + file.originalname;
 
 
         callback(null, uniqueFileName);
@@ -142,6 +145,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).single('myfile');
 var upload2 = multer({ storage: storage }).single('myvideo');
+var upload3 = multer({ storage: storage }).single('myimage');
 
 router.get('/', function (req, res, next) {
     res.render('index', { title: 'Express' });
@@ -169,10 +173,47 @@ router.post('/uploadvideo', (req, res) => {
         console.log("Video is uploaded successfully!");
     });
 });
-
+//upload image
+router.post('/uploadimage', (req, res) => {
+    upload3(req, res, function (err) {
+        if (err) {
+            return res.end("Error uploading video.");
+        }
+        console.log("Image is uploaded successfully!");
+    });
+});
 
 
 router.post('/proAddNotice', function (req, res, next) {
+
+    //add datetime to file name
+    var date_ob = new Date();
+    var day = ("0" + date_ob.getDate()).slice(-2);
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    var year = date_ob.getFullYear();
+    var hours = date_ob.getHours();
+    var minutes = date_ob.getMinutes();
+    var seconds = date_ob.getSeconds();
+    var txtHours, txtMinutes, txtSeconds;
+    if (hours < 10) {
+        txtHours = '0' + hours.toString();
+    }
+    else {
+        txtHours = hours.toString();
+    }
+    if (minutes < 10) {
+        txtMinutes = '0' + minutes.toString();
+    }
+    else {
+        txtMinutes = minutes.toString();
+    }
+    if (seconds < 10) {
+        txtSeconds = '0' + seconds.toString();
+    } else {
+        txtSeconds = seconds.toString();
+    }
+
+    var dateTime = year + month + day + txtHours + txtMinutes + '_';
 
     const txtSelect = req.body.searchoption;
     var txtOption = '';
@@ -190,27 +231,31 @@ router.post('/proAddNotice', function (req, res, next) {
 
 
     var txtTitle = req.body.txtTitle;
-    console.log(txtTitle);
     var txtContent = req.body.txtContent;
     var newContent = database.escape(txtContent);
     var txtWrite = req.session.sesWriter;
 
-    var today = new Date();
-
-    var year = today.getFullYear();
-    var month = ('0' + (today.getMonth() + 1)).slice(-2);
-    var day = ('0' + today.getDate()).slice(-2);
-
     var dateString = year + '-' + month + '-' + day;
 
-
+    var imageUpload = req.body.txtimageupload;
     var fileUpload = req.body.txtfileupload;
     var videoUpload = req.body.txtvideoupload;
+
+    if (typeof imageUpload !== 'undefined') {
+        imageUpload = imageUpload.trim();
+        if (imageUpload != '') {
+            imageUpload = dateTime+imageUpload;
+        } else {
+            imageUpload = '';
+        }
+    } else {
+        console.log(' not image');
+    }
 
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
         if (fileUpload != '') {
-            fileUpload = dateTime+ fileUpload;
+            fileUpload = dateTime+fileUpload;
         } else {
             fileUpload = '';
         }
@@ -221,7 +266,7 @@ router.post('/proAddNotice', function (req, res, next) {
     if (typeof videoUpload !== 'undefined') {
         videoUpload = videoUpload.trim();
         if (videoUpload != '') {
-            videoUpload = dateTime + videoUpload;
+            videoUpload = dateTime+videoUpload;
         } else {
             videoUpload = '';
         }
@@ -229,6 +274,7 @@ router.post('/proAddNotice', function (req, res, next) {
     } else {
         console.log(' not video ');
     }
+
 
     if (typeof txtWrite !== 'undefined') {
         txtWrite = txtWrite.trim();
@@ -268,8 +314,8 @@ router.post('/proAddNotice', function (req, res, next) {
 
         var query = `
         INSERT INTO notice 
-        (id,title,category, dateCreate, writer, content, fileUpload, videoUpload) 
-        VALUES ("${insertID}","${txtTitle}", "${txtOption}", "${dateString}", "${txtWrite}", "${newContent}", "${fileUpload}", "${videoUpload}")
+        (id,title,category, dateCreate, writer, content, imgUpload, fileUpload, videoUpload) 
+        VALUES ("${insertID}","${txtTitle}", "${txtOption}", "${dateString}", "${txtWrite}", "${newContent}", "${imageUpload}",  "${fileUpload}", "${videoUpload}")
         `;
 
         database.query(query, function (error, data) {
@@ -321,11 +367,43 @@ router.post('/proUpdateNotice', function (req, res, next) {
     }
 
 
+     //add datetime to file name
+     var date_ob = new Date();
+     var day = ("0" + date_ob.getDate()).slice(-2);
+     var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+     var year = date_ob.getFullYear();
+     var hours = date_ob.getHours();
+     var minutes = date_ob.getMinutes();
+     var seconds = date_ob.getSeconds();
+     var txtHours, txtMinutes, txtSeconds;
+     if (hours < 10) {
+         txtHours = '0' + hours.toString();
+     }
+     else {
+         txtHours = hours.toString();
+     }
+     if (minutes < 10) {
+         txtMinutes = '0' + minutes.toString();
+     }
+     else {
+         txtMinutes = minutes.toString();
+     }
+     if (seconds < 10) {
+         txtSeconds = '0' + seconds.toString();
+     } else {
+         txtSeconds = seconds.toString();
+     }
+ 
+     var dateTime = year + month + day + txtHours + txtMinutes + '_';
+
+
     var txtTitle = req.body.txtTitle;
     console.log(txtTitle);
     var txtContent = req.body.txtContent;
     var newContent = database.escape(txtContent);
+
     var txtWriter = req.body.txtsendWriter;
+
     var today = new Date();
     var year = today.getFullYear();
     var month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -333,14 +411,25 @@ router.post('/proUpdateNotice', function (req, res, next) {
 
     var dateString = year + '-' + month + '-' + day;
 
-
+    var imageUpload = req.body.txtimageupload;
     var fileUpload = req.body.txtfileupload;
     var videoUpload = req.body.txtvideoupload;
+
+    if (typeof imageUpload !== 'undefined') {
+        imageUpload = imageUpload.trim();
+        if (imageUpload != '') {
+            imageUpload = dateTime+imageUpload;
+        } else {
+            imageUpload = '';
+        }
+    } else {
+        console.log(' not image');
+    }
 
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
         if (fileUpload != '') {
-            fileUpload = dateTime + fileUpload;
+            fileUpload = dateTime+fileUpload;
         } else {
             fileUpload = '';
         }
@@ -351,7 +440,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
     if (typeof videoUpload !== 'undefined') {
         videoUpload = videoUpload.trim();
         if (videoUpload != '') {
-            videoUpload = dateTime + videoUpload;
+            videoUpload = dateTime+videoUpload;
         } else {
             videoUpload = '';
         }
@@ -363,7 +452,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
     if (typeof txtWriter !== 'undefined') {
         txtWriter = txtWriter.trim();
     } else {
-        console.log(' not writer ');
+        txtWriter = 'undefined';
     }
 
     var query = `
@@ -373,6 +462,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
         dateCreate = "${dateString}", 
         writer = "${txtWriter}", 
         content = "${newContent}", 
+        imgUpload = "${imageUpload}", 
         fileUpload = "${fileUpload}", 
         videoUpload = "${videoUpload}"
         WHERE id = "${id}"

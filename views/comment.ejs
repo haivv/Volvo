@@ -46,7 +46,7 @@
         // Check Delete
         function showcheckDelete() {
 
-           
+
             var modal = document.getElementById("checkDelete");
             modal.style.display = "block";
         }
@@ -54,28 +54,62 @@
             var modal = document.getElementById("checkDelete");
             modal.style.display = "none";
         }
+
+        // check comment
+
+        function checkComment() {
+            if (document.getElementById("txtTypeComment").value == '') {
+                var modal = document.getElementById("checkComment");
+                modal.style.display = "block";
+            }
+            else {
+                document.fcomment.submit();
+
+            }
+        }
+
+        // check comment
+
+        function hidecheckComment() {
+
+            var modal = document.getElementById("checkComment");
+            modal.style.display = "none";
+
+
+
+        }
+
     </script>
 
 </head>
 
 <body onLoad="commentBoxShow();">
+    <!--empty comment -->
+    <div id='checkComment' class='messBox'>
+        <div class='modalmess-content d-flex flex-column'>
+            <p class="p-5 d-flex ">Please type your comment!</p>
+            <p class="p-3 d-flex flex-row-reverse ">
+                <a href='' onclick='hidecheckComment();' class='btn btn-dark '>Confirm</a>
 
-<!-- Check Delete -->
-<div id='checkDelete' >
-    <div class=' d-flex flex-column modalmess-content '>
-      <p class="p-5 d-flex ">Do you want to delete?</p>
-      <p class="p-3 d-flex flex-row-reverse ">  
-        <a  href='#' onclick='hidecheckDelete();'  class='btn btn-dark btnfix'>No</a>&nbsp;
-        <a href='/notice/notice_delete/<%= strID %>' class='btn btn-dark '>Confirm </a> 
-
-      </p>
+            </p>
+        </div>
     </div>
-  </div>
+    <!-- Check Delete -->
+    <div id='checkDelete'>
+        <div class=' d-flex flex-column modalmess-content '>
+            <p class="p-5 d-flex ">Do you want to delete?</p>
+            <p class="p-3 d-flex flex-row-reverse ">
+                <a href='#' onclick='hidecheckDelete();' class='btn btn-dark btnfix'>No</a>&nbsp;
+                <a href='/notice/notice_delete/<%= strID %>' class='btn btn-dark '>Confirm </a>
+
+            </p>
+        </div>
+    </div>
 
 
 
 
-    
+
 
 
     <div id='comment' class='messBox'>
@@ -102,10 +136,17 @@
                 </div>
 
                 <div id="content" class="p-2">
-
-                    <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
-
+                    <div id="imgArt">
+                        <img src="/uploads/<%= data.imgUpload %>" alt="<%= data.imgUpload %>"/>
+                        
+                    </div>
+                    <div id="conArt">
+                        <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
                         <%- modifiedStr %>
+
+                    </div>
+
+                    
 
                 </div>
 
@@ -114,35 +155,37 @@
 
                 <div id="txtcomment" class="p-2">
                     <div id="fileupload">
-                      
 
-                            <% if((data.fileUpload=='undefined' ) || (data.fileUpload=='' )) { }else{%>
+
+                        <% if((data.fileUpload=='undefined' ) || (data.fileUpload=='' )) { }else{%>
                             <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>"
                                 target="_blank">Download</a>
                             &#9;
                             <% } %>
 
-                            <% if((data.videoUpload=='undefined' ) || (data.videoUpload=='' )) { } else{%>
-                                <span>Attached video: </span><a href="/uploads/<%= data.videoUpload %>"
-                                    target="_blank">Download</a>
-                                <% } %>
+                                <% if((data.videoUpload=='undefined' ) || (data.videoUpload=='' )) { } else{%>
+                                    <span>Attached video: </span><a href="/uploads/<%= data.videoUpload %>"
+                                        target="_blank">Download</a>
+                                    <% } %>
 
 
-                              
-                            <% if(data.writer == sesWriter){  %>
-                               
-                            <div id="action">
-                                <a href="/notice/notice_edit/<%= data.id %>">Edit</a> <button id="btnDeleteNotice" class="btn btn-link" onclick="showcheckDelete();">Delete</button> 
+
+                                        <% if(data.writer==sesWriter){ %>
+
+                                            <div id="action">
+                                                <a href="/notice/notice_edit/<%= data.id %>">Edit</a> <button
+                                                    id="btnDeleteNotice" class="btn btn-link"
+                                                    onclick="showcheckDelete();">Delete</button>
 
 
-                            </div>
+                                            </div>
 
-                            <%} else{%>
-                                
-                                <% } %>
+                                            <%} else{%>
+
+                                                <% } %>
                     </div>
-                    <form action="/notice/addcomment" method="post">
-                        <div>
+                   
+                        <div id="titComment">
                             <h4>Comment</h4>
                         </div>
                         <div id="commented">
@@ -174,36 +217,36 @@
                         </div>
                         <div id="typecomment">
 
-                            <input type="hidden" name="idNotice" value="<%= data.id %>">
-                            <input type="text" name="txtTypeComment" id="txtTypeComment" required><button
-                                class="btn btn-dark" id="btnSend">Send</button>
+                            <form action="/notice/addcomment" name="fcomment" method="post">
+                                <input type="hidden" name="idNotice" value="<%= data.id %>">
+                                <input type="text" name="txtTypeComment" id="txtTypeComment">
+                                <button type="button" class="btn btn-dark" id="btnSend"
+                                    onclick="checkComment()">Send</button>
 
-                    </form>
-
-
-
-
-                    </form>
-                </div>
-                <% }); }<!--and if(sampleData.length>-->
-                    else
-                    {
-                    %>
-
-                    No Data Found
-
-                    <% } %>
+                            </form>
 
 
+
+                        </div>
+                        <% }); }<!--and if(sampleData.length>-->
+                            else
+                            {
+                            %>
+
+                            No Data Found
+
+                            <% } %>
 
 
 
 
 
-        </div><!--end flex-->
-        </form>
 
-    </div><!--end modal-content-->
+
+                </div><!--end flex-->
+
+
+        </div><!--end modal-content-->
     </div><!--end loginfail-->
 
 

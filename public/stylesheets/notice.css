@@ -1,358 +1,404 @@
 #notice{
- padding:8% 10% 0 10%;
- z-index: 1; 
-
-}
-
-.modal {
-	display: none;
-	 z-index: 1; 
-   position: absolute;
-	background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-	background-color: #fc1515;
-	padding: 20px;
+  padding:8% 10% 0 10%;
   z-index: 1; 
-
-}
-
-/* mess */
-.messBox{
-  background-color: rgba(0, 0, 0, 0.2);
-  /* opacity: 0.5; */
-  display: none;
-	z-index: 10 ;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+ 
+ }
+ 
+ .modal {
+   display: none;
+    z-index: 1; 
+    position: absolute;
+   background-color: rgba(0, 0, 0, 0.5);
+ }
+ 
+ .modal-content {
+   background-color: #fc1515;
+   padding: 20px;
+   z-index: 1; 
+ 
+ }
+ 
+ /* mess */
+ .messBox{
+   background-color: rgba(0, 0, 0, 0.2);
+   /* opacity: 0.5; */
+   display: none;
+   z-index: 10 ;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+  
+   
+ }
+ .modalmess-content {
+   opacity: 1;
+   width: 400px;
+   height: 200px;
+   background: rgb(252, 252, 252);
+   border: 1px solid rgb(156, 156, 156);
+   border-radius: 10px;
+   margin: auto;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   position: fixed;
+ 
+ }
+ /* comment */
+ .modalcomment-content {
+   opacity: 1;
+   width: 70%;
+   height: 80%;
+   background: rgb(252, 252, 252);
+   border: 1px solid rgb(156, 156, 156);
+   border-radius: 10px;
+   margin: auto;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   position: fixed;
+   
+ 
+ }
+ 
+ #txtcomment{
+   height: 200px;
+   width: 100%;
+   background: #a5a5a5;
+   position:fixed;
+   bottom: 0;
+   border-radius: 0px 0px 10px 10px;
+ }
+ #typecomment{
+   width: 100%;
+   position:fixed;
+   bottom: -25px;
+   
+ }
+ #txtTypeComment{
+   width: 88%;
+   height: 40px;
+ }
+ #btnSend{
+   width: 10%;
+   position: relative;
+   top:-4px;
+   left: 5px;
+ }
+ 
+ @font-face {
+   font-family: VolvoM;
+   src: url(/volvo-novum-medium.otf);
+ }
+ 
+ @font-face {
+   font-family: VolvoL;
+   src: url(/Volvo-Light.ttf);
+ }
+ 
+ table{
+   width: 100%;
+   border-collapse: collapse;
+  
+ }
+ thead {
+   color: #4D5569;
+   background: #F5F6F9;
+   font-size: 14px;
+   font-family: 'VolvoL';
+ 
+ }
+ 
+ th{
+   height: 30px;
+   padding:0px 10px;
+   border-bottom: 1px solid #ddd !important; 
+ }
+ td{
+   height: 24px;
+   padding:0px 10px;
+   border-bottom: 1px solid #ddd !important; 
+   font-size: 14px;
+   font-weight: 100;
+  
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ .page-link{
+   font-size: 13px !important;
+ }
+ 
+ #main{
+   width: 100%;
+   height: 100px;
+   background-color: #fc1515;
+ }
+ #title{
+   width: 100%;
+   
+ }
+ #title select{
+   width: 20%;
+   float:left;
+   height: 50px;
+   
+ }
+ #title input{
+   width: 80%;
+   float:right;
+   height: 50px;
+ }
+ 
+ textarea{
+   width: 100%;
+   min-height: 250px;
+   padding:10px;
+   margin:10px 0px;
+   border-top: 0;
+ 
+ }
+ #btnUpload{
+   text-align: right;
+ }
+ 
+ #dataRow{
+   cursor: pointer;
+ }
+ 
+ h1{
+   border-bottom: 2px solid #8d8d8d;
+ }
+ 
+ #col1{
+   width: 40%;
+ }
+ .col{
+   width: 20%;
+ }
+ #commented{
+   width: 100%;
+   height: 100px;
+   overflow: auto; /* Enable vertical scrolling */
+   border: 1px solid #ccc;
+   padding:3px;
+   position: relative;
+   top: -30px;
+ }
+ .txtWriter{
+   font-weight: 600;
+ }
+ #titComment{
+   position: relative;
+   top: -30px;
+ }
+ 
+ /* Editor */
+ #addFile{
+   width: 100%;
+   height: 40px;
+   border-top: 1px solid #b3c1c3;
+   border-left: 1px solid #b3c1c3;
+   border-right: 1px solid #b3c1c3;
+   padding-top: 10px;
+   padding-left: 5px;
+   background: #e0f2f4;
+ }
+ #addFile i{
+   margin-left: 10px;
+ }
+ textarea{
+   border-top: 0px;
+ }
+ 
+ 
+ .choosefile{
+   
+   height: 50px;
+   margin-left: 10px;
+ 
+   position: relative;
+ 
+ }
+ 
+ .choosefile form{
+   width: 100%;
+   float: right;
+   border: 0px;
+ }
+ .fupload{
+   margin-top: 20px ;
+ }
+ .btnX{
+   width: 100%;
+   align-items:flex-end;
+ }
+ .btnX button{
+   float: right;
+   width: 25px;
+   height: 25px;
+   line-height: 100%;
+   
+   border-radius: 5px;
+   background: black;
+   color: white;
+   border: 0px;
+ }
+ 
+ 
+ /* file */
+ 
+ 
+ 
+ .inputfile-6 + label{
+   border: 1px solid #030303;
+   height: 30px;
+   padding: 3px 10px;
+ 
+ }
+ 
+ 
+ .inputfile-6 + label span {
+   width: 250px;
+   display: inline-block;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+   vertical-align: top;
+ }
+ 
+ .inputfile{
+   display: none !important;
+ }
+ /* btn select file */
+ .btnfile{
+   width: 90px;
+   height: 29px;
+   background: #000000;
+   color: white;
+   line-height: 29px;
+   text-align: center;
+   
+   cursor: pointer;
+   position: absolute;
+   right: 0;
+   top:0;
+ }
+ 
+ .btnFileUpload{
+   margin-top: 10px;
+ }
+ #txtcomment form{
+   position: relative;
+   top: -30px;
+ }
+ 
+ 
+ 
+ 
+ 
+ /* end file */
+ 
+ /* Comment page */
+ 
+ #fileupload{
+   width: 100%;
+   height: 25px;
+   background: #ffffff;
+   position: relative;top: -33px;
+   line-height: 25px;
+   padding-bottom: 5px;
  
   
+ }
+ 
+ #txtfileupload{
+   /* margin:0px  30px; */
+  
+ }
+ /* Action */
+ #action{
+   width: 120px;
+   float: right;
+   position: relative;
+   top:-5px;
+ }
+ 
+ #pagetitle{
+   width: 100%;
+   height: 50px;
+   border-bottom: 1px solid #b3c1c3;
+   
+ }
+ 
+ /* show title writer - date */
+ #showtitle{
+   margin-left: 20px;
+ }
+ 
+ #showname_date{
+   margin-right: 20px;
+ }
+ 
+ /* Delete box */
+ #checkDelete{
+   background-color: rgba(0, 0, 0, 0.2);
+   /* opacity: 0.5; */
+   display: none;
+   z-index: 15 ;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+ }
+ 
+ 
+ #btnDeleteNotice{
+   position: relative;
+   top:-3px;
+ }
+ 
+ #checkComment{
+   background-color: rgba(0, 0, 0, 0.2);
+   /* opacity: 0.5; */
+   display: none;
+   z-index: 15 ;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+ }
+
+
+ /* content */
+ #content{
+  display: flex;
+  flex-wrap: wrap;
+ }
+ #imgArt{
+  
+  background-color: #f1f1f1;
+  padding: 10px;
+  flex: 30%;
+ align-items: center;
+
 }
-.modalmess-content {
-  opacity: 1;
-  width: 400px;
+
+#imgArt img{
+ width: 100%;
+  margin: 0px auto;
+}
+
+ #conArt{
   height: 200px;
-  background: rgb(252, 252, 252);
-  border: 1px solid rgb(156, 156, 156);
-  border-radius: 10px;
-  margin: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-	position: fixed;
-
-}
-/* comment */
-.modalcomment-content {
-  opacity: 1;
-  width: 70%;
-  height: 80%;
-  background: rgb(252, 252, 252);
-  border: 1px solid rgb(156, 156, 156);
-  border-radius: 10px;
-  margin: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-	position: fixed;
-  
-
-}
-
-#txtcomment{
-  height: 200px;
-  width: 100%;
-  background: #a5a5a5;
-  position:fixed;
-  bottom: 0;
-  border-radius: 0px 0px 10px 10px;
-}
-#typecomment{
-  width: 100%;
-  position:fixed;
-  bottom: 5px;
-}
-#txtTypeComment{
-  width: 88%;
-  height: 40px;
-}
-#btnSend{
-  width: 10%;
-  position: relative;
-  top:-4px;
-  left: 5px;
-}
-
-@font-face {
-  font-family: VolvoM;
-  src: url(/volvo-novum-medium.otf);
-}
-
-@font-face {
-  font-family: VolvoL;
-  src: url(/Volvo-Light.ttf);
-}
-
-table{
-  width: 100%;
-  border-collapse: collapse;
- 
-}
-thead {
-  color: #4D5569;
-  background: #F5F6F9;
-  font-size: 14px;
-  font-family: 'VolvoL';
-
-}
-
-th{
-  height: 30px;
-  padding:0px 10px;
-  border-bottom: 1px solid #ddd !important; 
-}
-td{
-  height: 24px;
-  padding:0px 10px;
-  border-bottom: 1px solid #ddd !important; 
-  font-size: 14px;
-  font-weight: 100;
- 
-}
-
-
-
-
-
-
-.page-link{
-  font-size: 13px !important;
-}
-
-#main{
-  width: 100%;
-  height: 100px;
-  background-color: #fc1515;
-}
-#title{
-  width: 100%;
-  
-}
-#title select{
-  width: 20%;
-  float:left;
-  height: 50px;
-  
-}
-#title input{
-  width: 80%;
-  float:right;
-  height: 50px;
-}
-
-textarea{
-  width: 100%;
-  min-height: 250px;
-  padding:10px;
-  margin:10px 0px;
-  border-top: 0;
-
-}
-#btnUpload{
-  text-align: right;
-}
-
-#dataRow{
-  cursor: pointer;
-}
-
-h1{
-  border-bottom: 2px solid #8d8d8d;
-}
-
-#col1{
-  width: 40%;
-}
-.col{
-  width: 20%;
-}
-#commented{
-  width: 100%;
-  height: 100px;
-  overflow: auto; /* Enable vertical scrolling */
-  border: 1px solid #ccc;
-  padding:3px;
-}
-.txtWriter{
-  font-weight: 600;
-}
-
-
-/* Editor */
-#addFile{
-  width: 100%;
-  height: 40px;
-  border-top: 1px solid #b3c1c3;
-  border-left: 1px solid #b3c1c3;
-  border-right: 1px solid #b3c1c3;
-  padding-top: 10px;
-  padding-left: 5px;
-  background: #e0f2f4;
-}
-#addFile i{
-  margin-left: 10px;
-}
-textarea{
-  border-top: 0px;
-}
-
-
-.choosefile{
-  
-  height: 50px;
-  margin-left: 10px;
-
-  position: relative;
-
-}
-
-.choosefile form{
-  width: 100%;
-  float: right;
-  border: 0px;
-}
-.fupload{
-  margin-top: 20px ;
-}
-.btnX{
-  width: 100%;
-  align-items:flex-end;
-}
-.btnX button{
-  float: right;
-  width: 25px;
-  height: 25px;
-  line-height: 100%;
-  
-  border-radius: 5px;
-  background: black;
-  color: white;
-  border: 0px;
-}
-
-
-/* file */
-
-
-
-.inputfile-6 + label{
-  border: 1px solid #030303;
-  height: 30px;
-  padding: 3px 10px;
-
-  
-  
-}
-
-
-.inputfile-6 + label span {
-  width: 250px;
-  display: inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  vertical-align: top;
-}
-
-.inputfile{
-  display: none !important;
-}
-/* btn select file */
-.btnfile{
-  width: 90px;
-  height: 29px;
-  background: #000000;
-  color: white;
-  line-height: 29px;
-  text-align: center;
-  
-  cursor: pointer;
-  position: absolute;
-  right: 0;
-  top:0;
-}
-
-.btnFileUpload{
-  margin-top: 10px;
-}
-#txtcomment form{
-  position: relative;
-  top: -30px;
-}
-
-
-
-
-
-/* end file */
-
-/* Comment page */
-
-#fileupload{
-  width: 100%;
-  height: 25px;
-  background: #ffffff;
-  position: relative;top: -35px;
-
- 
-}
-
-#txtfileupload{
-  margin:0px  30px;
- 
-}
-/* Action */
-#action{
-  width: 120px;
-  height: 25px;
-  float: right;
-}
-
-#pagetitle{
-  width: 100%;
-  height: 50px;
-  border-bottom: 1px solid #b3c1c3;
-  
-}
-
-/* show title writer - date */
-#showtitle{
-  margin-left: 20px;
-}
-
-#showname_date{
-  margin-right: 20px;
-}
-
-/* Delete box */
-#checkDelete{
-  background-color: rgba(0, 0, 0, 0.2);
-  /* opacity: 0.5; */
-  display: none;
-	z-index: 15 ;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-
-#btnDeleteNotice{
-  position: relative;
-  top:-3px;
-}
+  overflow-y: scroll;
+  padding: 10px 20px;
+  flex: 70%;
+ }
