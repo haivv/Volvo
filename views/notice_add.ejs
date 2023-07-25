@@ -94,7 +94,17 @@
       var fileName = fileInput.files[0].name;
       document.getElementById("txtfileupload").innerHTML = fileName;
 
-      document.getElementById("sendFileName").value = fileName;
+      var date_ob = new Date();
+      var day = ("0" + date_ob.getDate()).slice(-2);
+      var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+      var year = date_ob.getFullYear();
+      var date = year + "-" + month + "-" + day;
+      var hours = date_ob.getHours();
+      var minutes = date_ob.getMinutes();
+      var seconds = date_ob.getSeconds();
+      var dateTime = year + month  + day + hours + minutes;
+
+      document.getElementById("sendFileName").value = dateTime + '_' + fileName;
 
       document.fsubmitfile.submit();
     }
@@ -123,7 +133,17 @@
       var fileName = fileInput.files[0].name;
       document.getElementById("txtvideoupload").innerHTML = fileName;
 
-      document.getElementById("sendVideoName").value = fileName;
+      var date_ob = new Date();
+      var day = ("0" + date_ob.getDate()).slice(-2);
+      var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+      var year = date_ob.getFullYear();
+      var date = year + "-" + month + "-" + day;
+      var hours = date_ob.getHours();
+      var minutes = date_ob.getMinutes();
+      var seconds = date_ob.getSeconds();
+      var dateTime = year + month  + day + hours + minutes;
+
+      document.getElementById("sendVideoName").value = dateTime + '_' + fileName;
 
       document.fsubmitfile.submit();
 

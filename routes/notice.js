@@ -5,21 +5,45 @@ var database = require('../database');
 const fs = require('fs');
 var multer = require('multer');
 
-        var date_ob = new Date();
-        var day = ("0" + date_ob.getDate()).slice(-2);
-        var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-        var year = date_ob.getFullYear();
-        var date = year + "-" + month + "-" + day;
-        var hours = date_ob.getHours();
-        var minutes = date_ob.getMinutes();
-        var seconds = date_ob.getSeconds();
-        var dateTime = year + month + day + hours + minutes + seconds;
+var date_ob = new Date();
+var day = ("0" + date_ob.getDate()).slice(-2);
+var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+var year = date_ob.getFullYear();
+var hours = date_ob.getHours();
+var minutes = date_ob.getMinutes();
+var seconds = date_ob.getSeconds();
+var txtHours, txtMinutes, txtSeconds;
+if (hours<10){
+    txtHours ='0'+hours.toString();
+}
+else{
+    txtHours =hours.toString();
+}
+if (minutes<10){
+    txtMinutes = '0'+minutes.toString();
+}
+else{
+    txtMinutes = minutes.toString();
+}
+if (seconds<10){
+    txtSeconds ='0'+seconds.toString();
+}else{
+    txtSeconds =seconds.toString();
+}
+var dateTime = year.toString() + month.toString() + day.toString() + txtHours+'_';
 
-        var preName = dateTime+"_";
-/* GET home page. */
 
+
+
+
+
+
+  
+  
+  
 
 router.get('/', function (req, res, next) {
+   
     var ses = req.session.sesWriter;
     var page = 1;
     var sql = "SELECT * FROM notice";
@@ -107,8 +131,8 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, callback) {
         //add datetime to file name
-        
-        var uniqueFileName = preName + file.originalname;
+       
+        var uniqueFileName= dateTime + file.originalname;
 
 
         callback(null, uniqueFileName);
@@ -185,27 +209,32 @@ router.post('/proAddNotice', function (req, res, next) {
 
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
-        fileUpload = preName+fileUpload;
+        if (fileUpload != '') {
+            fileUpload = dateTime+ fileUpload;
+        } else {
+            fileUpload = '';
+        }
     } else {
-        console.log(' Biến file không tồn tại');
+        console.log(' not file');
     }
 
     if (typeof videoUpload !== 'undefined') {
         videoUpload = videoUpload.trim();
-        videoUpload = preName+videoUpload;
+        if (videoUpload != '') {
+            videoUpload = dateTime + videoUpload;
+        } else {
+            videoUpload = '';
+        }
+
     } else {
-        console.log(' Biến video không tồn tại');
+        console.log(' not video ');
     }
 
     if (typeof txtWrite !== 'undefined') {
         txtWrite = txtWrite.trim();
     } else {
-        console.log(' Biến writer không tồn tại');
+        console.log(' not writer ');
     }
-
-
-
-
 
 
 
@@ -243,25 +272,25 @@ router.post('/proAddNotice', function (req, res, next) {
         VALUES ("${insertID}","${txtTitle}", "${txtOption}", "${dateString}", "${txtWrite}", "${newContent}", "${fileUpload}", "${videoUpload}")
         `;
 
-    database.query(query, function (error, data) {
+        database.query(query, function (error, data) {
 
-        if (error) {
-            throw error;
-        }
-        else {
-            res.render('mess', { title: 'Add notice success!', sess: req.session.sesWriter });
-        }
+            if (error) {
+                throw error;
+            }
+            else {
+                res.render('mess', { title: 'Add notice success!', sess: req.session.sesWriter });
+            }
+
+        });
+
+
+
+
 
     });
 
 
 
-
-
-    });
-
-
-    
 
 
 
@@ -297,9 +326,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
     var txtContent = req.body.txtContent;
     var newContent = database.escape(txtContent);
     var txtWriter = req.body.txtsendWriter;
-
     var today = new Date();
-
     var year = today.getFullYear();
     var month = ('0' + (today.getMonth() + 1)).slice(-2);
     var day = ('0' + today.getDate()).slice(-2);
@@ -309,9 +336,35 @@ router.post('/proUpdateNotice', function (req, res, next) {
 
     var fileUpload = req.body.txtfileupload;
     var videoUpload = req.body.txtvideoupload;
-    fileUpload = fileUpload.trim();
-    videoUpload = videoUpload.trim();
-    txtWriter = txtWriter.trim();
+
+    if (typeof fileUpload !== 'undefined') {
+        fileUpload = fileUpload.trim();
+        if (fileUpload != '') {
+            fileUpload = dateTime + fileUpload;
+        } else {
+            fileUpload = '';
+        }
+    } else {
+        console.log(' not file');
+    }
+
+    if (typeof videoUpload !== 'undefined') {
+        videoUpload = videoUpload.trim();
+        if (videoUpload != '') {
+            videoUpload = dateTime + videoUpload;
+        } else {
+            videoUpload = '';
+        }
+
+    } else {
+        console.log(' not video ');
+    }
+
+    if (typeof txtWriter !== 'undefined') {
+        txtWriter = txtWriter.trim();
+    } else {
+        console.log(' not writer ');
+    }
 
     var query = `
         UPDATE notice 
@@ -323,7 +376,6 @@ router.post('/proUpdateNotice', function (req, res, next) {
         fileUpload = "${fileUpload}", 
         videoUpload = "${videoUpload}"
         WHERE id = "${id}"
-
           `;
 
     database.query(query, function (error, data) {
@@ -353,7 +405,6 @@ router.get('/notice_delete/:txtid', function (req, res, next) {
           `;
 
     database.query(query, function (error, data) {
-
         if (error) {
             throw error;
         }
@@ -363,10 +414,6 @@ router.get('/notice_delete/:txtid', function (req, res, next) {
         }
 
     });
-
-
-
-
 
 });
 
@@ -405,7 +452,6 @@ router.post('/addcomment', function (req, res, next) {
     var year = today.getFullYear();
     var month = ('0' + (today.getMonth() + 1)).slice(-2);
     var day = ('0' + today.getDate()).slice(-2);
-
     var dateString = year + '-' + month + '-' + day;
 
     //res.send(idNotice);
