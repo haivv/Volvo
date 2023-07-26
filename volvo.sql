@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2023 at 04:04 AM
+-- Generation Time: Jul 26, 2023 at 08:09 AM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- PHP Version: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,6 +35,13 @@ CREATE TABLE `comment` (
   `comContent` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`id`, `idNotice`, `comWriter`, `comDate`, `comContent`) VALUES
+(9, 15, 'user25', '2023-07-26', 'have a nice day!');
+
 -- --------------------------------------------------------
 
 --
@@ -49,9 +56,21 @@ CREATE TABLE `notice` (
   `writer` varchar(20) NOT NULL,
   `comment` int(11) NOT NULL,
   `content` text NOT NULL,
+  `imgUpload` varchar(50) NOT NULL,
   `fileUpload` varchar(50) NOT NULL,
   `videoUpload` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notice`
+--
+
+INSERT INTO `notice` (`id`, `title`, `category`, `dateCreate`, `writer`, `comment`, `content`, `imgUpload`, `fileUpload`, `videoUpload`) VALUES
+(9, 'New title 07-25', 'Opinion', '2023-07-26', 'user25', 0, '\'<p><strong>Title</strong></p>\r\n\r\n<p>Content</p>\r\n\'', 'user25_Hai.png', '', 'user25_video.mp4'),
+(13, 'New title', 'Announcement', '2023-07-26', 'user25', 0, '\'<p><strong><span style=\"font-size:24px\">Title</span></strong></p>\r\n\r\n<p><span style=\"color:#e74c3c\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC</span>, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n\'', '20230726_desktop.png', '20230726_aa.txt', ''),
+(15, 'New title 07-25', 'Suggestion', '2023-07-26', 'user25', 1, '\'<h2>Where does it come from?</h2>\r\n\r\n<p><span style=\"color:#e67e22\">C</span><span style=\"font-size:16px\"><span style=\"color:#e67e22\">ontrary</span><span style=\"color:#e74c3c\"> to popular belief, Lorem Ipsum is not simply random text.</span></span> It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.&nbsp;</p>\r\n\'', '20230726_happy teacher day.png', '20230726_DataImport.xlsx', '20230726_video3.mp4'),
+(17, 'New title 07-17', 'Announcement', '2023-07-26', 'undefined', 0, '\'\'', 'undefined_happy teacher day.png', 'undefined_aa.txt', 'undefined_video.mp4'),
+(18, 'New title 07-25', 'Opinion', '2023-07-26', 'user25', 0, '\'<p>Title</p>\r\n\r\n<p>Content</p>\r\n\'', 'user25_happy teacher day.png', 'user25_aa.txt', 'user25_video.mp4');
 
 -- --------------------------------------------------------
 
@@ -185,7 +204,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `platform`
