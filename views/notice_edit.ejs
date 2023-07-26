@@ -19,7 +19,68 @@
 
 
   <script>
+// Config read file
+function readImage() {
+      var fileURL = '/config/image_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
 
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content1 = xhr.responseText;
+          displayContent1(content1);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent1(content1) {
+       var fileInput = document.getElementById('myimage');
+      fileInput.accept =content1;
+
+    }
+
+    function readFile() {
+      var fileURL = '/config/file_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content2 = xhr.responseText;
+          displayContent2(content2);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent2(content2) {
+       var fileInput = document.getElementById('myfile');
+      fileInput.accept =content2;
+
+    }
+
+    function readVideo() {
+      var fileURL = '/config/video_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content3 = xhr.responseText;
+          displayContent3(content3);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent3(content3) {
+       var fileInput = document.getElementById('myvideo');
+      fileInput.accept =content3;
+
+    }
+
+
+
+
+    // end config read file
     
 
     function checkall() {
@@ -181,7 +242,7 @@
 
 </head>
 
-<body onLoad="noticeBoxShow();">
+<body onLoad="noticeBoxShow(); readImage(); readFile();readVideo();">
 
   <!--show box to add image -->
   <div id='addImage' class='messBox'>
