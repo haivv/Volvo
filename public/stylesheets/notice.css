@@ -409,3 +409,12 @@
   letter-spacing: -0.5px;
  }
  a{ text-decoration: none !important;}
+
+ .ck-editor__editable_inline {
+  min-height: 300px;
+}
+
+#editConfirmCheckLength{
+  position: relative;
+  top:-10px;
+}

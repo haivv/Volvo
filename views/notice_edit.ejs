@@ -100,12 +100,23 @@ function readImage() {
         return false;
       }
 
-      // if (document.getElementById('txtContent').value.trim() == "") {
-      //   var modal = document.getElementById("checkContent");
-      //   modal.style.display = "block";
-      //   countOfCheck += 1;
-      //   return false;
-      // }
+       //check content empty
+       if (document.getElementById('charCount').value == 0) {
+        var modal = document.getElementById("checkContent");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+      if (document.getElementById('charCount').value >1000) {
+        var modal = document.getElementById("checkContent2");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+
+
+      
 
       document.fadd.submit();
     }
@@ -127,7 +138,11 @@ function readImage() {
       document.getElementById('txtContent').focus();
       modal.style.display = "none";
     }
-
+    function hideCheckContent2() {
+      var modal = document.getElementById("checkContent2");
+      document.getElementById('txtContent').focus();
+      modal.style.display = "none";
+    }
 
 
 
@@ -348,6 +363,16 @@ function readImage() {
     </div>
   </div>
 
+   <!--max content -->
+   <div id='checkContent2' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">The length of content must be less than 5000 characters! </p>
+      <p class="mb-3 pe-3 d-flex flex-row-reverse" id="editConfirmCheckLength">
+        <a href='#' onclick='hideCheckContent2();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
 
   <div id='notice' class='modal'>
     <div class='modal-content'>
@@ -385,7 +410,7 @@ function readImage() {
                 <i class="fa fa-video-camera" style="font-size:18px" onclick="addVideoShow()"></i>
                 <i class="fa fa-picture-o" style="font-size:18px" onclick="addImageShow()"></i>
               </div>
-              <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
+              <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
               <textarea cols="80" id="txtContent" name="txtContent" rows="10">
                 <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
 
@@ -394,64 +419,156 @@ function readImage() {
               </textarea>
 
               <script>
-                // CKEDITOR.addCss('.cke_editable { font-size: 15px; padding: 2em; }');
-
-                CKEDITOR.replace('txtContent',
-
-                  {
-                    toolbar: [
-
-                      {
-                        name: 'clipboard',
-                        items: ['Undo', 'Redo']
-                      },
-
-                      {
-                        name: 'links',
-                        items: ['Link', 'Unlink']
-                      },
-
-
-                      {
-                        name: 'basicstyles',
-                        items: ['Bold', 'Italic', 'Underline']
-                      },
-                      {
-                        name: 'styles',
-                        items: ['Font', 'FontSize']
-                      },
-                      {
-                        name: 'colors',
-                        items: ['TextColor']
-                      }
-
-                    ],
-                    extraPlugins: 'uploadimage,image2',
-                    // extraPlugins: 'editorplaceholder',
-                    // editorplaceholder: 'Start typing here...',
-
-                    extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
-
-                    // Adding drag and drop image upload.
-                    extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',
-                    uploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-
-                    // Configure your file manager integration. This example uses CKFinder 3 for PHP.
-                    filebrowserBrowseUrl: '/apps/ckfinder/3.4.5/ckfinder.html',
-                    filebrowserImageBrowseUrl: '/apps/ckfinder/3.4.5/ckfinder.html?type=Images',
-                    filebrowserUploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files',
-                    filebrowserImageUploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Images',
-
-                    height: 200,
-                    uiColor: '#CCEAEE',
-
-
-                    removeDialogTabs: 'image:advanced;link:advanced',
-
-
-                    removeButtons: 'PasteFromWord'
-                  });
-              </script>
+                CKEDITOR.ClassicEditor.create(document.getElementById("txtContent"), {
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+                 toolbar: {
+                     items: [
+                         
+                         'undo', 'redo',
+                         'fontSize', 'fontFamily', 'fontColor',  '|',
+                         'bold', 'italic', 'underline', '|',
+                         'link'
+                     ],
+                     shouldNotGroupWhenFull: true
+                 },
+                 // Changing the language of the interface requires loading the language file using the <script> tag.
+                 language: 'en',
+                 height: 200,
+                 list: {
+                     properties: {
+                         styles: true,
+                         startIndex: true,
+                         reversed: true
+                     }
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+                 heading: {
+                     options: [
+                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                         { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                         { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                         { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                         { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                         { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                         { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                     ]
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+                 placeholder: 'Type your content',
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+                 fontFamily: {
+                     options: [
+                         'default',
+                         'Arial, Helvetica, sans-serif',
+                         'Courier New, Courier, monospace',
+                         'Georgia, serif',
+                         'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                         'Tahoma, Geneva, sans-serif',
+                         'Times New Roman, Times, serif',
+                         'Trebuchet MS, Helvetica, sans-serif',
+                         'Verdana, Geneva, sans-serif'
+                     ],
+                     supportAllValues: true
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+                 fontSize: {
+                     options: [ 9, 10, 11, 12, 13, 'default', 15, 16, 17, 18 ],
+                     supportAllValues: true
+                 },
+                 // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+                 htmlSupport: {
+                     allow: [
+                         {
+                             name: /.*/,
+                             attributes: true,
+                             classes: true,
+                             styles: true
+                         }
+                     ]
+                 },
+                 // Be careful with enabling previews
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+                 htmlEmbed: {
+                     showPreviews: true
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+                 link: {
+                     decorators: {
+                         addTargetToExternalLinks: true,
+                         defaultProtocol: 'https://',
+                         toggleDownloadable: {
+                             mode: 'manual',
+                             label: 'Downloadable',
+                             attributes: {
+                                 download: 'file'
+                             }
+                         }
+                     }
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+                 mention: {
+                     feeds: [
+                         {
+                             marker: '@',
+                             feed: [
+                                 '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                 '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                 '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                 '@sugar', '@sweet', '@topping', '@wafer'
+                             ],
+                             minimumCharacters: 1
+                         }
+                     ]
+                 },
+                 // The "super-build" contains more premium features that require additional configuration, disable them below.
+                 // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+                 removePlugins: [
+                     // These two are commercial, but you can try them out without registering to a trial.
+                     // 'ExportPdf',
+                     // 'ExportWord',
+                     'CKBox',
+                     'CKFinder',
+                     'EasyImage',
+                     // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+                     // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+                     // Storing images as Base64 is usually a very bad idea.
+                     // Replace it on production website with other solutions:
+                     // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+                     // 'Base64UploadAdapter',
+                     'RealTimeCollaborativeComments',
+                     'RealTimeCollaborativeTrackChanges',
+                     'RealTimeCollaborativeRevisionHistory',
+                     'PresenceList',
+                     'Comments',
+                     'TrackChanges',
+                     'TrackChangesData',
+                     'RevisionHistory',
+                     'Pagination',
+                     'WProofreader',
+                     // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+                     // from a local file system (file://) - load this site via HTTP server if you enable MathType.
+                     'MathType',
+                     // The following features are part of the Productivity Pack and require additional license.
+                     'SlashCommand',
+                     'Template',
+                     'DocumentOutline',
+                     'FormatPainter',
+                     'TableOfContents'
+                 ]
+               }).then(editor => {
+       editor.model.document.on('change:data', () => {
+         const content = editor.getData();
+         const charCount = content.length;
+         document.getElementById('charCount').value = charCount;
+       });
+     })
+     .catch(error => {
+       console.error(' CKEditor error:', error);
+     });
+   </script>
+ 
+ <input type="hidden" id="charCount">
 
             </div>
             <div class="l-3 d-flex ">
