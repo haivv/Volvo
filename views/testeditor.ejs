@@ -1,18 +1,29 @@
-<!doctype html>
-<html lang="ko">
-  <head>
-  <meta charset="utf-8">
-    <title>CKEditor</title>
-  </head>
-  <body>
-    <h1>CKEditor</h1>
-    <form action="" method="POST">
-      <textarea name="text" id="editor"></textarea>
-    <p><input type="submit" value="전송"></p>
-    </form>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-    <script>
-      ClassicEditor.create( document.querySelector( '#editor' ) );
-    </script>
-  </body>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Đọc file txt bằng JavaScript</title>
+</head>
+<body>
+
+
+
+
+  <script>
+   function removeTextBeforeUnderscore(inputString) {
+  const underscoreIndex = inputString.indexOf('_');
+
+  if (underscoreIndex !== -1) {
+    return inputString.substring(underscoreIndex + 1);
+  } else {
+    // Nếu không tìm thấy ký tự _, trả về chuỗi ban đầu
+    return inputString;
+  }
+}
+
+// Sử dụng ví dụ
+const inputString = "example_text_text2.png";
+const result = removeTextBeforeUnderscore(inputString);
+alert(result);
+  </script>
+</body>
 </html>

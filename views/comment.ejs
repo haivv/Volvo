@@ -137,16 +137,16 @@
 
                 <div id="content" class="p-2">
                     <div id="imgArt">
-                        <img src="/uploads/<%= data.imgUpload %>" alt="<%= data.imgUpload %>"/>
-                        
+                        <img src="/uploads/<%= data.imgUpload %>" alt="<%= data.imgUpload %>" />
+
                     </div>
                     <div id="conArt">
                         <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
-                        <%- modifiedStr %>
+                            <%- modifiedStr %>
 
                     </div>
 
-                    
+
 
                 </div>
 
@@ -158,84 +158,84 @@
 
 
                         <% if((data.fileUpload=='undefined' ) || (data.fileUpload=='' )) { }else{%>
-                            <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>"
-                                target="_blank">Download</a>
+                            <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>" target="_blank">Download</a>
                             &#9;
-                            <% } %>
+                        <% } %>
 
-                                <% if((data.videoUpload=='undefined' ) || (data.videoUpload=='' )) { } else{%>
-                                    <span>Attached video: </span><a href="/uploads/<%= data.videoUpload %>"
-                                        target="_blank">Download</a>
-                                    <% } %>
-
+                        <% if((data.videoUpload=='undefined' ) || (data.videoUpload=='' )) { } else{%>
+                            <span>Attached video: </span><a href="/uploads/<%= data.videoUpload %>" target="_blank">Download</a>
+                        <% } %>
 
 
-                                        <% if(data.writer==sesWriter){ %>
 
-                                            <div id="action">
-                                                <a href="/notice/notice_edit/<%= data.id %>">Edit</a> <button
-                                                    id="btnDeleteNotice" class="btn btn-link"
-                                                    onclick="showcheckDelete();">Delete</button>
+                        <% if(data.writer==sesWriter){ %>
+
+                            <div id="action">
+                                <a href="/notice/notice_edit/<%= data.id %>">Edit</a> <a
+                                    id="btnDeleteNotice" class="btn btn-link"
+                                    onclick="showcheckDelete();">Delete</a>
 
 
-                                            </div>
+                            </div>
 
-                                            <%} else{%>
+                            <%} else{%>
 
-                                                <% } %>
+                                <% } %>
+
+
                     </div>
-                   
-                        <div id="titComment">
-                            <h4>Comment</h4>
-                        </div>
-                        <div id="commented">
-                            <% if(dataComment.length> 0)
-                                {
-                                dataComment.forEach(function(data2){
-                                %>
-                                <div class="txtWriter">
-                                    <%= data2.comWriter %>
-                                        <%= data2.comDate %>
-                                </div>
-                                <span>
-                                    <%= data2.comContent %>
-                                </span>
 
-
-
-                                <% }); }<!--and if(sampleData.length>-->
-                                    else
-                                    {
-                                    %>
-
-                                    No Data Found
-
-                                    <% } %>
-
-
-
-                        </div>
-                        <div id="typecomment">
-
-                            <form action="/notice/addcomment" name="fcomment" method="post">
-                                <input type="hidden" name="idNotice" value="<%= data.id %>">
-                                <input type="text" name="txtTypeComment" id="txtTypeComment">
-                                <button type="button" class="btn btn-dark" id="btnSend"
-                                    onclick="checkComment()">Send</button>
-
-                            </form>
-
-
-
-                        </div>
-                        <% }); }<!--and if(sampleData.length>-->
-                            else
+                    <div id="titComment">
+                        <h4>Comment</h4>
+                    </div>
+                    <div id="commented">
+                        <% if(dataComment.length> 0)
                             {
+                            dataComment.forEach(function(data2){
                             %>
+                            <div class="txtWriter">
+                                <%= data2.comWriter %>
+                                    <%= data2.comDate %>
+                            </div>
+                            <span>
+                                <%= data2.comContent %>
+                            </span>
 
-                            No Data Found
 
-                            <% } %>
+
+                            <% }); }<!--and if(sampleData.length>-->
+                                else
+                                {
+                                %>
+
+                                No Data Found
+
+                                <% } %>
+
+
+
+                    </div>
+                    <div id="typecomment">
+
+                        <form action="/notice/addcomment" name="fcomment" method="post">
+                            <input type="hidden" name="idNotice" value="<%= data.id %>">
+                            <input type="text" name="txtTypeComment" id="txtTypeComment">
+                            <button type="button" class="btn btn-dark" id="btnSend"
+                                onclick="checkComment()">Send</button>
+
+                        </form>
+
+
+
+                    </div>
+                    <% }); }<!--and if(sampleData.length>-->
+                        else
+                        {
+                        %>
+
+                        No Data Found
+
+                        <% } %>
 
 
 

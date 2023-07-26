@@ -106,36 +106,36 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, callback) {
 
-        var date_ob = new Date();
-        var day = ("0" + date_ob.getDate()).slice(-2);
-        var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-        var year = date_ob.getFullYear();
-        var hours = date_ob.getHours();
-        var minutes = date_ob.getMinutes();
-        var seconds = date_ob.getSeconds();
-        var txtHours, txtMinutes, txtSeconds;
-        if (hours < 10) {
-            txtHours = '0' + hours.toString();
-        }
-        else {
-            txtHours = hours.toString();
-        }
-        if (minutes < 10) {
-            txtMinutes = '0' + minutes.toString();
-        }
-        else {
-            txtMinutes = minutes.toString();
-        }
-        if (seconds < 10) {
-            txtSeconds = '0' + seconds.toString();
-        } else {
-            txtSeconds = seconds.toString();
-        }
-        var dateTime = year + month + day + txtHours + txtMinutes + '_';
+        // var date_ob = new Date();
+        // var day = ("0" + date_ob.getDate()).slice(-2);
+        // var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+        // var year = date_ob.getFullYear();
+        // var hours = date_ob.getHours();
+        // var minutes = date_ob.getMinutes();
+        // var seconds = date_ob.getSeconds();
+        // var txtHours, txtMinutes, txtSeconds;
+        // if (hours < 10) {
+        //     txtHours = '0' + hours.toString();
+        // }
+        // else {
+        //     txtHours = hours.toString();
+        // }
+        // if (minutes < 10) {
+        //     txtMinutes = '0' + minutes.toString();
+        // }
+        // else {
+        //     txtMinutes = minutes.toString();
+        // }
+        // if (seconds < 10) {
+        //     txtSeconds = '0' + seconds.toString();
+        // } else {
+        //     txtSeconds = seconds.toString();
+        // }
+        // var dateTime = year + month + day + '_';
+        
+        var additionName = req.session.sesWriter+ '_';
 
-
-
-        var uniqueFileName = dateTime + file.originalname;
+        var uniqueFileName = additionName + file.originalname;
 
 
         callback(null, uniqueFileName);
@@ -213,7 +213,9 @@ router.post('/proAddNotice', function (req, res, next) {
         txtSeconds = seconds.toString();
     }
 
-    var dateTime = year + month + day + txtHours + txtMinutes + '_';
+    var dateTime = year + month + day + '_';
+
+    
 
     const txtSelect = req.body.searchoption;
     var txtOption = '';
@@ -235,6 +237,8 @@ router.post('/proAddNotice', function (req, res, next) {
     var newContent = database.escape(txtContent);
     var txtWrite = req.session.sesWriter;
 
+    var additionName = req.session.sesWriter+ '_';
+
     var dateString = year + '-' + month + '-' + day;
 
     var imageUpload = req.body.txtimageupload;
@@ -244,7 +248,7 @@ router.post('/proAddNotice', function (req, res, next) {
     if (typeof imageUpload !== 'undefined') {
         imageUpload = imageUpload.trim();
         if (imageUpload != '') {
-            imageUpload = dateTime+imageUpload;
+            imageUpload = additionName+imageUpload;
         } else {
             imageUpload = '';
         }
@@ -255,7 +259,7 @@ router.post('/proAddNotice', function (req, res, next) {
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
         if (fileUpload != '') {
-            fileUpload = dateTime+fileUpload;
+            fileUpload = additionName+fileUpload;
         } else {
             fileUpload = '';
         }
@@ -266,7 +270,7 @@ router.post('/proAddNotice', function (req, res, next) {
     if (typeof videoUpload !== 'undefined') {
         videoUpload = videoUpload.trim();
         if (videoUpload != '') {
-            videoUpload = dateTime+videoUpload;
+            videoUpload = additionName+videoUpload;
         } else {
             videoUpload = '';
         }
@@ -329,24 +333,7 @@ router.post('/proAddNotice', function (req, res, next) {
 
         });
 
-
-
-
-
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
 
@@ -394,7 +381,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
          txtSeconds = seconds.toString();
      }
  
-     var dateTime = year + month + day + txtHours + txtMinutes + '_';
+     var dateTime = year + month + day + '_';
 
 
     var txtTitle = req.body.txtTitle;
@@ -414,11 +401,14 @@ router.post('/proUpdateNotice', function (req, res, next) {
     var imageUpload = req.body.txtimageupload;
     var fileUpload = req.body.txtfileupload;
     var videoUpload = req.body.txtvideoupload;
+    var txtWrite = req.session.sesWriter;
+
+    var additionName = req.session.sesWriter+ '_';
 
     if (typeof imageUpload !== 'undefined') {
         imageUpload = imageUpload.trim();
         if (imageUpload != '') {
-            imageUpload = dateTime+imageUpload;
+            imageUpload = additionName+imageUpload;
         } else {
             imageUpload = '';
         }
@@ -429,7 +419,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
         if (fileUpload != '') {
-            fileUpload = dateTime+fileUpload;
+            fileUpload = additionName+fileUpload;
         } else {
             fileUpload = '';
         }
@@ -440,7 +430,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
     if (typeof videoUpload !== 'undefined') {
         videoUpload = videoUpload.trim();
         if (videoUpload != '') {
-            videoUpload = dateTime+videoUpload;
+            videoUpload = additionName+videoUpload;
         } else {
             videoUpload = '';
         }
@@ -598,7 +588,7 @@ router.get('/updateComment', function (req, res, next) {
 
                 // Access the count value from the result
                 const count = results2[0].count;
-                console.log('Record count:', count);
+                // console.log('Record count:', count);
 
                 //update number of comment
                 database.query(`UPDATE notice SET comment = ${count} where id =${columnValues[i]}`, (error, results2, fields2) => {
@@ -612,16 +602,7 @@ router.get('/updateComment', function (req, res, next) {
                     // Close the connection
 
 
-
-
-
-
                 });
-
-
-
-
-
 
             });
 
@@ -635,6 +616,14 @@ router.get('/updateComment', function (req, res, next) {
 
 
 });
+
+router.get('/testfile', function (req, res, next) {
+   
+    res.render('testeditor');
+
+});
+
+
 router.get('/:page', function (req, res, next) {
     var page = req.params.page;
     var sql = "SELECT * FROM notice";
@@ -660,6 +649,7 @@ router.get('/:page', function (req, res, next) {
         }
     });
 });
+
 
 
 

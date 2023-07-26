@@ -12,13 +12,76 @@
   <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
   <script src="/javascripts/bootstrap.bundle.min.js"></script>
 
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 
 
   <script>
+
+    // Config read file
+    function readImage() {
+      var fileURL = '/config/image_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content1 = xhr.responseText;
+          displayContent1(content1);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent1(content1) {
+       var fileInput = document.getElementById('myimage');
+      fileInput.accept =content1;
+
+    }
+
+    function readFile() {
+      var fileURL = '/config/file_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content2 = xhr.responseText;
+          displayContent2(content2);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent2(content2) {
+       var fileInput = document.getElementById('myfile');
+      fileInput.accept =content2;
+
+    }
+
+    function readVideo() {
+      var fileURL = '/config/video_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content3 = xhr.responseText;
+          displayContent3(content3);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent3(content3) {
+       var fileInput = document.getElementById('myvideo');
+      fileInput.accept =content3;
+
+    }
+
+
+
+
+    // end config read file
+
 
     function checkall() {
       var countOfCheck = 0;
@@ -93,11 +156,7 @@
       var fileInput = document.getElementById('myfile');
       var fileName = fileInput.files[0].name;
       document.getElementById("txtfileupload").innerHTML = fileName;
-
-     
-
       document.getElementById("sendFileName").value =  fileName;
-
       document.fsubmitfile.submit();
     }
 
@@ -120,15 +179,10 @@
     function hideAddVideo() {
       var modal = document.getElementById("addVideo");
       modal.style.display = "none";
-
       var fileInput = document.getElementById('myvideo');
       var fileName = fileInput.files[0].name;
       document.getElementById("txtvideoupload").innerHTML = fileName;
-
-     
-
       document.getElementById("sendVideoName").value = fileName;
-
       document.fsubmitfile.submit();
 
     }
@@ -148,15 +202,10 @@
     function hideAddImage() {
       var modal = document.getElementById("addImage");
       modal.style.display = "none";
-
       var fileInput = document.getElementById('myimage');
       var fileName = fileInput.files[0].name;
       document.getElementById("txtimageupload").innerHTML = fileName;
-
-     
-
       document.getElementById("sendImageName").value = fileName;
-
       document.fsubmitfile.submit();
 
     }
@@ -188,19 +237,19 @@
 
 </head>
 
-<body onLoad="noticeBoxShow();">
+<body onLoad="noticeBoxShow(); readImage(); readFile();readVideo();">
 
 <!--show box to add image -->
 <div id='addImage' class='messBox'>
   <div class='modalmess-content d-flex flex-column p-2'>
     <div class="btnX "><button onclick='closeBoxAddimage()'>X</button></div>
-    <p class="p-1 d-flex ">Please choose video! </p>
+    <p class="p-1 d-flex ">Please choose image! </p>
     <div class="choosefile">
       <form action="/notice/uploadimage" name="fsubmitimage" method="POST" enctype="multipart/form-data">
         <input type="file" name="myimage" id="myimage" class="inputfile inputfile-6" accept="">
         <label for="myimage"><span id="hidfile1"></span> </label>
         <label for="myimage">
-          <div class="btnfile"> Select image</div>
+          <div class="btnfile" id="selectimage"> Select image</div>
         </label>
         <script src="/javascripts/custom-file-input.js"></script>
     </div>
@@ -222,7 +271,7 @@
           <input type="file" name="myvideo" id="myvideo" class="inputfile inputfile-6" accept="">
           <label for="myvideo"><span id="hidfile1"></span> </label>
           <label for="myvideo">
-            <div class="btnfile"> Select file</div>
+            <div class="btnfile"> Select video</div>
           </label>
           <script src="/javascripts/custom-file-input.js"></script>
       </div>
@@ -232,11 +281,6 @@
       </p>
     </div>
   </div>
-
-
-
-
- 
 
   <!--show box to add file -->
   <div id='addfile' class='messBox'>
@@ -259,8 +303,6 @@
       </p>
     </div>
   </div>
-
-
 
   <!--empty title -->
   <div id='checkSelect' class='messBox'>
@@ -298,16 +340,12 @@
 
   <div id='notice' class='modal'>
     <div class='modal-content'>
-
-
       <form action="/notice/proAddNotice" method="post" name="fadd">
         <div class="d-flex flex-column">
           <div class="p-2 d-flex flex-row-reverse ">
-
             <a href='/notice' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
-
-
           </div>
+
           <div class="p-2">
             <div id="title">
               <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"
@@ -320,10 +358,9 @@
                 <option value="op5">Reference</option>
               </select>
               <input type="text" placeholder="Type your title" id="txttitle" name="txtTitle">
-
             </div>
-
           </div>
+
           <div class="p-2">
             <div id="addFile">
               <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i> 
@@ -331,35 +368,23 @@
               <i class="fa fa-picture-o" style="font-size:18px" onclick="addImageShow()"></i>
             </div>
 
-
-
-
             <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
-
-
 
             <textarea cols="80" id="txtContent" name="txtContent" rows="10"></textarea>
 
             <script>
               // CKEDITOR.addCss('.cke_editable { font-size: 15px; padding: 2em; }');
-
-
               CKEDITOR.replace('txtContent',
-
                 {
                   toolbar: [
-
                     {
                       name: 'clipboard',
                       items: ['Undo', 'Redo']
                     },
-                    
                     {
                       name: 'links',
                       items: ['Link', 'Unlink']
                     },
-
-
                     {
                       name: 'basicstyles',
                       items: ['Bold', 'Italic', 'Underline']
@@ -393,9 +418,7 @@
                   height: 200,
                   uiColor: '#CCEAEE',
 
-
                   removeDialogTabs: 'image:advanced;link:advanced',
-
 
                   removeButtons: 'PasteFromWord'
                 });
@@ -403,16 +426,22 @@
 
           </div>
           <div class=" d-flex ">
-            <p id="txtfileupload"></p>
+            
+            
+            
+            <span id="txtfileupload"></span>
             <input type="hidden" name="txtfileupload" id="sendFileName">
-            &#9; 
-            <p id="txtvideoupload"></p>
+
+            <span id="txtvideoupload"></span>
             <input type="hidden" name="txtvideoupload" id="sendVideoName">
-            &#9; 
-            <p id="txtimageupload"></p>
+            
+            
+            <span id="txtimageupload"></span>
             <input type="hidden" name="txtimageupload" id="sendImageName">
 
-            <input type="hidden" name="txtsendWriter" value="sendImageName">
+            
+
+            <!-- <input type="hidden" name="txtsendWriter" value="txtsendWriter"> -->
 
           </div>
 
@@ -422,18 +451,11 @@
           </div>
 
 
-
-
-
-
         </div><!--end flex-->
       </form>
 
     </div><!--end modal-content-->
   </div><!--end loginfail-->
-
-
-
 
 
 

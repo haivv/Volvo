@@ -1,0 +1,1 @@
+.hwp, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .txt, .csv, .jpg, .jpeg, .gif, .png, .bmp, .tiff, .pdf, .zip, .avi, .mp4, .mov, .wmv, .fbx
