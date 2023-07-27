@@ -21,7 +21,7 @@
   <script>
 // Config read file
 function readImage() {
-      var fileURL = '/config/image_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var fileURL = '/config/image_extension.txt'; // 
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
@@ -40,7 +40,7 @@ function readImage() {
     }
 
     function readFile() {
-      var fileURL = '/config/file_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var fileURL = '/config/file_extension.txt'; // 
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
@@ -59,7 +59,7 @@ function readImage() {
     }
 
     function readVideo() {
-      var fileURL = '/config/video_extension.txt'; // Điền đúng đường dẫn đến file.txt của bạn
+      var fileURL = '/config/video_extension.txt'; // 
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
@@ -100,13 +100,13 @@ function readImage() {
         return false;
       }
 
-       //check content empty
-       if (document.getElementById('charCount').value == 0) {
-        var modal = document.getElementById("checkContent");
-        modal.style.display = "block";
-        countOfCheck += 1;
-        return false;
-      }
+      //  //check content empty
+      //  if ((document.getElementById('charCount').value == 0)  && (document.getElementById('charCount1').value == 0)) {
+      //   var modal = document.getElementById("checkContent");
+      //   modal.style.display = "block";
+      //   countOfCheck += 1;
+      //   return false;
+      // }
       if (document.getElementById('charCount').value >5000) {
         var modal = document.getElementById("checkContent2");
         modal.style.display = "block";
@@ -257,7 +257,7 @@ function readImage() {
 
 </head>
 
-<body onLoad="noticeBoxShow(); readImage(); readFile();readVideo();">
+<body onLoad="noticeBoxShow(); readImage(); readFile();readVideo(); countParagraphs(); ">
 
   <!--show box to add image -->
   <div id='addImage' class='messBox'>
@@ -410,7 +410,7 @@ function readImage() {
                 <i class="fa fa-video-camera" style="font-size:18px" onclick="addVideoShow()"></i>
                 <i class="fa fa-picture-o" style="font-size:18px" onclick="addImageShow()"></i>
               </div>
-              <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
+              <script src="/javascripts/ckeditor.js"></script>
               <textarea cols="80" id="txtContent" name="txtContent" rows="10">
                 <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
 
@@ -561,14 +561,22 @@ function readImage() {
          const content = editor.getData();
          const charCount = content.length;
          document.getElementById('charCount').value = charCount;
+        
+         
        });
      })
      .catch(error => {
        console.error(' CKEditor error:', error);
      });
+
+    
+       
    </script>
  
- <input type="hidden" id="charCount">
+ <input type="text" id="charCount">
+
+ 
+  
 
             </div>
             <div class="l-3 d-flex ">
