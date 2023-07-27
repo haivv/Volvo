@@ -4,8 +4,7 @@ const IP = require('ip'); //get client ip
 var database = require('../database');
 const fs = require('fs');
 var multer = require('multer');
-
-
+var createError = require('http-errors');
 
 
 
@@ -622,7 +621,10 @@ router.get('/testfile', function (req, res, next) {
     res.render('testeditor');
 
 });
-
+router.use((req, res, next) => {
+    // res.status(404).send('Not found');
+    next(createError(404));
+  });
 
 router.get('/:page', function (req, res, next) {
     var page = req.params.page;

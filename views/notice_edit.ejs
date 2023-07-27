@@ -21,7 +21,7 @@
   <script>
 // Config read file
 function readImage() {
-      var fileURL = '/config/image_extension.txt'; // 
+      var fileURL = '/config/image_extension.ini'; // 
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
@@ -40,7 +40,7 @@ function readImage() {
     }
 
     function readFile() {
-      var fileURL = '/config/file_extension.txt'; // 
+      var fileURL = '/config/file_extension.ini'; // 
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
@@ -59,7 +59,7 @@ function readImage() {
     }
 
     function readVideo() {
-      var fileURL = '/config/video_extension.txt'; // 
+      var fileURL = '/config/video_extension.ini'; // 
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
@@ -573,10 +573,8 @@ function readImage() {
        
    </script>
  
- <input type="text" id="charCount">
+ <input type="hidden" id="charCount">
 
- 
-  
 
             </div>
             <div class="l-3 d-flex ">
