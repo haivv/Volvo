@@ -8,14 +8,6 @@ var createError = require('http-errors');
 
 
 
-
-
-
-
-
-
-
-
 router.get('/', function (req, res, next) {
 
     var ses = req.session.sesWriter;
@@ -131,8 +123,8 @@ var storage = multer.diskStorage({
         //     txtSeconds = seconds.toString();
         // }
         // var dateTime = year + month + day + '_';
-        
-        var additionName = req.session.sesWriter+ '_';
+
+        var additionName = req.session.sesWriter + '_';
 
         var uniqueFileName = additionName + file.originalname;
 
@@ -214,7 +206,7 @@ router.post('/proAddNotice', function (req, res, next) {
 
     var dateTime = year + month + day + '_';
 
-    
+
 
     const txtSelect = req.body.searchoption;
     var txtOption = '';
@@ -236,7 +228,7 @@ router.post('/proAddNotice', function (req, res, next) {
     var newContent = database.escape(txtContent);
     var txtWrite = req.session.sesWriter;
 
-    var additionName = req.session.sesWriter+ '_';
+    var additionName = req.session.sesWriter + '_';
 
     var dateString = year + '-' + month + '-' + day;
 
@@ -247,7 +239,7 @@ router.post('/proAddNotice', function (req, res, next) {
     if (typeof imageUpload !== 'undefined') {
         imageUpload = imageUpload.trim();
         if (imageUpload != '') {
-            imageUpload = additionName+imageUpload;
+            imageUpload = additionName + imageUpload;
         } else {
             imageUpload = '';
         }
@@ -258,7 +250,7 @@ router.post('/proAddNotice', function (req, res, next) {
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
         if (fileUpload != '') {
-            fileUpload = additionName+fileUpload;
+            fileUpload = additionName + fileUpload;
         } else {
             fileUpload = '';
         }
@@ -269,7 +261,7 @@ router.post('/proAddNotice', function (req, res, next) {
     if (typeof videoUpload !== 'undefined') {
         videoUpload = videoUpload.trim();
         if (videoUpload != '') {
-            videoUpload = additionName+videoUpload;
+            videoUpload = additionName + videoUpload;
         } else {
             videoUpload = '';
         }
@@ -353,34 +345,34 @@ router.post('/proUpdateNotice', function (req, res, next) {
     }
 
 
-     //add datetime to file name
-     var date_ob = new Date();
-     var day = ("0" + date_ob.getDate()).slice(-2);
-     var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-     var year = date_ob.getFullYear();
-     var hours = date_ob.getHours();
-     var minutes = date_ob.getMinutes();
-     var seconds = date_ob.getSeconds();
-     var txtHours, txtMinutes, txtSeconds;
-     if (hours < 10) {
-         txtHours = '0' + hours.toString();
-     }
-     else {
-         txtHours = hours.toString();
-     }
-     if (minutes < 10) {
-         txtMinutes = '0' + minutes.toString();
-     }
-     else {
-         txtMinutes = minutes.toString();
-     }
-     if (seconds < 10) {
-         txtSeconds = '0' + seconds.toString();
-     } else {
-         txtSeconds = seconds.toString();
-     }
- 
-     var dateTime = year + month + day + '_';
+    //add datetime to file name
+    var date_ob = new Date();
+    var day = ("0" + date_ob.getDate()).slice(-2);
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    var year = date_ob.getFullYear();
+    var hours = date_ob.getHours();
+    var minutes = date_ob.getMinutes();
+    var seconds = date_ob.getSeconds();
+    var txtHours, txtMinutes, txtSeconds;
+    if (hours < 10) {
+        txtHours = '0' + hours.toString();
+    }
+    else {
+        txtHours = hours.toString();
+    }
+    if (minutes < 10) {
+        txtMinutes = '0' + minutes.toString();
+    }
+    else {
+        txtMinutes = minutes.toString();
+    }
+    if (seconds < 10) {
+        txtSeconds = '0' + seconds.toString();
+    } else {
+        txtSeconds = seconds.toString();
+    }
+
+    var dateTime = year + month + day + '_';
 
 
     var txtTitle = req.body.txtTitle;
@@ -402,12 +394,12 @@ router.post('/proUpdateNotice', function (req, res, next) {
     var videoUpload = req.body.txtvideoupload;
     var txtWrite = req.session.sesWriter;
 
-    var additionName = req.session.sesWriter+ '_';
+    var additionName = req.session.sesWriter + '_';
 
     if (typeof imageUpload !== 'undefined') {
         imageUpload = imageUpload.trim();
         if (imageUpload != '') {
-            imageUpload = additionName+imageUpload;
+            imageUpload = additionName + imageUpload;
         } else {
             imageUpload = '';
         }
@@ -418,7 +410,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
         if (fileUpload != '') {
-            fileUpload = additionName+fileUpload;
+            fileUpload = additionName + fileUpload;
         } else {
             fileUpload = '';
         }
@@ -429,7 +421,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
     if (typeof videoUpload !== 'undefined') {
         videoUpload = videoUpload.trim();
         if (videoUpload != '') {
-            videoUpload = additionName+videoUpload;
+            videoUpload = additionName + videoUpload;
         } else {
             videoUpload = '';
         }
@@ -617,39 +609,54 @@ router.get('/updateComment', function (req, res, next) {
 });
 
 router.get('/testfile', function (req, res, next) {
-   
+
     res.render('testeditor');
 
 });
-router.use((req, res, next) => {
-    // res.status(404).send('Not found');
-    next(createError(404));
-  });
+
 
 router.get('/:page', function (req, res, next) {
     var page = req.params.page;
-    var sql = "SELECT * FROM notice";
-    database.query(sql, function (error, data) {
-        if (error) {
-            throw error;
-        }
-        else {
-            var per_page_record = 5;
-            var total_records = data.length;
-            var total_pages = Math.round(total_records / per_page_record);
-            var start_from = (page - 1) * per_page_record;
-            var sqlpage = `SELECT * FROM notice ORDER BY id DESC LIMIT ${start_from}, ${per_page_record}`;
 
-            database.query(sqlpage, function (error, dataPage) {
-                if (error) {
-                    throw error;
-                }
-                else {
-                    res.render('notice', { title: 'Notice', dataPage: dataPage, total_pages: total_pages, page: page });
-                }
-            });
-        }
-    });
+    function isNumber(value) {
+        return !isNaN(parseFloat(value)) && isFinite(value);
+    }
+
+    if (isNumber(page)) {
+
+        var sql = "SELECT * FROM notice";
+        database.query(sql, function (error, data) {
+            if (error) {
+                //throw error;
+                res.render('error');
+            }
+            else {
+                var per_page_record = 5;
+                var total_records = data.length;
+                var total_pages = Math.round(total_records / per_page_record);
+                var start_from = (page - 1) * per_page_record;
+                var sqlpage = `SELECT * FROM notice ORDER BY id DESC LIMIT ${start_from}, ${per_page_record}`;
+
+                database.query(sqlpage, function (error, dataPage) {
+                    if (error) {
+                        //throw error;
+                        res.render('error');
+                    }
+                    else {
+                        res.render('notice', { title: 'Notice', dataPage: dataPage, total_pages: total_pages, page: page });
+                    }
+                });
+            }
+        });
+
+    }
+    else {
+        // res.send("Not found");
+        next(createError(404));
+    }
+
+
+
 });
 
 
