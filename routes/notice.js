@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
         else {
             var per_page_record = 5;
             var total_records = data.length;
-            var total_pages = Math.round(total_records / per_page_record);
+            var total_pages = Math.ceil(total_records / per_page_record);
             var start_from = (page - 1) * per_page_record;
             var sqlpage = `SELECT * FROM notice ORDER BY id DESC LIMIT ${start_from}, ${per_page_record}`;
 
@@ -633,7 +633,8 @@ router.get('/:page', function (req, res, next) {
             else {
                 var per_page_record = 5;
                 var total_records = data.length;
-                var total_pages = Math.round(total_records / per_page_record);
+                var total_pages = Math.ceil(total_records / per_page_record);
+                
                 var start_from = (page - 1) * per_page_record;
                 var sqlpage = `SELECT * FROM notice ORDER BY id DESC LIMIT ${start_from}, ${per_page_record}`;
 
