@@ -440,7 +440,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
         UPDATE notice 
         SET title = "${txtTitle}",
         category = "${txtOption}", 
-        dateCreate = "${dateString}", 
+        
         writer = "${txtWriter}", 
         content = "${newContent}", 
         imgUpload = "${imageUpload}", 
