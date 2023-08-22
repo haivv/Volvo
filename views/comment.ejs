@@ -7,11 +7,17 @@
     </title>
 
     <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+
     <link rel='stylesheet' href='/stylesheets/notice.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
     <script src="/javascripts/bootstrap.bundle.min.js"></script>
+
     <!-- <script src="/javascripts/custom-file-input.js"></script> -->
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="/javascripts/image-resize.min.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script>
 
 
@@ -34,6 +40,13 @@
     <style>
         body {
             background: #F5F6F9;
+
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 
@@ -74,13 +87,19 @@
 
     </script>
     <style>
-        #content{
-            height: 220px;
-            overflow-y:scroll;
-        }
-        #content p{
+        #content {
             width: 100%;
+            height: 36vh;
+            overflow-y: scroll;
+
         }
+
+        .ql-editor {
+            width: 100%;
+            margin: 0px !important;
+            padding: 0px 10px;
+        }
+       
     </style>
 
 </head>
@@ -137,14 +156,9 @@
                     Writer: <%= data.writer %> - Date: <%= data.dateCreate %> %>
                 </div>
 
-                <div id="content" class="p-2" >
-                 
-
-                        <% const str=data.content.toString(); %>
-                            <%- str %>
-
-  
-
+                <div id="content" >
+                    <div class="ql-editor"> <% const str=data.content.toString(); %> <%- str %>             </div>
+                  
 
 
                 </div>
@@ -157,40 +171,35 @@
 
 
                         <% if((data.fileUpload=='undefined' ) || (data.fileUpload=='' )) { }else{%>
-                            <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>" target="_blank">  <% 
-                                                                                                                        var strName = data.fileUpload.toString(); 
-                                                                                                                        var pos = strName.indexOf('_');
-                                                                                                                        var result = strName.substring(pos + 1);
-
-                                                                                                                        var lengthOfStr = result.length; 
-                                                                                                                        if(lengthOfStr>20) { 
-                                                                                                                    %>          
-                                                                                                                    <%=            result.substring(0,20) + ' ...';  %> 
-                                                                                                                    <% }else { %>  
-                                                                                                                    <%= result %> 
-                                                                                                                    <% } %></a>
+                            <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>" target="_blank">
+                                <% var strName=data.fileUpload.toString(); var pos=strName.indexOf('_'); var
+                                    result=strName.substring(pos + 1); var lengthOfStr=result.length; if(lengthOfStr>20)
+                                    {
+                                    %>
+                                    <%= result.substring(0,20) + ' ...' ; %>
+                                        <% }else { %>
+                                            <%= result %>
+                                                <% } %>
+                            </a>
                             &#9;
-                        <% } %>
-
-                        <% if((data.videoUpload=='undefined' ) || (data.videoUpload=='' )) { } else{%>
-                            <span>Attached video: </span><a href="/uploads/<%= data.videoUpload %>" target="_blank">Download</a>
-                        <% } %>
+                            <% } %>
 
 
 
-                        <% if(data.writer==sesWriter){ %>
-
-                            <div id="action">
-                                <a href="/notice/notice_edit/<%= data.id %>">Edit</a> <a
-                                    id="btnDeleteNotice" class="btn btn-link"
-                                    onclick="showcheckDelete();">Delete</a>
 
 
-                            </div>
+                                <% if(data.writer==sesWriter){ %>
 
-                            <%} else{%>
+                                    <div id="action">
+                                        <a href="/notice/notice_edit/<%= data.id %>">Edit</a> <a id="btnDeleteNotice"
+                                            class="btn btn-link" onclick="showcheckDelete();">Delete</a>
 
-                                <% } %>
+
+                                    </div>
+
+                                    <%} else{%>
+
+                                        <% } %>
 
 
                     </div>
