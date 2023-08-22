@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  <link rel='stylesheet' href='/stylesheets/notice.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+  <script>
+// Config read file
+function readImage() {
+      var fileURL = '/config/image_extension.ini'; // 
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content1 = xhr.responseText;
+          displayContent1(content1);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent1(content1) {
+       var fileInput = document.getElementById('myimage');
+      fileInput.accept =content1;
+
+    }
+
+    function readFile() {
+      var fileURL = '/config/file_extension.ini'; // 
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content2 = xhr.responseText;
+          displayContent2(content2);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent2(content2) {
+       var fileInput = document.getElementById('myfile');
+      fileInput.accept =content2;
+
+    }
+
+    function readVideo() {
+      var fileURL = '/config/video_extension.ini'; // 
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content3 = xhr.responseText;
+          displayContent3(content3);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent3(content3) {
+       var fileInput = document.getElementById('myvideo');
+      fileInput.accept =content3;
+
+    }
+
+
+
+
+    // end config read file
+    
+
+    function checkall() {
+      var countOfCheck = 0;
+      if ((document.getElementById('searchoption').value != "op1") && (document.getElementById('searchoption').value != "op2") && (document.getElementById('searchoption').value != "op3") && (document.getElementById('searchoption').value != "op4") && (document.getElementById('searchoption').value != "op5")) {
+        var modal = document.getElementById("checkSelect");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+
+      if (document.getElementById('txttitle').value == "") {
+        var modal = document.getElementById("checkTitle");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+      //  //check content empty
+      //  if ((document.getElementById('charCount').value == 0)  && (document.getElementById('charCount1').value == 0)) {
+      //   var modal = document.getElementById("checkContent");
+      //   modal.style.display = "block";
+      //   countOfCheck += 1;
+      //   return false;
+      // }
+      if (document.getElementById('charCount').value >5000) {
+        var modal = document.getElementById("checkContent2");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+
+
+      
+
+      document.fadd.submit();
+    }
+
+    function hideCheckSelect() {
+      var modal = document.getElementById("checkSelect");
+      document.getElementById('searchoption').focus();
+      modal.style.display = "none";
+    }
+
+    function hideCheckTitle() {
+      var modal = document.getElementById("checkTitle");
+      document.getElementById('txttitle').focus();
+      modal.style.display = "none";
+    }
+
+    function hideCheckContent() {
+      var modal = document.getElementById("checkContent");
+      document.getElementById('txtContent').focus();
+      modal.style.display = "none";
+    }
+    function hideCheckContent2() {
+      var modal = document.getElementById("checkContent2");
+      document.getElementById('txtContent').focus();
+      modal.style.display = "none";
+    }
+
+
+
+    function noticeBoxShow() {
+      // document.getElementById("editorMain").value = '';
+      var modal = document.getElementById("notice");
+      modal.style.display = "block";
+    }
+
+    function noticeBoxHide() {
+      var modal = document.getElementById("notice");
+      modal.style.display = "none";
+    }
+
+
+    // Add file
+    function addFileShow() {
+      // document.getElementById("editorMain").value = '';
+      var modal = document.getElementById("addfile");
+      modal.style.display = "block";
+    }
+
+    function hideAddFile() {
+      var modal = document.getElementById("addfile");
+      modal.style.display = "none";
+      var fileInput = document.getElementById('myfile');
+      var fileName = fileInput.files[0].name;
+      document.getElementById("txtfileupload").innerHTML = fileName;
+      document.getElementById("sendFileName").value = fileName;
+      document.fsubmitfile.submit();
+    }
+
+    function closeBoxAddfile() {
+      var modal = document.getElementById("addfile");
+      modal.style.display = "none";
+    }
+
+
+
+    // Add video
+    function addVideoShow() {
+      // document.getElementById("editorMain").value = '';
+      var modal = document.getElementById("addVideo");
+      modal.style.display = "block";
+    }
+
+    function hideAddVideo() {
+      var modal = document.getElementById("addVideo");
+      modal.style.display = "none";
+      var fileInput = document.getElementById('myvideo');
+      var fileName = fileInput.files[0].name;
+      document.getElementById("txtvideoupload").innerHTML = fileName;
+      document.getElementById("sendVideoName").value = fileName;
+      document.fsubmitfile.submit();
+
+    }
+
+    function closeBoxAddvideo() {
+      var modal = document.getElementById("addVideo");
+      modal.style.display = "none";
+    }
+
+
+    // Add image
+    function addImageShow() {
+      // document.getElementById("editorMain").value = '';
+      var modal = document.getElementById("addImage");
+      modal.style.display = "block";
+    }
+
+    function hideAddImage() {
+      var modal = document.getElementById("addImage");
+      modal.style.display = "none";
+
+      var fileInput = document.getElementById('myimage');
+      var fileName = fileInput.files[0].name;
+      document.getElementById("txtimageupload").innerHTML = fileName;
+
+
+
+      document.getElementById("sendImageName").value = fileName;
+
+      document.fsubmitfile.submit();
+
+    }
+
+    function closeBoxAddimage() {
+      var modal = document.getElementById("addImage");
+      modal.style.display = "none";
+    }
+
+  </script>
+
+
+  <style>
+    body {
+      background: #F5F6F9;
+    }
+  </style>
+
+  <script>
+    // message box
+    function showSelEmpMes() {
+      var modal = document.getElementById("emptySelect");
+      modal.style.display = "block";
+    }
+
+
+  </script>
+
+
+
+</head>
+
+<body onLoad="noticeBoxShow(); readImage(); readFile();readVideo(); countParagraphs(); ">
+
+  <!--show box to add image -->
+  <div id='addImage' class='messBox'>
+    <div class='modalmess-content d-flex flex-column p-2'>
+      <div class="btnX "><button onclick='closeBoxAddimage()'>X</button></div>
+      <p class="p-1 d-flex ">Please choose image! </p>
+      <div class="choosefile">
+        <form action="/notice/uploadimage" name="fsubmitimage" method="POST" enctype="multipart/form-data">
+          <input type="file" name="myimage" id="myimage" class="inputfile inputfile-6" accept="">
+          <label for="myimage"><span id="hidfile1"></span> </label>
+          <label for="myimage">
+            <div class="btnfile" id="selectimage"> Select image</div>
+          </label>
+          <script src="/javascripts/custom-file-input.js"></script>
+      </div>
+      <p class="d-flex flex-row-reverse">
+        <button class='btn btn-dark btnFileUpload' onclick="hideAddImage()">Upload</button>
+        </form>
+      </p>
+    </div>
+  </div>
+
+  <!--show box to add video -->
+  <div id='addVideo' class='messBox'>
+    <div class='modalmess-content d-flex flex-column p-2'>
+      <div class="btnX "><button onclick='closeBoxAddvideo()'>X</button></div>
+      <p class="p-1 d-flex ">Please choose video! </p>
+      <div class="choosefile">
+        <form action="/notice/uploadvideo" name="fsubmitvideo" method="POST" enctype="multipart/form-data">
+          <input type="file" name="myvideo" id="myvideo" class="inputfile inputfile-6" accept="">
+          <label for="myvideo"><span id="hidfile1"></span> </label>
+          <label for="myvideo">
+            <div class="btnfile"> Select video</div>
+          </label>
+          <script src="/javascripts/custom-file-input.js"></script>
+      </div>
+      <p class="d-flex flex-row-reverse">
+        <button class='btn btn-dark btnFileUpload' onclick="hideAddVideo()">Upload</button>
+        </form>
+      </p>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!--show box to add file -->
+  <div id='addfile' class='messBox'>
+
+    <div class='modalmess-content d-flex flex-column p-2'>
+      <div class="btnX "><button onclick='closeBoxAddfile()'>X</button></div>
+      <p class="p-1 d-flex ">Please choose file! </p>
+      <div class="choosefile">
+        <form action="/notice/uploadfile" name="fsubmitfile" method="POST" enctype="multipart/form-data">
+          <input type="file" name="myfile" id="myfile" class="inputfile inputfile-6" accept="">
+          <label for="myfile"><span id="hidfile1"></span> </label>
+          <label for="myfile">
+            <div class="btnfile"> Select file</div>
+          </label>
+          <script src="/javascripts/custom-file-input.js"></script>
+      </div>
+      <p class="d-flex flex-row-reverse">
+        <button class='btn btn-dark btnFileUpload' onclick="hideAddFile()">Upload</button>
+        </form>
+      </p>
+    </div>
+  </div>
+
+
+
+  <!--empty title -->
+  <div id='checkSelect' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please choose category!</p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckSelect();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+  <!--empty title -->
+  <div id='checkTitle' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please type title!</p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckTitle();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+  <!--empty content -->
+  <div id='checkContent' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please type content! </p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckContent();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+   <!--max content -->
+   <div id='checkContent2' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">The length of content must be less than 5000 characters! </p>
+      <p class="mb-3 pe-3 d-flex flex-row-reverse" id="editConfirmCheckLength">
+        <a href='#' onclick='hideCheckContent2();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+  <div id='notice' class='modal'>
+    <div class='modal-content'>
+      <form action="/notice/proUpdateNotice" method="post" name="fadd">
+        <div class="d-flex flex-column">
+          <div class="p-2 d-flex flex-row-reverse ">
+            <a href='/notice' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
+          </div>
+          <!-- show data from data base to modifine -->
+          <% if(Data.length> 0)
+            {
+            Data.forEach(function(data){
+            %>
+
+            <div class="p-2">
+              <div id="title">
+                <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"
+                  id="searchoption">
+                  <option>Select a category</option>
+
+                  <option value="op1" <% if(data.category=='Announcement' ){ %> selected <% } %> >Announcement</option>
+                  <option value="op2" <% if(data.category=='Suggestion' ){ %> selected <% } %> >Suggestion</option>
+                  <option value="op3" <% if(data.category=='Opinion' ){ %> selected <% } %> >Opinion</option>
+                  <option value="op4" <% if(data.category=='Request' ){ %> selected <% } %> >Request</option>
+                  <option value="op5" <% if(data.category=='Reference' ){ %> selected <% } %> >Reference</option>
+                </select>
+                <input type="text" placeholder="Type your title" id="txttitle" name="txtTitle"
+                  value="<%= data.title %>">
+              </div>
+
+            </div>
+            <div class="p-2">
+              <div id="addFile">
+                <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i>
+                <i class="fa fa-video-camera" style="font-size:18px" onclick="addVideoShow()"></i>
+                <i class="fa fa-picture-o" style="font-size:18px" onclick="addImageShow()"></i>
+              </div>
+              <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
+              <textarea cols="80" id="txtContent" name="txtContent" rows="10">
+                <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
+
+                        <%- modifiedStr %>
+
+              </textarea>
+
+              <script>
+                CKEDITOR.ClassicEditor.create(document.getElementById("txtContent"), {
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+                 toolbar: {
+                     items: [
+                         
+                         'undo', 'redo',
+                         'fontSize', 'fontFamily', 'fontColor',  '|',
+                         'bold', 'italic', 'underline', '|',
+                         'link'
+                     ],
+                     shouldNotGroupWhenFull: true
+                 },
+                 // Changing the language of the interface requires loading the language file using the <script> tag.
+                 language: 'en',
+                 height: 200,
+                 list: {
+                     properties: {
+                         styles: true,
+                         startIndex: true,
+                         reversed: true
+                     }
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+                 heading: {
+                     options: [
+                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                         { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                         { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                         { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                         { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                         { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                         { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                     ]
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+                 placeholder: 'Type your content',
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+                 fontFamily: {
+                     options: [
+                         'default',
+                         'Arial, Helvetica, sans-serif',
+                         'Courier New, Courier, monospace',
+                         'Georgia, serif',
+                         'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                         'Tahoma, Geneva, sans-serif',
+                         'Times New Roman, Times, serif',
+                         'Trebuchet MS, Helvetica, sans-serif',
+                         'Verdana, Geneva, sans-serif'
+                     ],
+                     supportAllValues: true
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+                 fontSize: {
+                     options: [ 9, 10, 11, 12, 13, 'default', 15, 16, 17, 18 ],
+                     supportAllValues: true
+                 },
+                 // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+                 htmlSupport: {
+                     allow: [
+                         {
+                             name: /.*/,
+                             attributes: true,
+                             classes: true,
+                             styles: true
+                         }
+                     ]
+                 },
+                 // Be careful with enabling previews
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+                 htmlEmbed: {
+                     showPreviews: true
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+                 link: {
+                     decorators: {
+                         addTargetToExternalLinks: true,
+                         defaultProtocol: 'https://',
+                         toggleDownloadable: {
+                             mode: 'manual',
+                             label: 'Downloadable',
+                             attributes: {
+                                 download: 'file'
+                             }
+                         }
+                     }
+                 },
+                 // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+                 mention: {
+                     feeds: [
+                         {
+                             marker: '@',
+                             feed: [
+                                 '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                 '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                 '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                 '@sugar', '@sweet', '@topping', '@wafer'
+                             ],
+                             minimumCharacters: 1
+                         }
+                     ]
+                 },
+                 // The "super-build" contains more premium features that require additional configuration, disable them below.
+                 // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+                 removePlugins: [
+                     // These two are commercial, but you can try them out without registering to a trial.
+                     // 'ExportPdf',
+                     // 'ExportWord',
+                     'CKBox',
+                     'CKFinder',
+                     'EasyImage',
+                     // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+                     // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+                     // Storing images as Base64 is usually a very bad idea.
+                     // Replace it on production website with other solutions:
+                     // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+                     // 'Base64UploadAdapter',
+                     'RealTimeCollaborativeComments',
+                     'RealTimeCollaborativeTrackChanges',
+                     'RealTimeCollaborativeRevisionHistory',
+                     'PresenceList',
+                     'Comments',
+                     'TrackChanges',
+                     'TrackChangesData',
+                     'RevisionHistory',
+                     'Pagination',
+                     'WProofreader',
+                     // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+                     // from a local file system (file://) - load this site via HTTP server if you enable MathType.
+                     'MathType',
+                     // The following features are part of the Productivity Pack and require additional license.
+                     'SlashCommand',
+                     'Template',
+                     'DocumentOutline',
+                     'FormatPainter',
+                     'TableOfContents'
+                 ]
+               }).then(editor => {
+       editor.model.document.on('change:data', () => {
+         const content = editor.getData();
+         const charCount = content.length;
+         document.getElementById('charCount').value = charCount;
+        
+         
+       });
+     })
+     .catch(error => {
+       console.error(' CKEditor error:', error);
+     });
+
+    
+       
+   </script>
+ 
+ <input type="hidden" id="charCount">
+
+
+            </div>
+            <div class="l-3 d-flex ">
+              <input type="hidden" name="txtid" value="<%= data.id %> ">
+              <input type="hidden" name="txtsendWriter" value="<%= data.writer %> ">
+
+              <span id="txtfileupload">
+                <% const strFile=data.fileUpload.toString();
+                
+                function removeTextBeforeUnderscore(inputString) {
+                  const underscoreIndex = inputString.indexOf('_');
+                  if (underscoreIndex !== -1) {
+                    return inputString.substring(underscoreIndex + 1);
+                  } else {
+                    return inputString;
+                  }
+                }
+
+                %>
+                  <%= 
+                  
+                  removeTextBeforeUnderscore(strFile);
+                  
+                  %>
+
+              </span>
+              <input type="hidden" name="txtfileupload" id="sendFileName" value="<%=  removeTextBeforeUnderscore(strFile); %> ">
+
+
+
+              <span id="txtvideoupload">
+                <% const strVideo=data.videoUpload.toString(); 
+                
+                function removeTextBeforeUnderscore(inputString) {
+                  const underscoreIndex = inputString.indexOf('_');
+                  if (underscoreIndex !== -1) {
+                    return inputString.substring(underscoreIndex + 1);
+                  } else {
+                    return inputString;
+                  }
+                }
+                
+                
+                
+                
+                %>
+                  <%= 
+                  removeTextBeforeUnderscore(strVideo);
+                  
+                  %>
+              </span>
+              <input type="hidden" name="txtvideoupload" id="sendVideoName" value="<%=  removeTextBeforeUnderscore(strVideo);  %> ">
+
+              <span id="txtimageupload">
+                <% const strImage=data.imgUpload.toString(); 
+                function removeTextBeforeUnderscore(inputString) {
+                  const underscoreIndex = inputString.indexOf('_');
+                  if (underscoreIndex !== -1) {
+                    return inputString.substring(underscoreIndex + 1);
+                  } else {
+                    return inputString;
+                  }
+                }
+
+
+                %>
+                  <%= 
+                    removeTextBeforeUnderscore(strImage);
+                  
+                  %>
+
+              </span>
+              <input type="hidden" name="txtimageupload" id="sendImageName" value="<%= removeTextBeforeUnderscore(strImage); %> ">
+
+            </div>
+
+
+            <% }); } else { %>
+              No Data Found
+              <% } %>
+
+                <div class="p-2 d-flex flex-row-reverse ">
+                  <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkall()">Update</button>
+
+                </div>
+
+
+
+
+
+
+        </div><!--end flex-->
+      </form>
+
+    </div><!--end modal-content-->
+  </div><!--end loginfail-->
+
+
+
+
+
+
+</body>
+
+</html>

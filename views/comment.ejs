@@ -45,8 +45,6 @@
         }
         // Check Delete
         function showcheckDelete() {
-
-
             var modal = document.getElementById("checkDelete");
             modal.style.display = "block";
         }
@@ -64,22 +62,26 @@
             }
             else {
                 document.fcomment.submit();
-
             }
         }
 
         // check comment
 
         function hidecheckComment() {
-
             var modal = document.getElementById("checkComment");
             modal.style.display = "none";
-
-
-
         }
 
     </script>
+    <style>
+        #content{
+            height: 220px;
+            overflow-y:scroll;
+        }
+        #content p{
+            width: 100%;
+        }
+    </style>
 
 </head>
 
@@ -135,16 +137,13 @@
                     Writer: <%= data.writer %> - Date: <%= data.dateCreate %> %>
                 </div>
 
-                <div id="content" class="p-2">
-                    <div id="imgArt">
-                        <img src="/uploads/<%= data.imgUpload %>" alt="<%= data.imgUpload %>" />
+                <div id="content" class="p-2" >
+                 
 
-                    </div>
-                    <div id="conArt">
-                        <% const str=data.content.toString(); const modifiedStr=str.slice(1, -1); %>
-                            <%- modifiedStr %>
+                        <% const str=data.content.toString(); %>
+                            <%- str %>
 
-                    </div>
+  
 
 
 
@@ -158,7 +157,18 @@
 
 
                         <% if((data.fileUpload=='undefined' ) || (data.fileUpload=='' )) { }else{%>
-                            <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>" target="_blank">Download</a>
+                            <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>" target="_blank">  <% 
+                                                                                                                        var strName = data.fileUpload.toString(); 
+                                                                                                                        var pos = strName.indexOf('_');
+                                                                                                                        var result = strName.substring(pos + 1);
+
+                                                                                                                        var lengthOfStr = result.length; 
+                                                                                                                        if(lengthOfStr>20) { 
+                                                                                                                    %>          
+                                                                                                                    <%=            result.substring(0,20) + ' ...';  %> 
+                                                                                                                    <% }else { %>  
+                                                                                                                    <%= result %> 
+                                                                                                                    <% } %></a>
                             &#9;
                         <% } %>
 

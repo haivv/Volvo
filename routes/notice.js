@@ -97,32 +97,6 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, callback) {
 
-        // var date_ob = new Date();
-        // var day = ("0" + date_ob.getDate()).slice(-2);
-        // var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-        // var year = date_ob.getFullYear();
-        // var hours = date_ob.getHours();
-        // var minutes = date_ob.getMinutes();
-        // var seconds = date_ob.getSeconds();
-        // var txtHours, txtMinutes, txtSeconds;
-        // if (hours < 10) {
-        //     txtHours = '0' + hours.toString();
-        // }
-        // else {
-        //     txtHours = hours.toString();
-        // }
-        // if (minutes < 10) {
-        //     txtMinutes = '0' + minutes.toString();
-        // }
-        // else {
-        //     txtMinutes = minutes.toString();
-        // }
-        // if (seconds < 10) {
-        //     txtSeconds = '0' + seconds.toString();
-        // } else {
-        //     txtSeconds = seconds.toString();
-        // }
-        // var dateTime = year + month + day + '_';
 
         var additionName = req.session.sesWriter + '_';
 
@@ -135,8 +109,7 @@ var storage = multer.diskStorage({
 
 
 var upload = multer({ storage: storage }).single('myfile');
-var upload2 = multer({ storage: storage }).single('myvideo');
-var upload3 = multer({ storage: storage }).single('myimage');
+
 
 router.get('/', function (req, res, next) {
     res.render('index', { title: 'Express' });
@@ -155,97 +128,45 @@ router.post('/uploadfile', (req, res) => {
 
 });
 
-//upload video
-router.post('/uploadvideo', (req, res) => {
-    upload2(req, res, function (err) {
-        if (err) {
-            return res.end("Error uploading video.");
-        }
-        console.log("Video is uploaded successfully!");
-    });
-});
-//upload image
-router.post('/uploadimage', (req, res) => {
-    upload3(req, res, function (err) {
-        if (err) {
-            return res.end("Error uploading video.");
-        }
-        console.log("Image is uploaded successfully!");
-    });
-});
+
 
 
 router.post('/proAddNotice', function (req, res, next) {
-
+   
     //add datetime to file name
     var date_ob = new Date();
     var day = ("0" + date_ob.getDate()).slice(-2);
     var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
     var year = date_ob.getFullYear();
-    var hours = date_ob.getHours();
-    var minutes = date_ob.getMinutes();
-    var seconds = date_ob.getSeconds();
-    var txtHours, txtMinutes, txtSeconds;
-    if (hours < 10) {
-        txtHours = '0' + hours.toString();
-    }
-    else {
-        txtHours = hours.toString();
-    }
-    if (minutes < 10) {
-        txtMinutes = '0' + minutes.toString();
-    }
-    else {
-        txtMinutes = minutes.toString();
-    }
-    if (seconds < 10) {
-        txtSeconds = '0' + seconds.toString();
-    } else {
-        txtSeconds = seconds.toString();
-    }
-
     var dateTime = year + month + day + '_';
 
+    const { content, searchoption, txttitle,txtfileupload } = req.body;
+    
 
+    var txtTitle = txttitle;
+    var txtContent = content;
+    var txtWrite = req.session.sesWriter;
+    if(txtWrite==''){
+        txtWrite = 'undefined';
+    }
+    var fileUpload = txtfileupload;
 
-    const txtSelect = req.body.searchoption;
+    var additionName = req.session.sesWriter + '_';
+    var dateString = year + '-' + month + '-' + day;
+
     var txtOption = '';
-    if (txtSelect == 'op1') {
+    if (searchoption == 'op1') {
         txtOption = "Announcement";
-    } else if (txtSelect == 'op2') {
+    } else if (searchoption == 'op2') {
         txtOption = "Suggestion";
-    } else if (txtSelect == 'op3') {
+    } else if (searchoption == 'op3') {
         txtOption = "Opinion";
-    } else if (txtSelect == 'op4') {
+    } else if (searchoption == 'op4') {
         txtOption = "Request";
-    } else if (txtSelect == 'op5') {
+    } else if (searchoption == 'op5') {
         txtOption = "Reference";
     }
 
-
-    var txtTitle = req.body.txtTitle;
-    var txtContent = req.body.txtContent;
-    var newContent = database.escape(txtContent);
-    var txtWrite = req.session.sesWriter;
-
-    var additionName = req.session.sesWriter + '_';
-
-    var dateString = year + '-' + month + '-' + day;
-
-    var imageUpload = req.body.txtimageupload;
-    var fileUpload = req.body.txtfileupload;
-    var videoUpload = req.body.txtvideoupload;
-
-    if (typeof imageUpload !== 'undefined') {
-        imageUpload = imageUpload.trim();
-        if (imageUpload != '') {
-            imageUpload = additionName + imageUpload;
-        } else {
-            imageUpload = '';
-        }
-    } else {
-        console.log(' not image');
-    }
 
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
@@ -258,25 +179,7 @@ router.post('/proAddNotice', function (req, res, next) {
         console.log(' not file');
     }
 
-    if (typeof videoUpload !== 'undefined') {
-        videoUpload = videoUpload.trim();
-        if (videoUpload != '') {
-            videoUpload = additionName + videoUpload;
-        } else {
-            videoUpload = '';
-        }
-
-    } else {
-        console.log(' not video ');
-    }
-
-
-    if (typeof txtWrite !== 'undefined') {
-        txtWrite = txtWrite.trim();
-    } else {
-        console.log(' not writer ');
-    }
-
+    
 
 
 
@@ -304,22 +207,24 @@ router.post('/proAddNotice', function (req, res, next) {
         }
         //console.log(countData);
 
-
         //console.log(insertID);
 
         var query = `
         INSERT INTO notice 
-        (id,title,category, dateCreate, writer, content, imgUpload, fileUpload, videoUpload) 
-        VALUES ("${insertID}","${txtTitle}", "${txtOption}", "${dateString}", "${txtWrite}", "${newContent}", "${imageUpload}",  "${fileUpload}", "${videoUpload}")
+        (id,title,category, dateCreate, writer, content,  fileUpload) 
+        VALUES (?,?,?,?,?,?,?)
         `;
 
-        database.query(query, function (error, data) {
+        database.query(query,[insertID,txtTitle,txtOption,dateString, txtWrite, txtContent,fileUpload], function (error, data) {
 
             if (error) {
                 throw error;
+               
             }
             else {
+              
                 res.render('mess', { title: 'Add notice success!', sess: req.session.sesWriter });
+              
             }
 
         });
@@ -328,128 +233,84 @@ router.post('/proAddNotice', function (req, res, next) {
 
 });
 
+router.get('/messadd', function (req, res, next) {
+    // var writer = req.session.sesWriter;
+    res.render('mess', { title: 'Add notice success!', sess: req.session.sesWriter });
+   // res.render('notice_add', { title: 'Notice' });
+});
+
+router.get('/messupdate', function (req, res, next) {
+    // var writer = req.session.sesWriter;
+    res.render('mess', { title: 'Update notice success!', sess: req.session.sesWriter });
+   // res.render('notice_add', { title: 'Notice' });
+});
+
+
+// router.get('/notice/addmess', function (req, res, next) {
+
+//     // res.render('mess', { title: 'Add notice success!', sess: req.session.sesWriter });
+// });
 router.post('/proUpdateNotice', function (req, res, next) {
-    var id = req.body.txtid;
-    const txtSelect = req.body.searchoption;
-    var txtOption = '';
-    if (txtSelect == 'op1') {
-        txtOption = "Announcement";
-    } else if (txtSelect == 'op2') {
-        txtOption = "Suggestion";
-    } else if (txtSelect == 'op3') {
-        txtOption = "Opinion";
-    } else if (txtSelect == 'op4') {
-        txtOption = "Request";
-    } else if (txtSelect == 'op5') {
-        txtOption = "Reference";
-    }
+    const { txtid, txtsendWriter,content, searchoption, txttitle,txtfileupload } = req.body;
+
+   //add datetime to file name
+   var date_ob = new Date();
+   var day = ("0" + date_ob.getDate()).slice(-2);
+   var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+   var year = date_ob.getFullYear();
+   var dateTime = year + month + day + '_';
 
 
-    //add datetime to file name
-    var date_ob = new Date();
-    var day = ("0" + date_ob.getDate()).slice(-2);
-    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-    var year = date_ob.getFullYear();
-    var hours = date_ob.getHours();
-    var minutes = date_ob.getMinutes();
-    var seconds = date_ob.getSeconds();
-    var txtHours, txtMinutes, txtSeconds;
-    if (hours < 10) {
-        txtHours = '0' + hours.toString();
-    }
-    else {
-        txtHours = hours.toString();
-    }
-    if (minutes < 10) {
-        txtMinutes = '0' + minutes.toString();
-    }
-    else {
-        txtMinutes = minutes.toString();
-    }
-    if (seconds < 10) {
-        txtSeconds = '0' + seconds.toString();
-    } else {
-        txtSeconds = seconds.toString();
-    }
+   var txtTitle = txttitle;
+   var txtContent = content;
+   var txtWrite = req.session.sesWriter;
+   if(txtWrite==''){
+       txtWrite = 'undefined';
+   }
+   var fileUpload = txtfileupload;
 
-    var dateTime = year + month + day + '_';
+   var additionName = req.session.sesWriter + '_';
+   var dateString = year + '-' + month + '-' + day;
+
+   var txtOption = '';
+   if (searchoption == 'op1') {
+       txtOption = "Announcement";
+   } else if (searchoption == 'op2') {
+       txtOption = "Suggestion";
+   } else if (searchoption == 'op3') {
+       txtOption = "Opinion";
+   } else if (searchoption == 'op4') {
+       txtOption = "Request";
+   } else if (searchoption == 'op5') {
+       txtOption = "Reference";
+   }
 
 
-    var txtTitle = req.body.txtTitle;
-    console.log(txtTitle);
-    var txtContent = req.body.txtContent;
-    var newContent = database.escape(txtContent);
+   if (typeof fileUpload !== 'undefined') {
+       fileUpload = fileUpload.trim();
+       if (fileUpload != '') {
+           fileUpload = additionName + fileUpload;
+       } else {
+           fileUpload = '';
+       }
+   } else {
+       console.log(' not file');
+   }
 
-    var txtWriter = req.body.txtsendWriter;
-
-    var today = new Date();
-    var year = today.getFullYear();
-    var month = ('0' + (today.getMonth() + 1)).slice(-2);
-    var day = ('0' + today.getDate()).slice(-2);
-
-    var dateString = year + '-' + month + '-' + day;
-
-    var imageUpload = req.body.txtimageupload;
-    var fileUpload = req.body.txtfileupload;
-    var videoUpload = req.body.txtvideoupload;
-    var txtWrite = req.session.sesWriter;
-
-    var additionName = req.session.sesWriter + '_';
-
-    if (typeof imageUpload !== 'undefined') {
-        imageUpload = imageUpload.trim();
-        if (imageUpload != '') {
-            imageUpload = additionName + imageUpload;
-        } else {
-            imageUpload = '';
-        }
-    } else {
-        console.log(' not image');
-    }
-
-    if (typeof fileUpload !== 'undefined') {
-        fileUpload = fileUpload.trim();
-        if (fileUpload != '') {
-            fileUpload = additionName + fileUpload;
-        } else {
-            fileUpload = '';
-        }
-    } else {
-        console.log(' not file');
-    }
-
-    if (typeof videoUpload !== 'undefined') {
-        videoUpload = videoUpload.trim();
-        if (videoUpload != '') {
-            videoUpload = additionName + videoUpload;
-        } else {
-            videoUpload = '';
-        }
-
-    } else {
-        console.log(' not video ');
-    }
-
-    if (typeof txtWriter !== 'undefined') {
-        txtWriter = txtWriter.trim();
-    } else {
-        txtWriter = 'undefined';
-    }
 
     var query = `
         UPDATE notice 
-        SET title = "${txtTitle}",
-        category = "${txtOption}", 
-        
-        writer = "${txtWriter}", 
-        content = "${newContent}", 
-        imgUpload = "${imageUpload}", 
-        fileUpload = "${fileUpload}", 
-        videoUpload = "${videoUpload}"
-        WHERE id = "${id}"
+        SET title = ?,
+        category = ?,
+        dateCreate = ?,
+        writer = ?,
+        content = ?,
+        fileUpload = ?
+
+        WHERE id = "${txtid}"
           `;
 
-    database.query(query, function (error, data) {
+    database.query(query,[txtTitle,txtOption,dateString, txtWrite, txtContent,fileUpload], function (error, data) {
 
         if (error) {
             throw error;

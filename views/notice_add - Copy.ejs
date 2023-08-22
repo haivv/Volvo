@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  <link rel='stylesheet' href='/stylesheets/notice.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+ 
+
+ 
+  <script>
+
+    // Config read file
+    function readImage() {
+      var fileURL = '/config/image_extension.ini'; // 
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content1 = xhr.responseText;
+          displayContent1(content1);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent1(content1) {
+      var fileInput = document.getElementById('myimage');
+      fileInput.accept = content1;
+
+    }
+
+    function readFile() {
+      var fileURL = '/config/file_extension.ini'; // 
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content2 = xhr.responseText;
+          displayContent2(content2);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent2(content2) {
+      var fileInput = document.getElementById('myfile');
+      fileInput.accept = content2;
+
+    }
+
+    function readVideo() {
+      var fileURL = '/config/video_extension.ini'; // Điền đúng đường dẫn đến file.txt của bạn
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', fileURL, true);
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var content3 = xhr.responseText;
+          displayContent3(content3);
+        }
+      };
+      xhr.send();
+    }
+    function displayContent3(content3) {
+      var fileInput = document.getElementById('myvideo');
+      fileInput.accept = content3;
+
+    }
+
+
+
+
+    // end config read file
+
+
+    function checkall() {
+      var countOfCheck = 0;
+      if ((document.getElementById('searchoption').value != "op1") && (document.getElementById('searchoption').value != "op2") && (document.getElementById('searchoption').value != "op3") && (document.getElementById('searchoption').value != "op4") && (document.getElementById('searchoption').value != "op5")) {
+        var modal = document.getElementById("checkSelect");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+
+      if (document.getElementById('txttitle').value == "") {
+        var modal = document.getElementById("checkTitle");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+      //check content empty
+      if (document.getElementById('charCount').value == 0) {
+        var modal = document.getElementById("checkContent");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+      if (document.getElementById('charCount').value > 5000) {
+        var modal = document.getElementById("checkContent2");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+
+
+      document.fadd.submit();
+    }
+
+    function hideCheckSelect() {
+      var modal = document.getElementById("checkSelect");
+      document.getElementById('searchoption').focus();
+      modal.style.display = "none";
+    }
+
+    function hideCheckTitle() {
+      var modal = document.getElementById("checkTitle");
+      document.getElementById('txttitle').focus();
+      modal.style.display = "none";
+    }
+
+    function hideCheckContent() {
+      var modal = document.getElementById("checkContent");
+      document.getElementById('txtContent').focus();
+      modal.style.display = "none";
+    }
+
+    function hideCheckContent2() {
+      var modal = document.getElementById("checkContent2");
+      document.getElementById('txtContent').focus();
+      modal.style.display = "none";
+    }
+
+
+
+
+    function noticeBoxShow() {
+      // document.getElementById("editorMain").value = '';
+      var modal = document.getElementById("notice");
+      modal.style.display = "block";
+    }
+
+    function noticeBoxHide() {
+      var modal = document.getElementById("notice");
+      modal.style.display = "none";
+    }
+
+
+    // Add file
+    function addFileShow() {
+      // document.getElementById("editorMain").value = '';
+      var modal = document.getElementById("addfile");
+      modal.style.display = "block";
+    }
+
+    function hideAddFile() {
+      var modal = document.getElementById("addfile");
+      modal.style.display = "none";
+      var fileInput = document.getElementById('myfile');
+      var fileName = fileInput.files[0].name;
+      document.getElementById("txtfileupload").innerHTML = fileName;
+      document.getElementById("sendFileName").value = fileName;
+      document.fsubmitfile.submit();
+    }
+
+    function closeBoxAddfile() {
+      var modal = document.getElementById("addfile");
+
+      modal.style.display = "none";
+
+    }
+
+
+
+    
+  </script>
+
+
+  <style>
+    body {
+      background: #F5F6F9;
+    }
+    #editor{
+      height: 250px;
+    }
+  </style>
+
+  <script>
+    // message box
+    function showSelEmpMes() {
+      var modal = document.getElementById("emptySelect");
+      modal.style.display = "block";
+    }
+
+
+  </script>
+
+
+
+</head>
+
+<body onLoad="noticeBoxShow(); readFile();">
+
+  
+
+  <!--show box to add file -->
+  <div id='addfile' class='messBox'>
+
+    <div class='modalmess-content d-flex flex-column p-2'>
+      <div class="btnX "><button onclick='closeBoxAddfile()'>X</button></div>
+      <p class="p-1 d-flex ">Please choose file! </p>
+      <div class="choosefile">
+        <form action="/notice/uploadfile" name="fsubmitfile" method="POST" enctype="multipart/form-data">
+          <input type="file" name="myfile" id="myfile" class="inputfile inputfile-6" accept="">
+          <label for="myfile"><span id="hidfile1"></span> </label>
+          <label for="myfile">
+            <div class="btnfile"> Select file</div>
+          </label>
+          <script src="/javascripts/custom-file-input.js"></script>
+      </div>
+      <p class="d-flex flex-row-reverse">
+        <button class='btn btn-dark btnFileUpload' onclick="hideAddFile()">Upload</button>
+        </form>
+      </p>
+    </div>
+  </div>
+
+  <!--empty title -->
+  <div id='checkSelect' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please choose category!</p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckSelect();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+  <!--empty title -->
+  <div id='checkTitle' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please type title!</p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckTitle();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+  <!--empty content -->
+  <div id='checkContent' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">Please type content! </p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' onclick='hideCheckContent();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+  <!--max content -->
+  <div id='checkContent2' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">The length of content must be less than 5000 characters! </p>
+      <p class="mb-3 pe-3  d-flex flex-row-reverse " id="editConfirmCheckLength">
+        <a href='#' onclick='hideCheckContent2();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
+
+  <div id='notice' class='modal'>
+    <div class='modal-content'>
+      <!-- <form action="/notice/proAddNotice" method="post" name="fadd"> -->
+        <div class="d-flex flex-column">
+          <div class="p-2 d-flex flex-row-reverse ">
+            <a href='/notice' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
+          </div>
+
+          <div class="p-2">
+            <div id="title">
+              <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"
+                id="searchoption">
+                <option>Select a category</option>
+                <option value="op1">Announcement</option>
+                <option value="op2">Suggestion</option>
+                <option value="op3">Opinion</option>
+                <option value="op4">Request</option>
+                <option value="op5">Reference</option>
+              </select>
+              <input type="text" placeholder="Type your title" id="txttitle" name="txtTitle">
+            </div>
+          </div>
+
+          <div class="p-2">
+            <div id="addFile">
+              <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i>
+              <i class="fa fa-video-camera" style="font-size:18px" onclick="addVideoShow()"></i>
+              <i class="fa fa-picture-o" style="font-size:18px" onclick="addImageShow()"></i>
+            </div>
+
+            
+
+            <div id="editor" ></div>
+
+            <button onclick="saveContent()">Save</button>
+
+            <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+            <script src="javascripts/image-resize.min.js"></script>
+
+            <script>
+              var quill = new Quill('#editor', {
+                  theme: 'snow',
+                  modules: {
+                      toolbar: [
+                          ['bold', 'italic', 'underline'],
+                          [{ 'color': [] }],
+                          [{ 'font': [] }],          // dropdown with defaults from theme
+                          [{ 'size': ['small', false, 'large', 'huge'] }],
+                          ['image', 'video', 'link']
+          
+                      ],
+                      imageResize: {
+                          // Bạn có thể tùy chỉnh các tùy chọn ở đây
+                      }
+                  }
+              });
+          
+              function saveContent() {
+                  const content = quill.root.innerHTML;
+                  fetch('/save', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                      },
+                      body: `content=${encodeURIComponent(content)}`
+                  })
+                  .then(response => response.json())
+                  .then(data => console.log(data));
+              }
+          
+          
+              quill.getModule('toolbar').addHandler('image', () => {
+              const input = document.createElement('input');
+              input.setAttribute('type', 'file');
+              input.setAttribute('accept', 'image/*');
+              input.click();
+          
+              input.onchange = () => {
+                  const file = input.files[0];
+                  if (/^image\//.test(file.type)) {
+                      saveToServer(file).then((url) => {
+                          const range = quill.getSelection(true);
+                          quill.insertEmbed(range.index, 'image', url);
+                      });
+                  } else {
+                      console.warn('You can only upload images');
+                  }
+              };
+          });
+          
+          function saveToServer(file) {
+              return new Promise((resolve, reject) => {
+                  const formData = new FormData();
+                  formData.append('image', file);
+                  
+                  fetch('/upload', {
+                      method: 'POST',
+                      body: formData
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.imageUrl) {
+                          resolve(data.imageUrl);
+                      } else {
+                          reject('Upload failed');
+                      }
+                  })
+                  .catch(error => {
+                      reject('Upload error');
+                  });
+              });
+          }
+          </script>
+
+
+            <input type="hidden" id="charCount">
+
+
+          </div>
+          <div class=" d-flex ">
+
+
+
+            <span id="txtfileupload"></span>
+            <input type="hidden" name="txtfileupload" id="sendFileName">
+
+            <span id="txtvideoupload"></span>
+            <input type="hidden" name="txtvideoupload" id="sendVideoName">
+
+
+            <span id="txtimageupload"></span>
+            <input type="hidden" name="txtimageupload" id="sendImageName">
+
+
+
+            <!-- <input type="hidden" name="txtsendWriter" value="txtsendWriter"> -->
+
+          </div>
+
+          <div class="p-2 d-flex flex-row-reverse ">
+            <button class="btn btn-primary" id="btnUpload" type="button" onclick=" saveContent(); checkall()">Upload</button>
+
+          </div>
+
+
+        </div><!--end flex-->
+      <!-- </form> -->
+
+    </div><!--end modal-content-->
+  </div><!--end loginfail-->
+
+
+
+</body>
+
+</html>
