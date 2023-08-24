@@ -16,65 +16,127 @@
   </title>
   <style>
     .ql-size {
-    font-size: inherit;
-  }
+      font-size: inherit;
+    }
 
-  .ql-size.ql-picker {
-    width: 80px;  /* Điều chỉnh nếu cần */
-  }
+    .ql-size.ql-picker {
+      width: 80px;
+      /* Điều chỉnh nếu cần */
+    }
 
-  .ql-size.ql-picker .ql-picker-label {
-    line-height: 1.5;
-    padding-right: 15px;
-  }
+    .ql-size.ql-picker .ql-picker-label {
+      line-height: 1.5;
+      padding-right: 15px;
+    }
 
-  .ql-size.ql-picker .ql-picker-item {
-    line-height: 1.5;
-  }
+    .ql-size.ql-picker .ql-picker-item {
+      line-height: 1.5;
+    }
 
-.ql-snow .ql-picker.ql-size .ql-picker-label[data-value='12px']::before,
-.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='12px']::before {
-    content: '12px';
-}
-
-
-.ql-snow .ql-picker.ql-size .ql-picker-label[data-value='16px']::before,
-.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='16px']::before {
-    content: '16px';
-}
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='12px']::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='12px']::before {
+      content: '12px';
+    }
 
 
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='16px']::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='16px']::before {
+      content: '16px';
+    }
 
-.ql-snow .ql-picker.ql-size .ql-picker-label[data-value='20px']::before,
-.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='20px']::before {
-    content: '20px';
-}
 
-.ql-snow .ql-picker.ql-size .ql-picker-label[data-value='24px']::before,
-.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='24px']::before {
-    content: '24px';
-}
 
-.ql-snow .ql-picker.ql-size .ql-picker-label[data-value='28px']::before,
-.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='28px']::before {
-    content: '28px';
-}
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='20px']::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='20px']::before {
+      content: '20px';
+    }
+
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='24px']::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='24px']::before {
+      content: '24px';
+    }
+
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='28px']::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='28px']::before {
+      content: '28px';
+    }
 
 
     #editor {
       height: 250px;
     }
-    #charCount{
+
+    #charCount {
       display: none;
     }
 
     .ql-editor img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
   <script>
+
+
+    let arrFileName = [];
+
+    function loadListFile() {
+      var listFileDB = document.getElementById("listFileDB").innerHTML;
+      document.getElementById("sendFileName").innerHTML = listFileDB;
+      //var listFileDB =  "ffffffffffffff";
+      let arrFileDB = listFileDB.split(";");
+      for (let i = 0; i < arrFileDB.length - 1; i++) {
+        let pos = arrFileDB[i].indexOf('_');
+        var result = arrFileDB[i].substring(pos + 1);
+        arrFileName.push(result);
+      }
+
+      document.getElementById("filenumber").innerHTML = arrFileName.length;
+      for (let j = 0; j < arrFileName.length; j++) {
+        document.getElementById("txtfileupload").innerHTML += "<div id='attachFile'> <div class='filename' >" + arrFileName[j] + "</div> <button id='btndelfile' onclick='remfile(" + j + ");' class='delfile'>x</button> </div>"
+
+      }
+    }
+
+    function loadListFile2() {
+      document.getElementById("txtfileupload").innerHTML = '';
+      document.getElementById("sendFileName").innerHTML = '';
+      var txtUser = document.getElementById("username").innerHTML;
+      for (let j = 0; j < arrFileName.length; j++) {
+
+        document.getElementById("txtfileupload").innerHTML += "<div id='attachFile'> <div class='filename' >" + arrFileName[j] + "</div> <button id='btndelfile' onclick='remfile(" + j + ");' class='delfile'>x</button> </div>"
+
+        var newFullName = txtUser + '_' + arrFileName[j];
+
+        document.getElementById("sendFileName").innerHTML += newFullName + ';';
+      }
+      document.getElementById("filenumber").innerHTML = arrFileName.length;
+    }
+
+
+
+    function remfile(anumber) {
+      arrFileName.splice(anumber, 1);
+      document.getElementById("txtfileupload").innerHTML = '';
+
+      for (let i = 0; i < arrFileName.length; i++) {
+        document.getElementById("txtfileupload").innerHTML += "<div id='attachFile'> <div class='filename' >" + arrFileName[i] + "</div> <button id='btndelfile' onclick='remfile(" + i + ");' class='delfile'>x</button> </div>"
+      }
+
+      document.getElementById("filenumber").innerHTML = arrFileName.length;
+
+      document.getElementById("sendFileName").innerHTML = '';
+      var txtUser = document.getElementById("username").innerHTML;
+      var fileFullName = '';
+      for (let i = 0; i < arrFileName.length; i++) {
+        fileFullName = txtUser + '_' + arrFileName[i] + ";";
+        document.getElementById("sendFileName").innerHTML += fileFullName;
+      }
+    }
+
+
+
 
     // Config read file
     function readImage() {
@@ -82,7 +144,7 @@
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
           var content1 = xhr.responseText;
           displayContent1(content1);
@@ -91,8 +153,8 @@
       xhr.send();
     }
     function displayContent1(content1) {
-       var fileInput = document.getElementById('myimage');
-      fileInput.accept =content1;
+      var fileInput = document.getElementById('myimage');
+      fileInput.accept = content1;
 
     }
 
@@ -101,7 +163,7 @@
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
           var content2 = xhr.responseText;
           displayContent2(content2);
@@ -110,8 +172,8 @@
       xhr.send();
     }
     function displayContent2(content2) {
-       var fileInput = document.getElementById('myfile');
-      fileInput.accept =content2;
+      var fileInput = document.getElementById('myfile');
+      fileInput.accept = content2;
 
     }
 
@@ -120,7 +182,7 @@
       var xhr = new XMLHttpRequest();
       xhr.open('GET', fileURL, true);
 
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
           var content3 = xhr.responseText;
           displayContent3(content3);
@@ -129,8 +191,8 @@
       xhr.send();
     }
     function displayContent3(content3) {
-       var fileInput = document.getElementById('myvideo');
-      fileInput.accept =content3;
+      var fileInput = document.getElementById('myvideo');
+      fileInput.accept = content3;
 
     }
 
@@ -163,7 +225,7 @@
       //   return false;
       // }
 
-      if (document.getElementById('charCount').innerHTML >5000) {
+      if (document.getElementById('charCount').innerHTML > 5000) {
         var modal = document.getElementById("checkContent2");
         modal.style.display = "block";
         countOfCheck += 1;
@@ -171,13 +233,13 @@
       }
       return true;
     }
-    
-    function checkSubmit(){
-      if(checkall() == true){
-        saveContent();
-       // alert("submit");
 
-      }else{
+    function checkSubmit() {
+      if (checkall() == true) {
+        saveContent();
+        // alert("submit");
+
+      } else {
         //alert("cannot");
       }
 
@@ -231,12 +293,18 @@
 
     function hideAddFile() {
       var modal = document.getElementById("addfile");
+      var filenumber = document.getElementById("filenumber").innerHTML;
+      var newNumber = Number(filenumber) + 1;
       modal.style.display = "none";
+
       var fileInput = document.getElementById('myfile');
       var fileName = fileInput.files[0].name;
-      document.getElementById("txtfileupload").innerHTML = fileName;
-      document.getElementById("sendFileName").value =  fileName;
+      arrFileName.push(fileName);
+      //readListFile();
+      loadListFile2();
+
       document.fsubmitfile.submit();
+
     }
 
     function closeBoxAddfile() {
@@ -252,50 +320,9 @@
 
 </head>
 
-<body onLoad="noticeBoxShow(); readFile();">
-
-<!--show box to add image -->
-<div id='addImage' class='messBox'>
-  <div class='modalmess-content d-flex flex-column p-2'>
-    <div class="btnX "><button onclick='closeBoxAddimage()'>X</button></div>
-    <p class="p-1 d-flex ">Please choose image! </p>
-    <div class="choosefile">
-      <form action="/notice/uploadimage" name="fsubmitimage" method="POST" enctype="multipart/form-data">
-        <input type="file" name="myimage" id="myimage" class="inputfile inputfile-6" accept="">
-        <label for="myimage"><span id="hidfile1"></span> </label>
-        <label for="myimage">
-          <div class="btnfile" id="selectimage"> Select image</div>
-        </label>
-        <script src="/javascripts/custom-file-input.js"></script>
-    </div>
-    <p class="d-flex flex-row-reverse">
-      <button class='btn btn-dark btnFileUpload' onclick="hideAddImage()">Upload</button>
-      </form>
-    </p>
-  </div>
-</div>
+<body onLoad="noticeBoxShow(); readFile(); loadListFile();">
 
 
-  <!--show box to add video -->
-  <div id='addVideo' class='messBox'>
-    <div class='modalmess-content d-flex flex-column p-2'>
-      <div class="btnX "><button onclick='closeBoxAddvideo()'>X</button></div>
-      <p class="p-1 d-flex ">Please choose video! </p>
-      <div class="choosefile">
-        <form action="/notice/uploadvideo" name="fsubmitvideo" method="POST" enctype="multipart/form-data">
-          <input type="file" name="myvideo" id="myvideo" class="inputfile inputfile-6" accept="">
-          <label for="myvideo"><span id="hidfile1"></span> </label>
-          <label for="myvideo">
-            <div class="btnfile"> Select video</div>
-          </label>
-          <script src="/javascripts/custom-file-input.js"></script>
-      </div>
-      <p class="d-flex flex-row-reverse">
-        <button class='btn btn-dark btnFileUpload' onclick="hideAddVideo()">Upload</button>
-        </form>
-      </p>
-    </div>
-  </div>
 
   <!--show box to add file -->
   <div id='addfile' class='messBox'>
@@ -366,222 +393,214 @@
 
   <div id='notice' class='modal'>
     <div class='modal-content'>
-      <form action="/notice/proAddNotice"  name="fadd">
+      <form action="/notice/proAddNotice" name="fadd">
         <div class="d-flex flex-column">
           <div class="p-2 d-flex flex-row-reverse ">
             <a href='/notice' onclick='noticeBoxHide();' class='btn btn-dark btnfix'>X</a>
           </div>
 
-           <!-- show data from data base to modifine -->
-           <% if(Data.length> 0)
-           {
-           Data.forEach(function(data){
-            
-           %>
+          <!-- show data from data base to modifine -->
+          <% if(Data.length> 0)
+            {
+            Data.forEach(function(data){
 
-          <div class="p-2">
-            <div id="title">
-              <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"
-                id="searchoption">
-                <option >Select a category</option>
+            %>
+
+            <div class="p-2">
+              <div id="title">
+                <select class="form-select form-select-sm" aria-label="GFG Small Select" name="searchoption"
+                  id="searchoption">
+                  <option>Select a category</option>
                   <option value="op1" <% if(data.category=='Announcement' ){ %> selected <% } %> >Announcement</option>
                   <option value="op2" <% if(data.category=='Suggestion' ){ %> selected <% } %> >Suggestion</option>
                   <option value="op3" <% if(data.category=='Opinion' ){ %> selected <% } %> >Opinion</option>
                   <option value="op4" <% if(data.category=='Request' ){ %> selected <% } %> >Request</option>
                   <option value="op5" <% if(data.category=='Reference' ){ %> selected <% } %> >Reference</option>
-              </select>
-              <input type="text" placeholder="Type your title" id="txttitle" name="txtTitle" value="<%= data.title %>" >
-            </div>
-          </div>
-
-          <div class="p-2">
-            <div id="addFile">
-              <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i> 
-            </div>
-
-            <input type="hidden" name="txtid" id="txtid" value="<%= data.id %> ">
-            <input type="hidden" name="txtsendWriter" id="txtsendWriter" value="<%= data.writer %> ">
-
-
-            <div id="trinhsoanthao">
-              <div id="editor">
-                <%- data.content %>
-
+                </select>
+                <input type="text" placeholder="Type your title" id="txttitle" name="txtTitle"
+                  value="<%= data.title %>">
               </div>
-              <!-- <button onclick="saveContent()">Save</button> -->
-              <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-              <script src="/javascripts/image-resize.min.js"></script>
-              <script>
+            </div>
 
-                var Size = Quill.import('attributors/style/size');
-                Size.whitelist = ['12px', '16px', '20px', '24px', '28px'];
-                Quill.register(Size, true);
+            <div class="p-2">
+              <div id="addFile">
+                <i class="fa fa-upload" style="font-size:18px" onclick="addFileShow()"></i>
+              </div>
 
-                var quill = new Quill('#editor', {
-                  theme: 'snow',
-                  placeholder: 'Type your content...',
-                  modules: {
-                    toolbar: [
-                      ['bold', 'italic', 'underline'],
-                      [{ 'color': [] }],
-                      [{ 'font': [] }],          // dropdown with defaults from theme
-                      [{ 'align': ''}, {'align': 'center'},{'align': 'right'},],
-                      [{ 'size': ['12px', '16px', '20px', '24px', '28px'] }],
-                      ['image', 'video', 'link']
-                    ],
-                    imageResize: {
+              <input type="hidden" name="txtid" id="txtid" value="<%= data.id %> ">
+              <input type="hidden" name="txtsendWriter" id="txtsendWriter" value="<%= data.writer %> ">
+
+
+              <div id="trinhsoanthao">
+                <div id="editor">
+                  <%- data.content %>
+
+                </div>
+                <!-- <button onclick="saveContent()">Save</button> -->
+                <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+                <script src="/javascripts/image-resize.min.js"></script>
+                <script>
+
+                  var Size = Quill.import('attributors/style/size');
+                  Size.whitelist = ['12px', '16px', '20px', '24px', '28px'];
+                  Quill.register(Size, true);
+
+                  var quill = new Quill('#editor', {
+                    theme: 'snow',
+                    placeholder: 'Type your content...',
+                    modules: {
+                      toolbar: [
+                        ['bold', 'italic', 'underline'],
+                        [{ 'color': [] }],
+                        [{ 'font': [] }],          // dropdown with defaults from theme
+                        [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' },],
+                        [{ 'size': ['12px', '16px', '20px', '24px', '28px'] }],
+                        ['image', 'video', 'link']
+                      ],
+                      imageResize: {
+                      }
                     }
-                  }
-                });
-                function saveContent() {
-                  const content = quill.root.innerHTML;
-                  let searchoption = document.getElementById('searchoption').value;
-                  let txtTitle = document.getElementById('txttitle').value;
-                  let txtfileupload = document.getElementById('sendFileName').value;
-                  let txtid = document.getElementById('txtid').value;
-                  let txtsendWriter = document.getElementById('txtsendWriter').value;
-
-                  
-
-                  
-
-                  let formData = new URLSearchParams();
-                  formData.append('content', content);
-                  formData.append('searchoption', searchoption);
-                  formData.append('txttitle', txtTitle);
-                  formData.append('txtfileupload', txtfileupload);
-                  formData.append('txtid', txtid);
-                  formData.append('txtsendWriter', txtsendWriter);
+                  });
+                  function saveContent() {
+                    const content = quill.root.innerHTML;
+                    let searchoption = document.getElementById('searchoption').value;
+                    let txtTitle = document.getElementById('txttitle').value;
+                    let txtfileupload = document.getElementById('sendFileName').innerHTML;
+                    let txtid = document.getElementById('txtid').value;
+                    let txtsendWriter = document.getElementById('txtsendWriter').value;
 
 
-                  fetch('/notice/proUpdateNotice', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: formData
-                  })
-                  .then(window.location.href = '/notice/messupdate'); //.then(window.location.href = '/notice/messupdate');
-                }//saveContent
 
 
-                quill.getModule('toolbar').addHandler('image', () => {
-                  const input = document.createElement('input');
-                  input.setAttribute('type', 'file');
-                  input.setAttribute('accept', 'image/*');
-                  input.click();
 
-                  input.onchange = () => {
-                    const file = input.files[0];
-                    if (/^image\//.test(file.type)) {
-                      saveToServer(file).then((url) => {
-                        const range = quill.getSelection(true);
-                        quill.insertEmbed(range.index, 'image', url);
-                      });
-                    } else {
-                      console.warn('You can only upload images');
-                    }
-                  };
-                });
+                    let formData = new URLSearchParams();
+                    formData.append('content', content);
+                    formData.append('searchoption', searchoption);
+                    formData.append('txttitle', txtTitle);
+                    formData.append('txtfileupload', txtfileupload);
+                    formData.append('txtid', txtid);
+                    formData.append('txtsendWriter', txtsendWriter);
 
-               
 
-                function saveToServer(file) {
-                  return new Promise((resolve, reject) => {
-                    const formData = new FormData();
-                    formData.append('image', file);
-
-                    fetch('/upload', {
+                    fetch('/notice/proUpdateNotice', {
                       method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                      },
                       body: formData
                     })
-                      .then(response => response.json())
-                      .then(data => {
-                        if (data.imageUrl) {
-                          resolve(data.imageUrl);
+                      .then(window.location.href = '/notice/messupdate'); //.then(window.location.href = '/notice/messupdate');
+                  }//saveContent
 
-                        } else {
-                          reject('Upload failed');
-                        }
-                      })
-                      .catch(error => {
-                        reject('Upload error');
-                      });
+
+                  quill.getModule('toolbar').addHandler('image', () => {
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', 'image/*');
+                    input.click();
+
+                    input.onchange = () => {
+                      const file = input.files[0];
+                      if (/^image\//.test(file.type)) {
+                        saveToServer(file).then((url) => {
+                          const range = quill.getSelection(true);
+                          quill.insertEmbed(range.index, 'image', url);
+                        });
+                      } else {
+                        console.warn('You can only upload images');
+                      }
+                    };
                   });
-                }
 
-                 
-                //count char
-                function updateCharCount() {
+
+
+                  function saveToServer(file) {
+                    return new Promise((resolve, reject) => {
+                      const formData = new FormData();
+                      formData.append('image', file);
+
+                      fetch('/upload', {
+                        method: 'POST',
+                        body: formData
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          if (data.imageUrl) {
+                            resolve(data.imageUrl);
+
+                          } else {
+                            reject('Upload failed');
+                          }
+                        })
+                        .catch(error => {
+                          reject('Upload error');
+                        });
+                    });
+                  }
+
+
+                  //count char
+                  function updateCharCount() {
                     let contentText = quill.getText();
                     let charCount = contentText.length - 1; // trừ đi ký tự xuống dòng cuối cùng
                     document.getElementById('charCount').innerText = charCount;
-                }
+                  }
 
-                // Lắng nghe sự kiện text-change từ Quill editor
-                quill.on('text-change', function() {
+                  // Lắng nghe sự kiện text-change từ Quill editor
+                  quill.on('text-change', function () {
                     updateCharCount();
-                });
+                  });
 
                   // Gọi lần đầu tiên khi khởi tạo
                   updateCharCount();
-                  
+
                 //end count char
 
 
 
-              </script>
+                </script>
 
-            </div><!--end trinh soan thao-->
+              </div><!--end trinh soan thao-->
 
-            <!-- <input type="text" id="charCount"> -->
-            <span id="charCount">0</span>
-
-
-          </div>
-          <div class=" d-flex ">
-            
-           
-            
-            <span id="txtfileupload">
-              <% const strFile=data.fileUpload.toString();
-                
-              function removeTextBeforeUnderscore(inputString) {
-                const underscoreIndex = inputString.indexOf('_');
-                if (underscoreIndex !== -1) {
-                  return inputString.substring(underscoreIndex + 1);
-                } else {
-                  return inputString;
-                }
-              }
-
-              %>
-                <%= 
-                
-                removeTextBeforeUnderscore(strFile);
-                
-                %>
-
-            </span>
-            <input type="hidden" name="txtfileupload" id="sendFileName" value="<%=  removeTextBeforeUnderscore(strFile); %> ">
-
-            
-
-            
-
-            <!-- <input type="hidden" name="txtsendWriter" value="txtsendWriter"> -->
-
-          </div>
+              <!-- <input type="text" id="charCount"> -->
+              <span id="charCount">0</span>
 
 
-          <% }); } else { %>
-            No Data Found
-            <% } %>
+            </div>
+            <div class=" d-flex ">
 
-          <div class="p-2 d-flex flex-row-reverse ">
-            <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkSubmit()">Update</button>
+              <span id="listFileDB">
+                <%= data.fileUpload;%>
+              </span>
 
-          </div>
+              <span id="txtfileupload"> </span>
+
+
+              <span id="filenumber">0</span>
+
+              <span type="text" name="txtfileupload" id="sendFileName"></span>
+
+              <span id="username">
+                <%= sesWriter %>
+              </span>
+
+
+
+
+
+              <!-- <input type="hidden" name="txtsendWriter" value="txtsendWriter"> -->
+
+            </div>
+
+
+            <% }); } else { %>
+              No Data Found
+              <% } %>
+
+                <div class="p-2 d-flex flex-row-reverse ">
+                  <button class="btn btn-primary" id="btnUpload" type="button" onclick="checkSubmit()">Update</button>
+
+                </div>
 
 
         </div><!--end flex-->
@@ -590,7 +609,7 @@
     </div><!--end modal-content-->
   </div><!--end loginfail-->
 
-  
+
 
 
 

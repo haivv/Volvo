@@ -418,3 +418,42 @@
   position: relative;
   top:-10px;
 }
+
+/* attach file  */
+  /* Attach file */
+  #attachFile{
+    width: 20vh;
+    height: 30px;
+    border: 1px solid rgb(201, 201, 201);
+    float: left;
+    margin-right: 10px;
+    padding: 3px;
+    position: relative;
+  }
+  /* End attach file */
+  .filename{
+    width: 90%;
+    height: 20px;
+    float: left;
+    overflow: hidden;
+  }
+  .delfile{
+    position: absolute;
+    top: -15px;
+    right: -8px;
+    border: 0px;
+    border-radius: 50%;
+    font-weight: bold;
+    color: rgb(121, 121, 121);;
+    padding:0px 3px;
+    background: none;
+  }
+  
+  #username{
+    display: none;
+  }
+
+  #listFileDB, #filenumber, #sendFileName{
+    display: none;
+  }
+  

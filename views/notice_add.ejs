@@ -55,6 +55,10 @@
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='28px']::before {
     content: '28px';
 }
+
+
+
+
   </style>
 
   <title>
@@ -70,6 +74,8 @@
   </style>
   <script>
 
+    let arrFileName = [];
+    
     // Config read file
     function readImage() {
       var fileURL = '/config/image_extension.ini'; // 
@@ -215,24 +221,85 @@
 
     // Add file
     function addFileShow() {
-      // document.getElementById("editorMain").value = '';
       var modal = document.getElementById("addfile");
       modal.style.display = "block";
     }
 
+    function remfile(anumber){
+      arrFileName.splice(anumber,1);
+      document.getElementById("txtfileupload").innerHTML='';
+
+      for (let i = 0; i < arrFileName.length; i++) {
+        document.getElementById("txtfileupload").innerHTML+="<div id='attachFile'> <div class='filename' >"+ arrFileName[i] +"</div> <button id='btndelfile' onclick='remfile("+i+");' class='delfile'>x</button> </div>"
+      }
+      
+      document.getElementById("filenumber").innerHTML=arrFileName.length;
+
+
+      document.getElementById("sendFileName").innerHTML='';
+      var txtUser = document.getElementById("username").innerHTML;
+      var fileFullName='';
+      for (let i = 0; i < arrFileName.length; i++) {
+        fileFullName = txtUser +'_'+ arrFileName[i]+";";
+        document.getElementById("sendFileName").innerHTML += fileFullName;
+      }
+    }
+     
+      
+      // arrFileName.splice(anumber, 1);
+      //readListFile();
+      
+      
+    
+
+    function readListFile(){
+      document.getElementById("txtfileupload").innerHTML='';
+      for (let i = 0; i < arrFileName.length; i++) {
+        document.getElementById("txtfileupload").innerHTML+="<div id='attachFile'> <div class='filename' >"+ arrFileName[i] +"</div> <button id='btndelfile' onclick='remfile("+i+");' class='delfile'>x</button> </div>"
+        
+      }
+
+      document.getElementById("sendFileName").innerHTML='';
+      var txtUser = document.getElementById("username").innerHTML;
+      for (let i = 0; i < arrFileName.length; i++) {
+        var fileFullName = txtUser +'_'+ arrFileName[i]+";";
+        document.getElementById("sendFileName").innerHTML += fileFullName;
+      }
+
+      
+    }
+
+
     function hideAddFile() {
+
       var modal = document.getElementById("addfile");
+      var filenumber = document.getElementById("filenumber").innerHTML;
+      var newNumber = Number(filenumber) + 1;
       modal.style.display = "none";
+
       var fileInput = document.getElementById('myfile');
       var fileName = fileInput.files[0].name;
-      document.getElementById("txtfileupload").innerHTML = fileName;
-      document.getElementById("sendFileName").value =  fileName;
+      arrFileName.push(fileName);
+      readListFile();
+      
+       //document.getElementById("txtfileupload").innerHTML += "<div id='attachFile'> <div class='filename' >"+ newNumber+fileName +"</div> <button  id='btndelfile' onclick='remfile("+newNumber+");' class='delfile'>x</button> </div>";
+     
+      // document.getElementById("sendFileName").value =  fileName;
+      // var filenameNew = document.getElementById("filename").innerHTML + fileName;
+      // document.getElementById("filename").innerHTML = filenameNew;
+
+      
+
+      //  var fileFullName = txtUser+'_'+fileName;
+      //  var fileNameNew = document.getElementById("filefullname").innerHTML + fileFullName + ";";
+      // document.getElementById("filefullname").innerHTML = fileNameNew;
+
+      document.getElementById("filenumber").innerHTML = newNumber;
       document.fsubmitfile.submit();
     }
 
     function closeBoxAddfile() {
       var modal = document.getElementById("addfile");
-
       modal.style.display = "none";
 
     }
@@ -240,6 +307,40 @@
 
 
   </script>
+  <style>
+    /* Attach file */
+#attachFile{
+  width: 20vh;
+  height: 30px;
+  border: 1px solid rgb(201, 201, 201);
+  float: left;
+  margin-right: 10px;
+  padding: 3px;
+  position: relative;
+}
+/* End attach file */
+.filename{
+  width: 90%;
+  height: 20px;
+  float: left;
+  overflow: hidden;
+}
+.delfile{
+  position: absolute;
+  top: -15px;
+  right: -8px;
+  border: 0px;
+  border-radius: 50%;
+  font-weight: bold;
+  color: rgb(121, 121, 121);;
+  padding:0px 3px;
+  background: none;
+}
+
+#username{
+  display: none;
+}
+  </style>
 
 </head>
 
@@ -290,13 +391,12 @@
 
   <!--show box to add file -->
   <div id='addfile' class='messBox'>
-
     <div class='modalmess-content d-flex flex-column p-2'>
       <div class="btnX "><button onclick='closeBoxAddfile()'>X</button></div>
       <p class="p-1 d-flex ">Please choose file! </p>
       <div class="choosefile">
         <form action="/notice/uploadfile" name="fsubmitfile" method="POST" enctype="multipart/form-data">
-          <input type="file" name="myfile" id="myfile" class="inputfile inputfile-6" accept="">
+          <input type="file" name="myfile" id="myfile" class="inputfile inputfile-6" accept="" >
           <label for="myfile"><span id="hidfile1"></span> </label>
           <label for="myfile">
             <div class="btnfile"> Select file</div>
@@ -309,6 +409,8 @@
       </p>
     </div>
   </div>
+
+
 
   <!--empty title -->
   <div id='checkSelect' class='messBox'>
@@ -418,7 +520,7 @@
                   const content = quill.root.innerHTML;
                   let searchoption = document.getElementById('searchoption').value;
                   let txtTitle = document.getElementById('txttitle').value;
-                  let txtfileupload = document.getElementById('sendFileName').value;
+                  let txtfileupload = document.getElementById('sendFileName').innerHTML;
 
                   
 
@@ -510,6 +612,8 @@
 
             <!-- <input type="text" id="charCount"> -->
             <span id="charCount">0</span>
+            <span id="filenumber">0</span>
+            
 
 
           </div>
@@ -518,7 +622,20 @@
             
             
             <span id="txtfileupload"></span>
-            <input type="hidden" name="txtfileupload" id="sendFileName">
+
+           
+            <!-- <p style="width: 100%; height: 30px; border:1px solid #ccc;">
+              <span id="filename"></span>
+            </p>
+            
+          
+            <p style="width: 100%; height: 30px;border:1px solid #ee4545;"><span id="filefullname"></span></p> -->
+            
+
+
+            <span id="username"><%= writer %></span>
+
+            <span type="text" name="txtfileupload" id="sendFileName"></span>
 
             
 

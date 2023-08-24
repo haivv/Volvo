@@ -72,9 +72,9 @@ router.get('/getWriter/:writer', function (req, res, next) {
 
 
 router.get('/notice_add', function (req, res, next) {
-    // var writer = req.session.sesWriter;
+    var writer = req.session.sesWriter;
     // res.send(writer);
-    res.render('notice_add', { title: 'Notice' });
+    res.render('notice_add', { title: 'Notice', writer:writer });
 });
 
 router.get('/notice_edit/:id', function (req, res, next) {
@@ -171,7 +171,7 @@ router.post('/proAddNotice', function (req, res, next) {
     if (typeof fileUpload !== 'undefined') {
         fileUpload = fileUpload.trim();
         if (fileUpload != '') {
-            fileUpload = additionName + fileUpload;
+            fileUpload = fileUpload;
         } else {
             fileUpload = '';
         }
@@ -289,7 +289,7 @@ router.post('/proUpdateNotice', function (req, res, next) {
    if (typeof fileUpload !== 'undefined') {
        fileUpload = fileUpload.trim();
        if (fileUpload != '') {
-           fileUpload = additionName + fileUpload;
+           fileUpload = fileUpload;
        } else {
            fileUpload = '';
        }

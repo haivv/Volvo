@@ -171,30 +171,47 @@
 
 
                         <% if((data.fileUpload=='undefined' ) || (data.fileUpload=='' )) { }else{%>
-                            <span>Attached file: </span><a href="/uploads/<%= data.fileUpload %>" target="_blank">
-                                <% var strName=data.fileUpload.toString(); var pos=strName.indexOf('_'); var
-                                    result=strName.substring(pos + 1); var lengthOfStr=result.length; if(lengthOfStr>20)
-                                    {
-                                    %>
-                                    <%= result.substring(0,20) + ' ...' ; %>
-                                        <% }else { %>
-                                            <%= result %>
-                                                <% } %>
-                            </a>
+                            <span>Attached file: </span>
+                           
+                                
+                                <% 
+                                    let strFile = data.fileUpload;
+                                    let arrayFile = strFile.split(";");
+                                    for(var i = 0; i < arrayFile.length; i++ ){
+
+                                        let pos = arrayFile[i].indexOf('_');
+                                        var result=arrayFile[i].substring(pos + 1); var lengthOfStr=result.length; if(lengthOfStr>20)
+                                        {
+                                            %>
+                                            <a href="/uploads/<%= arrayFile[i];%>" download="<%= result; %>">
+                                                <%=  result.substring(0,21) + ' ...' ; %>
+                                            </a> &nbsp;&nbsp;
+                                            <%
+
+                                        }
+                                        else{
+                                            <!-- lengofStr < 20 -->
+                                            %>
+                                            <a href="/uploads/<%= arrayFile[i];%>" download="<%= result; %>">
+                                                <%= result %>
+                                            </a> &nbsp;&nbsp;
+                                            
+                                            <%
+                                        }
+                                    }
+                                            
+                                         
+                                                %>
+                               
+                            
                             &#9;
                             <% } %>
 
 
-
-
-
                                 <% if(data.writer==sesWriter){ %>
-
                                     <div id="action">
                                         <a href="/notice/notice_edit/<%= data.id %>">Edit</a> <a id="btnDeleteNotice"
                                             class="btn btn-link" onclick="showcheckDelete();">Delete</a>
-
-
                                     </div>
 
                                     <%} else{%>
