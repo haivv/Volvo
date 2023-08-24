@@ -107,7 +107,7 @@
 
         document.getElementById("txtfileupload").innerHTML += "<div id='attachFile'> <div class='filename' >" + arrFileName[j] + "</div> <button id='btndelfile' onclick='remfile(" + j + ");' class='delfile'>x</button> </div>"
 
-        var newFullName = txtUser + '_' + arrFileName[j];
+        var newFullName = txtUser+'_'+arrFileName[j];
 
         document.getElementById("sendFileName").innerHTML += newFullName + ';';
       }
@@ -130,7 +130,7 @@
       var txtUser = document.getElementById("username").innerHTML;
       var fileFullName = '';
       for (let i = 0; i < arrFileName.length; i++) {
-        fileFullName = txtUser + '_' + arrFileName[i] + ";";
+        fileFullName = txtUser+'_'+arrFileName[i] + ";";
         document.getElementById("sendFileName").innerHTML += fileFullName;
       }
     }
@@ -580,9 +580,7 @@
 
               <span type="text" name="txtfileupload" id="sendFileName"></span>
 
-              <span id="username">
-                <%= sesWriter %>
-              </span>
+              <span id="username"><%= sesWriter %></span>
 
 
 
