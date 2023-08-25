@@ -5,8 +5,7 @@ var database = require('../database');
 const fs = require('fs');
 var multer = require('multer');
 var createError = require('http-errors');
-const path = require('path');
-
+var path = require('path');
 
 
 router.get('/', function (req, res, next) {
@@ -92,17 +91,21 @@ router.get('/notice_edit/:id', function (req, res, next) {
 
 // Upload file
 // // SET STORAGE
-
-
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './public/uploads');
     },
     filename: function (req, file, callback) {
 
+    
+
+        file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8');
+
+      
+       
         var additionName = req.session.sesWriter + '_';
 
-        var uniqueFileName = additionName + file.originalname;
+        var uniqueFileName = additionName +  file.originalname;
 
 
         callback(null, uniqueFileName);
