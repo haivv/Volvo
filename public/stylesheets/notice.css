@@ -491,3 +491,8 @@ textarea {
 #sendFileName {
   display: none;
 }
+
+#btnUp{
+  position: relative;
+  top: -22px;
+}

@@ -217,6 +217,16 @@
         return false;
       }
 
+      var strTitle = document.getElementById('txttitle').value;
+      const matches = strTitle.match(/ /g);
+      if (matches.length > 2) {
+        var modal = document.getElementById("checkTitle2");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
+     
       //check content empty
       //  if (document.getElementById('charCount').innerHTML == 0) {
       //   var modal = document.getElementById("checkContent");
@@ -253,6 +263,12 @@
 
     function hideCheckTitle() {
       var modal = document.getElementById("checkTitle");
+      document.getElementById('txttitle').focus();
+      modal.style.display = "none";
+    }
+
+    function hideCheckTitle2() {
+      var modal = document.getElementById("checkTitle2");
       document.getElementById('txttitle').focus();
       modal.style.display = "none";
     }
@@ -367,6 +383,18 @@
       </p>
     </div>
   </div>
+
+    <!-- title long-->
+    <div id='checkTitle2' class='messBox'>
+      <div class='modalmess-content d-flex flex-column'>
+        <p class="p-5 d-flex ">The length of the title must be less than 20 characters!</p>
+        <p class="p-3 d-flex flex-row-reverse ">
+          <a href='#' id="btnUp" onclick='hideCheckTitle2();' class='btn btn-dark '>Confirm</a>
+  
+        </p>
+      </div>
+    </div>
+  
 
   <!--empty content -->
   <div id='checkContent' class='messBox'>

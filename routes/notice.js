@@ -5,6 +5,7 @@ var database = require('../database');
 const fs = require('fs');
 var multer = require('multer');
 var createError = require('http-errors');
+const path = require('path');
 
 
 
@@ -91,12 +92,13 @@ router.get('/notice_edit/:id', function (req, res, next) {
 
 // Upload file
 // // SET STORAGE
+
+
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './public/uploads');
     },
     filename: function (req, file, callback) {
-
 
         var additionName = req.session.sesWriter + '_';
 

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -151,6 +152,15 @@
         return false;
       }
 
+      var strTitle = document.getElementById('txttitle').value;
+      const matches = strTitle.match(/ /g);
+      if (matches.length > 20) {
+        var modal = document.getElementById("checkTitle2");
+        modal.style.display = "block";
+        countOfCheck += 1;
+        return false;
+      }
+
       //check content empty
        if (document.getElementById('charCount').innerHTML == 0) {
         
@@ -188,6 +198,11 @@
 
     function hideCheckTitle() {
       var modal = document.getElementById("checkTitle");
+      document.getElementById('txttitle').focus();
+      modal.style.display = "none";
+    }
+    function hideCheckTitle2() {
+      var modal = document.getElementById("checkTitle2");
       document.getElementById('txttitle').focus();
       modal.style.display = "none";
     }
@@ -315,48 +330,7 @@
 
 <body onLoad="noticeBoxShow(); readFile();">
 
-<!--show box to add image -->
-<div id='addImage' class='messBox'>
-  <div class='modalmess-content d-flex flex-column p-2'>
-    <div class="btnX "><button onclick='closeBoxAddimage()'>X</button></div>
-    <p class="p-1 d-flex ">Please choose image! </p>
-    <div class="choosefile">
-      <form action="/notice/uploadimage" name="fsubmitimage" method="POST" enctype="multipart/form-data">
-        <input type="file" name="myimage" id="myimage" class="inputfile inputfile-6" accept="">
-        <label for="myimage"><span id="hidfile1"></span> </label>
-        <label for="myimage">
-          <div class="btnfile" id="selectimage"> Select image</div>
-        </label>
-        <script src="/javascripts/custom-file-input.js"></script>
-    </div>
-    <p class="d-flex flex-row-reverse">
-      <button class='btn btn-dark btnFileUpload' onclick="hideAddImage()">Upload</button>
-      </form>
-    </p>
-  </div>
-</div>
 
-
-  <!--show box to add video -->
-  <div id='addVideo' class='messBox'>
-    <div class='modalmess-content d-flex flex-column p-2'>
-      <div class="btnX "><button onclick='closeBoxAddvideo()'>X</button></div>
-      <p class="p-1 d-flex ">Please choose video! </p>
-      <div class="choosefile">
-        <form action="/notice/uploadvideo" name="fsubmitvideo" method="POST" enctype="multipart/form-data">
-          <input type="file" name="myvideo" id="myvideo" class="inputfile inputfile-6" accept="">
-          <label for="myvideo"><span id="hidfile1"></span> </label>
-          <label for="myvideo">
-            <div class="btnfile"> Select video</div>
-          </label>
-          <script src="/javascripts/custom-file-input.js"></script>
-      </div>
-      <p class="d-flex flex-row-reverse">
-        <button class='btn btn-dark btnFileUpload' onclick="hideAddVideo()">Upload</button>
-        </form>
-      </p>
-    </div>
-  </div>
 
   <!--show box to add file -->
   <div id='addfile' class='messBox'>
@@ -381,7 +355,7 @@
 
 
 
-  <!--empty title -->
+  <!--empty checkSelect -->
   <div id='checkSelect' class='messBox'>
     <div class='modalmess-content d-flex flex-column'>
       <p class="p-5 d-flex ">Please choose category!</p>
@@ -402,6 +376,18 @@
       </p>
     </div>
   </div>
+
+   <!-- title long-->
+   <div id='checkTitle2' class='messBox'>
+    <div class='modalmess-content d-flex flex-column'>
+      <p class="p-5 d-flex ">The length of the title must be less than 20 characters!</p>
+      <p class="p-3 d-flex flex-row-reverse ">
+        <a href='#' id="btnUp" onclick='hideCheckTitle2();' class='btn btn-dark '>Confirm</a>
+
+      </p>
+    </div>
+  </div>
+
 
   <!--empty content -->
   <div id='checkContent' class='messBox'>
